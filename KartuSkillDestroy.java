@@ -4,12 +4,13 @@
 
 class KartuSkillDestroy extends KartuSkill {
     // Konstruktor
-    public KartuSkillDestroy(KartuKarakter target, int incAtk, int incDef){
+    public KartuSkillDestroy(String nama, String desc, String elemen, int power, KartuKarakter target){
+        super.setAttr(nama, desc, elemen, power);
         super.setTarget(target);
     }
 
     // override applyEffect() dari KartuSkill: menghancurkan target
-    public applyEffect(){
+    public void applyEffect(){
         // implementasi
     }
 }

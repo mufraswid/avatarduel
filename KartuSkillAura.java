@@ -8,14 +8,15 @@ class KartuSkillAura extends KartuSkill {
     private int incDef;
 
     // Konstruktor
-    public KartuSkillAura(KartuKarakter target, int incAtk, int incDef){
+    public KartuSkillAura(String nama, String desc, String elemen, int power, KartuKarakter target, int incAtk, int incDef){
+        super.setAttr(nama, desc, elemen, power);
         super.setTarget(target);
         this.incAtk = incAtk;
         this.incDef = incDef;
     }
 
     // override applyEffect() dari KartuSkill: menambah atk dan defense target;
-    public applyEffect(){
+    public void applyEffect(){
         // implementasi
     }
 }
