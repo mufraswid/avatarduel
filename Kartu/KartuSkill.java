@@ -5,13 +5,15 @@
 
 abstract class KartuSkill extends Kartu {
     // Atribut dari KartuSkill
-    KartuKarakter target;
+    private int power;
+    private KartuKarakter target;
 
     // Fungsi untuk mengaplikasikan efek ke kartu applyEffect() diaplikasikan
     public abstract void applyEffect();
 
-    // setter target kartu
-    public void setTarget(KartuKarakter target){
+    // setter atribut kartu skill
+    public void setSkillAttr(KartuKarakter target, int power){
         this.target = target;
+        this.power = power;
     }
 }

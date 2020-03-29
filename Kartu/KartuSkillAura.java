@@ -8,9 +8,9 @@ class KartuSkillAura extends KartuSkill {
     private int incDef;
 
     // Konstruktor
-    public KartuSkillAura(String nama, String desc, String elemen, int power, KartuKarakter target, int incAtk, int incDef){
-        super.setAttr(nama, desc, elemen, power);
-        super.setTarget(target);
+    public KartuSkillAura(String nama, String desc, String elemen, KartuKarakter target, int power, int incAtk, int incDef){
+        super.setKartuAttr(nama, desc, elemen);
+        super.setSkillAttr(target, power);
         this.incAtk = incAtk;
         this.incDef = incDef;
     }

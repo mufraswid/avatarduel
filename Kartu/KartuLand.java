@@ -4,8 +4,8 @@
 
 class KartuLand extends Kartu {
     // Konstruktor
-    public KartuLand(String nama, String desc, String elemen, int power){
-        super.setAttr(nama, desc, elemen, power);
+    public KartuLand(String nama, String desc, String elemen){
+        super.setKartuAttr(nama, desc, elemen);
     }
 
     // Method untuk menambah power here
