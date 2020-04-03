@@ -6,11 +6,15 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.avatarduel.Constants;
 import com.avatarduel.Main;
 import com.avatarduel.model.Element;
+import com.avatarduel.model.card.Card;
 import com.avatarduel.model.card.CharacterCard;
 import com.avatarduel.model.card.LandCard;
 import com.avatarduel.model.card.skill.AuraSkillCard;
+import com.avatarduel.model.card.skill.DestroySkillCard;
+import com.avatarduel.model.card.skill.PowerUpSkillCard;
 import com.avatarduel.util.CSVReader;
 
 import javafx.application.Application;
@@ -21,9 +25,6 @@ import javafx.stage.Stage;
 
 public class Game extends Application {
 
-    private static final double WIDTH = 1080, HEIGHT = 720;
-    private static final String LAND_CSV_FILE_PATH = "card/data/land.csv",
-            CHARACTER_CSV_FILE_PATH = "card/data/character.csv", AURA_SKILL_CSV_FILE_PATH = "card/data/skill_aura.csv";
     private static Game instance;
 
     public static void start() {
@@ -34,9 +35,7 @@ public class Game extends Application {
         return Game.instance;
     }
 
-    private List<LandCard> landCards;
-    private List<CharacterCard> characterCards;
-    private List<AuraSkillCard> auraSkillCards;
+    private List<Card> cards;
 
     public Game() {
         Game.instance = this;
@@ -49,22 +48,28 @@ public class Game extends Application {
         return reader.read();
     }
 
-    public void loadCards() throws IOException, URISyntaxException {
-        landCards = new ArrayList<>();
-        for (String[] row : getListFromCsv(LAND_CSV_FILE_PATH)) {
-            landCards.add(new LandCard(row[4], row[1], row[3], Element.valueOf(row[2])));
+    private void loadCards() throws IOException, URISyntaxException {
+        cards = new ArrayList<>();
+        for (String[] row : getListFromCsv(Constants.LAND_CSV_FILE_PATH)) {
+            cards.add(new LandCard(row[4], row[1], row[3], Element.valueOf(row[2])));
         }
 
-        characterCards = new ArrayList<>();
-        for (String[] row : getListFromCsv(CHARACTER_CSV_FILE_PATH)) {
-            characterCards.add(new CharacterCard(row[4], row[1], row[3], Element.valueOf(row[2]),
-                    Integer.parseInt(row[7]), Integer.parseInt(row[5]), Integer.parseInt(row[6])));
+        for (String[] row : getListFromCsv(Constants.CHARACTER_CSV_FILE_PATH)) {
+            cards.add(new CharacterCard(row[4], row[1], row[3], Element.valueOf(row[2]), Integer.parseInt(row[7]),
+                    Integer.parseInt(row[5]), Integer.parseInt(row[6])));
         }
 
-        auraSkillCards = new ArrayList<>();
-        for (String[] row : getListFromCsv(AURA_SKILL_CSV_FILE_PATH)) {
-            auraSkillCards.add(new AuraSkillCard(row[4], row[1], row[3], Element.valueOf(row[2]),
-                    Integer.parseInt(row[5]), Integer.parseInt(row[6]), Integer.parseInt(row[7])));
+        for (String[] row : getListFromCsv(Constants.AURA_SKILL_CSV_FILE_PATH)) {
+            cards.add(new AuraSkillCard(row[4], row[1], row[3], Element.valueOf(row[2]), Integer.parseInt(row[5]),
+                    Integer.parseInt(row[6]), Integer.parseInt(row[7])));
+        }
+
+        for (String[] row : getListFromCsv(Constants.DESTROY_SKILL_CSV_FILE_PATH)) {
+            cards.add(new DestroySkillCard(row[4], row[1], row[3], Element.valueOf(row[2]), Integer.parseInt(row[5])));
+        }
+
+        for (String[] row : getListFromCsv(Constants.POWERUP_SKILL_CSV_FILE_PATH)) {
+            cards.add(new PowerUpSkillCard(row[4], row[1], row[3], Element.valueOf(row[2]), Integer.parseInt(row[5])));
         }
     }
 
@@ -76,7 +81,7 @@ public class Game extends Application {
     @Override
     public void start(Stage primaryStage) {
         Group root = new Group();
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
+        Scene scene = new Scene(root, Constants.WIDTH, Constants.HEIGHT);
         scene.setFill(Color.GREY);
 
         primaryStage.setTitle("Avatar Duel by K03-01");
