@@ -1,4 +1,4 @@
-package com.avatarduel;
+package com.avatarduel.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.avatarduel.Main;
 import com.avatarduel.model.Element;
 import com.avatarduel.model.card.CharacterCard;
 import com.avatarduel.model.card.LandCard;
@@ -15,19 +16,34 @@ import com.avatarduel.util.CSVReader;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.text.Text;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class AvatarDuel extends Application {
+public class Game extends Application {
+
+    private static final double WIDTH = 1080, HEIGHT = 720;
     private static final String LAND_CSV_FILE_PATH = "card/data/land.csv",
             CHARACTER_CSV_FILE_PATH = "card/data/character.csv", AURA_SKILL_CSV_FILE_PATH = "card/data/skill_aura.csv";
+    private static Game instance;
+
+    public static void start() {
+        Application.launch();
+    }
+
+    public static Game getInstance() {
+        return Game.instance;
+    }
 
     private List<LandCard> landCards;
     private List<CharacterCard> characterCards;
     private List<AuraSkillCard> auraSkillCards;
 
+    public Game() {
+        Game.instance = this;
+    }
+
     private List<String[]> getListFromCsv(String path) throws IOException, URISyntaxException {
-        File csvFile = new File(getClass().getResource(path).toURI());
+        File csvFile = new File(Main.class.getResource(path).toURI());
         CSVReader reader = new CSVReader(csvFile, "\t");
         reader.setSkipHeader(true);
         return reader.read();
@@ -53,30 +69,20 @@ public class AvatarDuel extends Application {
     }
 
     @Override
-    public void start(Stage stage) {
-        Text text = new Text();
-        text.setText("Loading...");
-        text.setX(50);
-        text.setY(50);
+    public void init() throws Exception {
+        this.loadCards();
+    }
 
+    @Override
+    public void start(Stage primaryStage) {
         Group root = new Group();
-        root.getChildren().add(text);
+        Scene scene = new Scene(root, WIDTH, HEIGHT);
+        scene.setFill(Color.GREY);
 
-        Scene scene = new Scene(root, 1280, 720);
-
-        stage.setTitle("Avatar Duel");
-        stage.setScene(scene);
-        stage.show();
-
-        try {
-            this.loadCards();
-            text.setText("Avatar Duel!");
-        } catch (Exception e) {
-            text.setText("Failed to load cards: " + e);
-        }
+        primaryStage.setTitle("Avatar Duel by K03-01");
+        primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        primaryStage.show();
     }
 
-    public static void main(String[] args) {
-        launch();
-    }
 }

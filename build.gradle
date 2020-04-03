@@ -6,7 +6,7 @@ plugins {
     id 'application'
 }
 
-mainClassName = 'com.avatarduel.AvatarDuel'
+mainClassName = 'com.avatarduel.Main'
 
 group 'com.avatarduel'
 version '1.0-SNAPSHOT'
