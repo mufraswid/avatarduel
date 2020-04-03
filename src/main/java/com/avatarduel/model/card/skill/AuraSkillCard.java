@@ -25,11 +25,11 @@ public class AuraSkillCard extends SkillCard {
     }
 
     //#region setter
-    public void setAttackAddition(int attackAddition) {
+    private void setAttackAddition(int attackAddition) {
         this.attackAddition = attackAddition;
     }
 
-    public void setDefenseAddition(int defenseAddition) {
+    private void setDefenseAddition(int defenseAddition) {
         this.defenseAddition = defenseAddition;
     }
     //#endregion

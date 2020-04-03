@@ -50,24 +50,30 @@ public class Game extends Application {
 
     private void loadCards() throws IOException, URISyntaxException {
         cards = new ArrayList<>();
+
+        // Land
         for (String[] row : getListFromCsv(Constants.LAND_CSV_FILE_PATH)) {
             cards.add(new LandCard(row[4], row[1], row[3], Element.valueOf(row[2])));
         }
 
+        // Character
         for (String[] row : getListFromCsv(Constants.CHARACTER_CSV_FILE_PATH)) {
             cards.add(new CharacterCard(row[4], row[1], row[3], Element.valueOf(row[2]), Integer.parseInt(row[7]),
                     Integer.parseInt(row[5]), Integer.parseInt(row[6])));
         }
 
+        // Aura skill
         for (String[] row : getListFromCsv(Constants.AURA_SKILL_CSV_FILE_PATH)) {
             cards.add(new AuraSkillCard(row[4], row[1], row[3], Element.valueOf(row[2]), Integer.parseInt(row[5]),
                     Integer.parseInt(row[6]), Integer.parseInt(row[7])));
         }
 
+        // Destroy skill
         for (String[] row : getListFromCsv(Constants.DESTROY_SKILL_CSV_FILE_PATH)) {
             cards.add(new DestroySkillCard(row[4], row[1], row[3], Element.valueOf(row[2]), Integer.parseInt(row[5])));
         }
 
+        // Powerup skill
         for (String[] row : getListFromCsv(Constants.POWERUP_SKILL_CSV_FILE_PATH)) {
             cards.add(new PowerUpSkillCard(row[4], row[1], row[3], Element.valueOf(row[2]), Integer.parseInt(row[5])));
         }

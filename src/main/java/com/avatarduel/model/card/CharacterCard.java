@@ -20,15 +20,15 @@ public class CharacterCard extends Card {
     }
 
     //#region setter
-    public void setAttack(int attack) {
+    private void setAttack(int attack) {
         this.attack = attack;
     }
 
-    public void setDefense(int defense) {
+    private void setDefense(int defense) {
         this.defense = defense;
     }
 
-    public void setPowerNeeded(int power) {
+    private void setPowerNeeded(int power) {
         this.powerNeeded = power;
     }
     //#endregion

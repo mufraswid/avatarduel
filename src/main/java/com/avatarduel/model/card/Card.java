@@ -18,19 +18,19 @@ public abstract class Card {
     }
 
     //#region setter
-    public void setImagePath(String imagePath) {
+    private void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
 
-    public void setNama(String nama) {
+    private void setNama(String nama) {
         this.name = nama;
     }
 
-    public void setDesc(String desc) {
+    private void setDesc(String desc) {
         this.description = desc;
     }
 
-    public void setElementType(Element elementType) {
+    private void setElementType(Element elementType) {
         this.elementType = elementType;
     }
     //#endregion

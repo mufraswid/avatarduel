@@ -14,13 +14,14 @@ public abstract class SkillCard extends Card {
 
     public SkillCard(String imagePath, String name, String description, Element elementType, int powerNeeded) {
         super(imagePath, name, description, elementType);
+        setPowerNeeded(powerNeeded);
     }
 
     // Fungsi untuk mengaplikasikan efek ke kartu applyEffect() diaplikasikan
     public abstract void applyEffect(CharacterCard characterCard);
 
     //#region setter
-    public void setPowerNeeded(int powerNeeded) {
+    private void setPowerNeeded(int powerNeeded) {
         this.powerNeeded = powerNeeded;
     }
     //#endregion
