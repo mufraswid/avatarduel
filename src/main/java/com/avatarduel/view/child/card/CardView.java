@@ -31,6 +31,11 @@ public abstract class CardView extends GridView implements RefreshableView, Clos
     }
 
     @Override
+    public void refreshView() {
+        setVisible(hasCard());
+    }
+
+    @Override
     public boolean isClosed() {
         return this.closed;
     }

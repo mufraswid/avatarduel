@@ -1,5 +1,5 @@
 id	name	element	description	imagepath	power
-97	Air Destroy	AIR	Destroying power of air element	src/res/image/destroy/air.png	5
-98	Water Destroy	WATER	Destroying power of water element	src/res/image/destroy/water.png	5
-99	Fire Destroy	FIRE	Destroying power of fire element	src/res/image/destroy/fire.png	5
-100	Earth Destroy	EARTH	Destroying power of earth element	src/res/image/destroy/earth.png	5
+97	Air Destroy	AIR	Destroying power of air element	card/image/skill/destroy/air.png	5
+98	Water Destroy	WATER	Destroying power of water element	card/image/skill/destroy/water.png	5
+99	Fire Destroy	FIRE	Destroying power of fire element	card/image/skill/destroy/fire.png	5
+100	Earth Destroy	EARTH	Destroying power of earth element	card/image/skill/destroy/earth.png	5

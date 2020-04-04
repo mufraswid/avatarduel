@@ -26,12 +26,13 @@ public class SmallCardView extends CardView {
                 Game.getInstance().getScene().setCursor(Cursor.DEFAULT);
             }
         });
+
+        // TODO: Implement
     }
 
     @Override
     public void refreshView() {
-        // TODO Auto-generated method stub
-
+        super.refreshView();
     }
 
 }

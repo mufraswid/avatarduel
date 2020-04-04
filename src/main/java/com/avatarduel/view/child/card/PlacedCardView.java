@@ -1,7 +1,10 @@
 package com.avatarduel.view.child.card;
 
+import com.avatarduel.Constants;
 import com.avatarduel.model.CardPosition;
 import com.avatarduel.model.card.Card;
+
+import javafx.geometry.Insets;
 
 public class PlacedCardView extends CardView {
 
@@ -16,7 +19,11 @@ public class PlacedCardView extends CardView {
 
     private void setPosition(CardPosition cardPosition) {
         if (this.cardPosition != cardPosition) {
-            smallCardView.setRotate(cardPosition == CardPosition.DEFENSE ? -90 : 90);
+            boolean isDefense = cardPosition == CardPosition.DEFENSE;
+            double horizontal = isDefense ? 0 : Constants.GAP;
+            double vertical = isDefense ? Constants.GAP : 0;
+            setPadding(new Insets(vertical, horizontal, vertical, horizontal));
+            smallCardView.setRotate(isDefense ? -90 : 90);
             this.cardPosition = cardPosition;
         }
     }

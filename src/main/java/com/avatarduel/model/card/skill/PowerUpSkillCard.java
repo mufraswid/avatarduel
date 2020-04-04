@@ -17,4 +17,9 @@ public class PowerUpSkillCard extends SkillCard {
     public void applyEffect(CharacterCard characterCard) {
         // TODO: Implement!
     }
+
+    @Override
+    public String getDescription() {
+        return "POWERUP SKILL CARD\n" + super.getDescription();
+    }
 }

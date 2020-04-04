@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.avatarduel.Constants;
-import com.avatarduel.Main;
 import com.avatarduel.model.Element;
 import com.avatarduel.model.Player;
 import com.avatarduel.model.card.Card;
@@ -17,6 +16,7 @@ import com.avatarduel.model.card.skill.AuraSkillCard;
 import com.avatarduel.model.card.skill.DestroySkillCard;
 import com.avatarduel.model.card.skill.PowerUpSkillCard;
 import com.avatarduel.util.CSVReader;
+import com.avatarduel.util.PathConverter;
 import com.avatarduel.view.ViewPosition;
 import com.avatarduel.view.main.MainView;
 
@@ -66,7 +66,7 @@ public class Game extends Application {
     }
 
     private List<String[]> getListFromCsv(String path) throws IOException, URISyntaxException {
-        File csvFile = new File(Main.class.getResource(path).toURI());
+        File csvFile = new File(PathConverter.convertPathToURI(path));
         CSVReader reader = new CSVReader(csvFile, "\t");
         reader.setSkipHeader(true);
         return reader.read();
@@ -112,10 +112,10 @@ public class Game extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        scene = new Scene(this.mainView = new MainView(), Constants.WIDTH, Constants.HEIGHT);
+        this.scene = new Scene(this.mainView = new MainView(), Constants.WIDTH, Constants.HEIGHT);
 
         primaryStage.setTitle("Avatar Duel by K03-G01");
-        primaryStage.setScene(scene);
+        primaryStage.setScene(this.scene);
         primaryStage.setResizable(false);
         primaryStage.show();
     }

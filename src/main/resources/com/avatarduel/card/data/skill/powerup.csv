@@ -1,5 +1,5 @@
 id	name	element	description	imagepath	power
-93	Air PowerUp	AIR	PowerUp of air element	src/res/image/powerup/air.png	2
-94	Water PowerUp	WATER	PowerUp of water element	src/res/image/powerup/water.png	2
-95	Fire PowerUp	FIRE	PowerUp of fire element	src/res/image/powerup/fire.png	2
-96	Earth PowerUp	EARTH	PowerUp of earth element	src/res/image/powerup/earth.png	2
+93	Air PowerUp	AIR	PowerUp of air element	card/image/skill/powerup/air.png	2
+94	Water PowerUp	WATER	PowerUp of water element	card/image/skill/powerup/water.png	2
+95	Fire PowerUp	FIRE	PowerUp of fire element	card/image/skill/powerup/fire.png	2
+96	Earth PowerUp	EARTH	PowerUp of earth element	card/image/skill/powerup/earth.png	2

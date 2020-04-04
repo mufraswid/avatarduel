@@ -45,5 +45,10 @@ public class CharacterCard extends Card {
     public int getPowerNeeded() {
         return this.powerNeeded;
     }
+
+    @Override
+    public String getDescription() {
+        return "CHARACTER CARD\n" + super.getDescription();
+    }
     //#endregion
 }

@@ -2,6 +2,7 @@ package com.avatarduel.view.child.card;
 
 import com.avatarduel.Constants;
 import com.avatarduel.model.Player;
+import com.avatarduel.view.ViewPosition;
 
 public class CardFieldView extends CardView {
 
@@ -19,7 +20,8 @@ public class CardFieldView extends CardView {
     public void initGUI() {
         for (int i = 0; i < Constants.CARD_ROW; ++i) {
             for (int j = 0; j < Constants.CARD_COLUMN; ++j) {
-                add(placedCardViews[i][j] = new PlacedCardView(null), j, i);
+                int row = player.getPosition() == ViewPosition.BOTTOM ? i : (i + 1) % 2;
+                add(placedCardViews[i][j] = new PlacedCardView(null), j, row);
             }
         }
         // if (player.getPosition() == ViewPosition.BOTTOM) {

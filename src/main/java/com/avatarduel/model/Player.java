@@ -3,6 +3,8 @@ package com.avatarduel.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.avatarduel.Constants;
+import com.avatarduel.controller.Game;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.view.ViewPosition;
 
@@ -22,9 +24,13 @@ public class Player {
         currentDeckCount = 0;
         totalDeckCount = 0;
         cardList = new ArrayList<>();
-        placedCards = new Card[2][7];
+        placedCards = new Card[Constants.CARD_ROW][Constants.CARD_COLUMN];
         hp = 80;
         this.name = name;
+
+        // TODO delete later
+        placedCards[0][0] = Game.getInstance().getCards().get(56);
+        placedCards[0][1] = Game.getInstance().getCards().get(97);
     }
 
     public String getName() {

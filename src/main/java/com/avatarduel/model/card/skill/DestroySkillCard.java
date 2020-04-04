@@ -17,4 +17,9 @@ public class DestroySkillCard extends SkillCard {
     public void applyEffect(CharacterCard characterCard) {
         // TODO: Implement!
     }
+
+    @Override
+    public String getDescription() {
+        return "DESTROY SKILL CARD\n" + super.getDescription();
+    }
 }
