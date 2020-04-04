@@ -3,13 +3,10 @@ package com.avatarduel.view.child.card;
 import com.avatarduel.Constants;
 import com.avatarduel.controller.Game;
 import com.avatarduel.model.card.Card;
-import com.avatarduel.model.card.CharacterCard;
-import com.avatarduel.model.card.skill.SkillCard;
 import com.avatarduel.util.ElementColorPicker;
 import com.avatarduel.util.PathConverter;
 import com.avatarduel.view.DefaultText;
-import com.avatarduel.view.child.card.status.CharacterStatusView;
-import com.avatarduel.view.child.card.status.SkillStatusView;
+import com.avatarduel.view.child.card.status.StatusViewFactory;
 
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
@@ -58,17 +55,15 @@ public class SmallCardView extends CardView {
         if (hasCard()) {
             nameText.setText(card.getName());
             imageView.setImage(new Image(PathConverter.convertPathToURL(card.getImagePath())));
-            if (card instanceof SkillCard) {
-                statusCardView = new SkillStatusView((SkillCard) card, true);
-            } else if (card instanceof CharacterCard) {
-                statusCardView = new CharacterStatusView((CharacterCard) card, true);
-            }
+            statusCardView = StatusViewFactory.createStatusView(card);
             setBackground(new Background(new BackgroundFill(ElementColorPicker.getColor(card.getElementType()),
                     CornerRadii.EMPTY, Insets.EMPTY)));
             getChildren().clear();
             add(nameText, 0, 0);
             add(imageView, 0, 1);
-            add(statusCardView, 0, 2);
+            if (statusCardView != null) {
+                add(statusCardView, 0, 2);
+            }
         }
     }
 

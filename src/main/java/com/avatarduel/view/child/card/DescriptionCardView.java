@@ -1,11 +1,8 @@
 package com.avatarduel.view.child.card;
 
 import com.avatarduel.model.card.Card;
-import com.avatarduel.model.card.CharacterCard;
-import com.avatarduel.model.card.skill.SkillCard;
 import com.avatarduel.view.DefaultText;
-import com.avatarduel.view.child.card.status.CharacterStatusView;
-import com.avatarduel.view.child.card.status.SkillStatusView;
+import com.avatarduel.view.child.card.status.StatusViewFactory;
 
 public class DescriptionCardView extends CardView {
 
@@ -26,11 +23,7 @@ public class DescriptionCardView extends CardView {
     @Override
     public void refreshView() {
         if (hasCard()) {
-            if (card instanceof SkillCard) {
-                statusCardView = new SkillStatusView((SkillCard) card);
-            } else if (card instanceof CharacterCard) {
-                statusCardView = new CharacterStatusView((CharacterCard) card);
-            }
+            statusCardView = StatusViewFactory.createStatusView(card);
             descriptionText.setText(card.getDescription());
             descriptionText.wrappingWidthProperty().bind(widthProperty().subtract(5)); // .subtract(Constants.GAP)
             getChildren().clear();

@@ -18,7 +18,7 @@ public final class Constants {
     public static final int CARD_COLUMN = 7;
 
     // Margin
-    public static final double GAP = 2;
+    public static final double GAP = 0;
 
     // Font size
     public static final double SMALL_FONT_SIZE = 8;
