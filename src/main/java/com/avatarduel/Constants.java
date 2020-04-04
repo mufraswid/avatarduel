@@ -13,4 +13,8 @@ public final class Constants {
     public static final String DESTROY_SKILL_CSV_FILE_PATH = "card/data/skill/destroy.csv";
     public static final String POWERUP_SKILL_CSV_FILE_PATH = "card/data/skill/powerup.csv";
 
+    // Cards Count
+    public static final int CARD_ROW = 2;
+    public static final int CARD_COLUMN = 7;
+
 }

@@ -9,6 +9,7 @@ import java.util.List;
 import com.avatarduel.Constants;
 import com.avatarduel.Main;
 import com.avatarduel.model.Element;
+import com.avatarduel.model.Player;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.model.card.CharacterCard;
 import com.avatarduel.model.card.LandCard;
@@ -16,9 +17,9 @@ import com.avatarduel.model.card.skill.AuraSkillCard;
 import com.avatarduel.model.card.skill.DestroySkillCard;
 import com.avatarduel.model.card.skill.PowerUpSkillCard;
 import com.avatarduel.util.CSVReader;
+import com.avatarduel.view.main.MainView;
 
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -36,9 +37,18 @@ public class Game extends Application {
     }
 
     private List<Card> cards;
+    private Player player1, player2;
 
     public Game() {
         Game.instance = this;
+    }
+
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public Player getPlayer2() {
+        return player2;
     }
 
     private List<String[]> getListFromCsv(String path) throws IOException, URISyntaxException {
@@ -86,11 +96,10 @@ public class Game extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Group root = new Group();
-        Scene scene = new Scene(root, Constants.WIDTH, Constants.HEIGHT);
+        Scene scene = new Scene(new MainView(), Constants.WIDTH, Constants.HEIGHT);
         scene.setFill(Color.GREY);
 
-        primaryStage.setTitle("Avatar Duel by K03-01");
+        primaryStage.setTitle("Avatar Duel by K03-G01");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();

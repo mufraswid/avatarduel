@@ -1,5 +1,5 @@
 package com.avatarduel.model;
 
-public enum Position {
+public enum CardPosition {
     ATTACK, DEFENSE
 }
