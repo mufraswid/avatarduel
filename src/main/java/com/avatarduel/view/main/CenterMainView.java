@@ -17,6 +17,7 @@ public class CenterMainView extends GridView {
         handCardView2 = new HandCardFieldView(game.getPlayer2());
         cardFieldView1 = new CardFieldView(game.getPlayer1());
         cardFieldView2 = new CardFieldView(game.getPlayer2());
+        initGUI();
     }
 
     @Override

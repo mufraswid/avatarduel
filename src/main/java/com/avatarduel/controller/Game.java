@@ -17,11 +17,11 @@ import com.avatarduel.model.card.skill.AuraSkillCard;
 import com.avatarduel.model.card.skill.DestroySkillCard;
 import com.avatarduel.model.card.skill.PowerUpSkillCard;
 import com.avatarduel.util.CSVReader;
+import com.avatarduel.view.ViewPosition;
 import com.avatarduel.view.main.MainView;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Game extends Application {
@@ -38,9 +38,23 @@ public class Game extends Application {
 
     private List<Card> cards;
     private Player player1, player2;
+    private MainView mainView;
+    private Scene scene;
 
     public Game() {
         Game.instance = this;
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public MainView getMainView() {
+        return mainView;
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 
     public Player getPlayer1() {
@@ -92,12 +106,13 @@ public class Game extends Application {
     @Override
     public void init() throws Exception {
         this.loadCards();
+        player1 = new Player("Player 1", ViewPosition.BOTTOM);
+        player2 = new Player("Player 2", ViewPosition.TOP);
     }
 
     @Override
     public void start(Stage primaryStage) {
-        Scene scene = new Scene(new MainView(), Constants.WIDTH, Constants.HEIGHT);
-        scene.setFill(Color.GREY);
+        scene = new Scene(this.mainView = new MainView(), Constants.WIDTH, Constants.HEIGHT);
 
         primaryStage.setTitle("Avatar Duel by K03-G01");
         primaryStage.setScene(scene);

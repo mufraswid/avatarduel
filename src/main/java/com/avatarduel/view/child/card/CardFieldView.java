@@ -2,32 +2,35 @@ package com.avatarduel.view.child.card;
 
 import com.avatarduel.Constants;
 import com.avatarduel.model.Player;
-import com.avatarduel.view.GridView;
-import com.avatarduel.view.RefreshableView;
 
-public class CardFieldView extends GridView implements ClosableCard, RefreshableView {
+public class CardFieldView extends CardView {
 
     private PlacedCardView[][] placedCardViews;
     private Player player;
 
     public CardFieldView(Player player) {
-        super("14,14,14,14,14,14,14", "50,50");
+        super(null, "15,15,15,15,15,15,15", "50,50");
         placedCardViews = new PlacedCardView[Constants.CARD_ROW][Constants.CARD_COLUMN];
         this.player = player;
-        refreshView();
+        initGUI();
     }
 
     @Override
     public void initGUI() {
         for (int i = 0; i < Constants.CARD_ROW; ++i) {
             for (int j = 0; j < Constants.CARD_COLUMN; ++j) {
-                add(placedCardViews[i][j], j, i);
+                add(placedCardViews[i][j] = new PlacedCardView(null), j, i);
             }
         }
+        // if (player.getPosition() == ViewPosition.BOTTOM) {
+        //     setStyle("-fx-border-style: solid none none none; -fx-border-width: 5; -fx-border-color: black;");
+        // }
+        refreshView();
     }
 
     @Override
     public void setClosed(boolean closed) {
+        super.setClosed(closed);
         for (PlacedCardView[] views : placedCardViews) {
             for (ClosableCard card : views) {
                 card.setClosed(closed);

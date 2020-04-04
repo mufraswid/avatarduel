@@ -4,22 +4,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.avatarduel.model.Player;
-import com.avatarduel.view.GridView;
-import com.avatarduel.view.RefreshableView;
 
-public class HandCardFieldView extends GridView implements ClosableCard, RefreshableView {
+public class HandCardFieldView extends CardView {
 
     private Player player;
     private List<SmallCardView> smallCardViews;
 
     public HandCardFieldView(Player player) {
-        super("100", "100");
+        super(null, "100", "100");
         this.player = player;
         refreshView();
+        initGUI();
     }
 
     @Override
     public void setClosed(boolean closed) {
+        super.setClosed(closed);
         for (ClosableCard card : smallCardViews) {
             card.setClosed(closed);
         }

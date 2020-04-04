@@ -11,13 +11,19 @@ public abstract class CardView extends GridView implements RefreshableView, Clos
 
     public CardView(Card card, String colPercentages, String rowPercentages) {
         super(colPercentages, rowPercentages);
-        setCard(card);
-        setClosed(true);
+        this.card = card;
+        this.closed = true;
+        addBorder();
     }
 
     public void setCard(Card card) {
-        this.card = card;
-        refreshView();
+        if ((this.card = card) != null) {
+            refreshView();
+        }
+    }
+
+    public boolean hasCard() {
+        return this.card != null;
     }
 
     public Card getCard() {
@@ -25,8 +31,14 @@ public abstract class CardView extends GridView implements RefreshableView, Clos
     }
 
     @Override
+    public boolean isClosed() {
+        return this.closed;
+    }
+
+    @Override
     public void setClosed(boolean closed) {
         this.closed = closed;
+        refreshView();
     }
 
 }

@@ -14,10 +14,12 @@ public class PhaseView extends GridView {
         battleText = new DefaultText("BATTLE");
         main2Text = new DefaultText("MAIN 2");
         endText = new DefaultText("END");
+        initGUI();
     }
 
     @Override
     public void initGUI() {
+        addBorder();
         add(drawText, 0, 0);
         add(main1Text, 0, 1);
         add(battleText, 0, 2);

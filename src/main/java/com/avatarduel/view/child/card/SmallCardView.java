@@ -1,32 +1,37 @@
 package com.avatarduel.view.child.card;
 
-import com.avatarduel.model.CardPosition;
+import com.avatarduel.controller.Game;
 import com.avatarduel.model.card.Card;
+
+import javafx.scene.Cursor;
 
 public class SmallCardView extends CardView {
 
-    private boolean closed;
-
     public SmallCardView(Card card) {
-        super(card, colPercentages, rowPercentages);
+        super(card, "100", "100");
         setClosed(true);
+        initGUI();
     }
 
     @Override
     public void initGUI() {
-        // TODO: Implement
-
+        hoverProperty().addListener((observable, oldValue, newValue) -> {
+            if (!hasCard()) {
+                return;
+            }
+            if (newValue) {
+                Game.getInstance().getMainView().getBigCardView().setCard(getCard());
+                Game.getInstance().getScene().setCursor(Cursor.HAND);
+            } else {
+                Game.getInstance().getScene().setCursor(Cursor.DEFAULT);
+            }
+        });
     }
 
     @Override
     public void refreshView() {
         // TODO Auto-generated method stub
 
-    }
-
-    @Override
-    public void setClosed(boolean closed) {
-        this.closed = closed;
     }
 
 }

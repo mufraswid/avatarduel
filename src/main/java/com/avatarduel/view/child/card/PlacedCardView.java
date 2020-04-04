@@ -11,11 +11,14 @@ public class PlacedCardView extends CardView {
     public PlacedCardView(Card card) {
         super(card, "100", "100");
         smallCardView = new SmallCardView(card);
+        initGUI();
     }
 
     private void setPosition(CardPosition cardPosition) {
-        this.cardPosition = cardPosition;
-        // TODO: Rotate smallCardView
+        if (this.cardPosition != cardPosition) {
+            smallCardView.setRotate(cardPosition == CardPosition.DEFENSE ? -90 : 90);
+            this.cardPosition = cardPosition;
+        }
     }
 
     public CardPosition getPosition() {

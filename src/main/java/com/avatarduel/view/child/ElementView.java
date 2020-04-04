@@ -1,10 +1,14 @@
 package com.avatarduel.view.child;
 
+import com.avatarduel.Constants;
 import com.avatarduel.model.Element;
 import com.avatarduel.model.Player;
 import com.avatarduel.view.DefaultText;
 import com.avatarduel.view.GridView;
 import com.avatarduel.view.RefreshableView;
+
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 
 public class ElementView extends GridView implements RefreshableView {
 
@@ -26,15 +30,19 @@ public class ElementView extends GridView implements RefreshableView {
         waterValue = new DefaultText();
         airValue = new DefaultText();
 
-        refreshView();
+        initGUI();
     }
 
     private String elementStringValue(Element el) {
-        return String.format("%d / %d", player.getCurrentElementValue(el), player.getMaxElementValue(el));
+        return String.format(": %d / %d", player.getCurrentElementValue(el), player.getMaxElementValue(el));
     }
 
     @Override
     public void initGUI() {
+        getColumnConstraints().forEach(col -> col.setHalignment(HPos.LEFT));
+        setPadding(new Insets(0, 0, 0, Constants.GAP));
+        addBorder();
+
         add(earthText, 0, 0);
         add(fireText, 0, 1);
         add(waterText, 0, 2);
@@ -44,6 +52,7 @@ public class ElementView extends GridView implements RefreshableView {
         add(fireValue, 1, 1);
         add(waterValue, 1, 2);
         add(airValue, 1, 3);
+        refreshView();
     }
 
     @Override

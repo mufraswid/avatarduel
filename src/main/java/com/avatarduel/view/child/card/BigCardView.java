@@ -5,7 +5,8 @@ import com.avatarduel.model.card.Card;
 public class BigCardView extends CardView {
 
     public BigCardView(Card card) {
-        super(card, colPercentages, rowPercentages);
+        super(card, "100", "100");
+        initGUI();
     }
 
     @Override

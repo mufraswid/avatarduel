@@ -20,6 +20,11 @@ public class LeftMainView extends GridView {
         deckView2 = new DeckView(game.getPlayer2());
         statusView1 = new StatusView(game.getPlayer1());
         statusView2 = new StatusView(game.getPlayer2());
+        initGUI();
+    }
+
+    public BigCardView getBigCardView() {
+        return bigCardView;
     }
 
     @Override

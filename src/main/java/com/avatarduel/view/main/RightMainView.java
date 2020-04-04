@@ -16,6 +16,7 @@ public class RightMainView extends GridView {
         phaseView = new PhaseView();
         elementView1 = new ElementView(game.getPlayer1());
         elementView2 = new ElementView(game.getPlayer2());
+        initGUI();
     }
 
     @Override

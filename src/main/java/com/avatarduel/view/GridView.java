@@ -2,26 +2,49 @@ package com.avatarduel.view;
 
 import java.util.Arrays;
 
+import com.avatarduel.Constants;
+
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.paint.Color;
 
 public abstract class GridView extends GridPane implements View {
 
     private static final String SEPARATOR = ",";
 
     public GridView(double[] colPercentages, double[] rowPercentages) {
-        getColumnConstraints().setAll((ColumnConstraints[]) Arrays.stream(colPercentages).mapToObj(d -> {
+        Object[] arr = Arrays.stream(colPercentages).mapToObj(d -> {
             ColumnConstraints col = new ColumnConstraints();
             col.setPercentWidth(d);
+            col.setHgrow(Priority.ALWAYS);
+            col.setHalignment(HPos.CENTER);
             return col;
-        }).toArray());
-        getRowConstraints().setAll((RowConstraints[]) Arrays.stream(rowPercentages).mapToObj(d -> {
+        }).toArray();
+        getColumnConstraints().setAll(Arrays.copyOf(arr, arr.length, ColumnConstraints[].class));
+
+        arr = Arrays.stream(rowPercentages).mapToObj(d -> {
             RowConstraints row = new RowConstraints();
             row.setPercentHeight(d);
+            row.setVgrow(Priority.ALWAYS);
+            row.setValignment(VPos.CENTER);
             return row;
-        }).toArray());
-        initGUI();
+        }).toArray();
+        getRowConstraints().setAll(Arrays.copyOf(arr, arr.length, RowConstraints[].class));
+
+        setHgap(Constants.GAP);
+        setVgap(Constants.GAP);
+    }
+
+    public void addBorder() {
+        setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, new BorderWidths(1))));
     }
 
     public GridView(String colPercentages, String rowPercentages) {

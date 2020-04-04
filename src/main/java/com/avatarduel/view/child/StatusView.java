@@ -12,24 +12,26 @@ public class StatusView extends GridView implements RefreshableView {
     private Player player;
 
     public StatusView(Player player) {
-        // TODO: Should be player as parameter that has position instead of ViewPosition, so it can name the nameText and hpText
         super("100", "50,50");
         this.player = player;
         this.nameText = new DefaultText();
         this.hpText = new DefaultText();
+        initGUI();
     }
 
     @Override
     public void initGUI() {
+        addBorder();
         boolean isTop = player.getPosition() == ViewPosition.TOP;
         add(nameText, 0, isTop ? 0 : 1);
         add(hpText, 0, isTop ? 1 : 0);
+        refreshView();
     }
 
     @Override
     public void refreshView() {
-        // TODO Auto-generated method stub
-
+        nameText.setText(player.getName());
+        hpText.setText(player.getHP() + " HP");
     }
 
 }
