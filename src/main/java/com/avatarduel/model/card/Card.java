@@ -7,17 +7,39 @@ import com.avatarduel.model.Element;
  */
 public abstract class Card {
     // atribut
+    private int id;
     private String name, description, imagePath;
     private Element elementType;
 
-    public Card(String imagePath, String name, String description, Element elementType) {
+    public Card(String imagePath, int id, String name, String description, Element elementType) {
         setImagePath(imagePath);
+        setId(id);
         setNama(name);
         setDesc(description);
         setElementType(elementType);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Card)) {
+            return false;
+        }
+        Card card = (Card) o;
+        return id == card.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
     //#region setter
+    private void setId(int id) {
+        this.id = id;
+    }
+
     private void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
@@ -36,6 +58,10 @@ public abstract class Card {
     //#endregion
 
     //#region getter
+    public int getId() {
+        return this.id;
+    }
+
     public String getImagePath() {
         return this.imagePath;
     }

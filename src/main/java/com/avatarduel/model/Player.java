@@ -8,12 +8,16 @@ import com.avatarduel.controller.Game;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.view.ViewPosition;
 
+/**
+ * Kelas Player: kelas yang memodelkan konsep pemain pada permainan
+ */
+
 public class Player {
 
     private ViewPosition position;
     private int[] currentElementValue, maxElementValue;
-    private int currentDeckCount, totalDeckCount, hp;
-    private List<Card> cardList;
+    private int totalDeckCount, hp;
+    private List<Card> deck, handCards;
     private Card[][] placedCards;
     private String name;
 
@@ -21,9 +25,9 @@ public class Player {
         this.position = viewPosition;
         this.currentElementValue = new int[Element.values().length];
         this.maxElementValue = new int[Element.values().length];
-        currentDeckCount = 0;
         totalDeckCount = 0;
-        cardList = new ArrayList<>();
+        deck = new ArrayList<>();
+        handCards = new ArrayList<>();
         placedCards = new Card[Constants.CARD_ROW][Constants.CARD_COLUMN];
         hp = 80;
         this.name = name;
@@ -33,6 +37,7 @@ public class Player {
         placedCards[0][1] = Game.getInstance().getCards().get(97);
     }
 
+    //#region getter
     public String getName() {
         return name;
     }
@@ -54,19 +59,20 @@ public class Player {
     }
 
     public int getCurrentDeckCount() {
-        return currentDeckCount;
+        return deck.size();
     }
 
     public int getTotalDeckCount() {
         return totalDeckCount;
     }
 
-    public List<Card> getCardList() {
-        return cardList;
+    public List<Card> getHandCards() {
+        return handCards;
     }
 
     public Card getPlacedCard(int row, int col) {
         return placedCards[row][col];
     }
+    //#end region
 
 }

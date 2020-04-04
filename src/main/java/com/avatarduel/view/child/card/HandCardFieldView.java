@@ -36,7 +36,7 @@ public class HandCardFieldView extends CardView {
     @Override
     public void refreshView() {
         getChildren().clear();
-        this.smallCardViews = player.getCardList().stream().map(card -> new SmallCardView(card))
+        this.smallCardViews = player.getHandCards().stream().map(card -> new SmallCardView(card))
                 .collect(Collectors.toList());
         initGUI();
     }

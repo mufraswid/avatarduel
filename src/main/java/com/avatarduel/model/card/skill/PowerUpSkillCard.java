@@ -8,8 +8,9 @@ import com.avatarduel.model.card.CharacterCard;
  */
 public class PowerUpSkillCard extends SkillCard {
     // Konstruktor
-    public PowerUpSkillCard(String imagePath, String name, String description, Element elementType, int powerNeeded) {
-        super(imagePath, name, description, elementType, powerNeeded);
+    public PowerUpSkillCard(String imagePath, int id, String name, String description, Element elementType,
+            int powerNeeded) {
+        super(imagePath, id, name, description, elementType, powerNeeded);
     }
 
     // override applyEffect() dari KartuSkill: mengurangi HP lawan jika target menyerang kartu lawan seakan kartu lawan sedang menyerang
@@ -21,5 +22,11 @@ public class PowerUpSkillCard extends SkillCard {
     @Override
     public String getDescription() {
         return "POWERUP SKILL CARD\n" + super.getDescription();
+    }
+
+    @Override
+    public void revertEffect(CharacterCard characterCard) {
+        // TODO Auto-generated method stub
+
     }
 }
