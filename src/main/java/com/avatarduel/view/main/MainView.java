@@ -8,9 +8,9 @@ import javafx.geometry.Insets;
 
 public class MainView extends GridView {
 
-    private LeftMainView leftMainView;
-    private CenterMainView centerMainView;
-    private RightMainView rightMainView;
+    public LeftMainView leftMainView;
+    public CenterMainView centerMainView;
+    public RightMainView rightMainView;
 
     public MainView() {
         super("20,70,10", "100");

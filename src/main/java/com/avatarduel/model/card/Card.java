@@ -10,6 +10,7 @@ public abstract class Card {
     private int id;
     private String name, description, imagePath;
     private Element elementType;
+    private boolean isClosed;
 
     public Card(String imagePath, int id, String name, String description, Element elementType) {
         setImagePath(imagePath);
@@ -17,6 +18,7 @@ public abstract class Card {
         setNama(name);
         setDesc(description);
         setElementType(elementType);
+        setClosed(false);
     }
 
     @Override
@@ -36,6 +38,10 @@ public abstract class Card {
     }
 
     //#region setter
+    public void setClosed(boolean closed) {
+        this.isClosed = closed;
+    }
+
     private void setId(int id) {
         this.id = id;
     }
@@ -58,6 +64,10 @@ public abstract class Card {
     //#endregion
 
     //#region getter
+    public boolean isClosed() {
+        return isClosed;
+    }
+
     public int getId() {
         return this.id;
     }

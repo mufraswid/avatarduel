@@ -3,42 +3,49 @@ package com.avatarduel.view.child.card;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.avatarduel.model.Player;
+import com.avatarduel.Constants;
+import com.avatarduel.controller.PlayerController;
+import com.avatarduel.view.BorderBuilder;
+import com.avatarduel.view.View;
+import com.avatarduel.view.child.PlayerRenderer;
 
-public class HandCardFieldView extends CardView {
+import javafx.geometry.Insets;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.HBox;
 
-    private Player player;
-    private List<SmallCardView> smallCardViews;
+public class HandCardFieldView extends ScrollPane implements View, PlayerRenderer {
 
-    public HandCardFieldView(Player player) {
-        super(null, "100", "100");
-        this.player = player;
-        refreshView();
+    public List<SmallCardView> smallCardViews;
+    public boolean closed;
+    public HBox hbox;
+
+    public HandCardFieldView() {
+        hbox = new HBox();
         initGUI();
     }
 
-    @Override
-    public void setClosed(boolean closed) {
-        super.setClosed(closed);
-        for (ClosableCard card : smallCardViews) {
-            card.setClosed(closed);
-        }
+    public void addBorder() {
+        setBorder(BorderBuilder.createDefaultBorder());
     }
 
     @Override
     public void initGUI() {
-        int i = 0;
-        for (SmallCardView card : smallCardViews) {
-            add(card, i++, 0);
-        }
+        setContent(hbox);
+        addBorder();
+        setPadding(new Insets(Constants.GAP, Constants.GAP, Constants.GAP, Constants.GAP));
     }
 
     @Override
-    public void refreshView() {
-        getChildren().clear();
-        this.smallCardViews = player.getHandCards().stream().map(card -> new SmallCardView(card))
-                .collect(Collectors.toList());
-        initGUI();
+    public void renderPlayer(PlayerController player) {
+        hbox.getChildren().clear();
+        this.smallCardViews = player.getHandCards().stream().map(card -> {
+            SmallCardView smallCardView = new SmallCardView();
+            smallCardView.renderCard(card);
+            return smallCardView;
+        }).collect(Collectors.toList());
+        for (SmallCardView card : smallCardViews) {
+            hbox.getChildren().add(card);
+        }
     }
 
 }

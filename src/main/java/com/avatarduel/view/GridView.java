@@ -6,15 +6,10 @@ import com.avatarduel.Constants;
 
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.paint.Color;
 
 public abstract class GridView extends GridPane implements View {
 
@@ -24,6 +19,8 @@ public abstract class GridView extends GridPane implements View {
         Object[] arr = Arrays.stream(colPercentages).mapToObj(d -> {
             ColumnConstraints col = new ColumnConstraints();
             col.setPercentWidth(d);
+            // col.setPrefWidth(d * ((Region) getParent()).getPrefWidth() / 100d);
+            // col.prefWidthProperty().bind(((Region) getParent()).prefWidthProperty().multiply(d).divide(100d));
             col.setHgrow(Priority.ALWAYS);
             col.setHalignment(HPos.CENTER);
             return col;
@@ -33,6 +30,8 @@ public abstract class GridView extends GridPane implements View {
         arr = Arrays.stream(rowPercentages).mapToObj(d -> {
             RowConstraints row = new RowConstraints();
             row.setPercentHeight(d);
+            // row.setPrefHeight(d * ((Region) getParent()).getPrefHeight() / 100d);
+            // row.prefHeightProperty().bind(((Region) getParent()).prefHeightProperty().multiply(d).divide(100d));
             row.setVgrow(Priority.ALWAYS);
             row.setValignment(VPos.CENTER);
             return row;
@@ -44,7 +43,11 @@ public abstract class GridView extends GridPane implements View {
     }
 
     public void addBorder() {
-        setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, new BorderWidths(1))));
+        setBorder(BorderBuilder.createDefaultBorder());
+    }
+
+    public void removeBorder() {
+        setBorder(null);
     }
 
     public GridView(String colPercentages, String rowPercentages) {

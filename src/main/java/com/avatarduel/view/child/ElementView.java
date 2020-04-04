@@ -1,35 +1,31 @@
 package com.avatarduel.view.child;
 
 import com.avatarduel.Constants;
+import com.avatarduel.controller.PlayerController;
 import com.avatarduel.model.Element;
-import com.avatarduel.model.Player;
 import com.avatarduel.util.ElementColorPicker;
 import com.avatarduel.view.DefaultText;
 import com.avatarduel.view.GridView;
-import com.avatarduel.view.RefreshableView;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.paint.Color;
 
-public class ElementView extends GridView implements RefreshableView {
+public class ElementView extends GridView implements PlayerRenderer {
 
-    private DefaultText earthText, fireText, waterText, airText, earthValue, fireValue, waterValue, airValue;
-    private Player player;
+    public DefaultText earthText, fireText, waterText, airText, earthValue, fireValue, waterValue, airValue;
 
-    public ElementView(Player player) {
+    public ElementView() {
         super("40,60", "25,25,25,25");
 
-        this.player = player;
-
         earthText = new DefaultText("Earth", true);
-        earthText.setFill(ElementColorPicker.getColor(Element.EARTH));
+        earthText.text.setFill(ElementColorPicker.getColor(Element.EARTH));
         fireText = new DefaultText("Fire", true);
-        fireText.setFill(ElementColorPicker.getColor(Element.FIRE));
+        fireText.text.setFill(ElementColorPicker.getColor(Element.FIRE));
         waterText = new DefaultText("Water", true);
-        waterText.setFill(Color.BLUE);
+        waterText.text.setFill(Color.BLUE);
         airText = new DefaultText("Air", true);
-        airText.setFill(ElementColorPicker.getColor(Element.AIR));
+        airText.text.setFill(ElementColorPicker.getColor(Element.AIR));
 
         earthValue = new DefaultText();
         fireValue = new DefaultText();
@@ -37,10 +33,6 @@ public class ElementView extends GridView implements RefreshableView {
         airValue = new DefaultText();
 
         initGUI();
-    }
-
-    private String elementStringValue(Element el) {
-        return String.format(": %d / %d", player.getCurrentElementValue(el), player.getMaxElementValue(el));
     }
 
     @Override
@@ -58,15 +50,18 @@ public class ElementView extends GridView implements RefreshableView {
         add(fireValue, 1, 1);
         add(waterValue, 1, 2);
         add(airValue, 1, 3);
-        refreshView();
     }
 
     @Override
-    public void refreshView() {
-        earthValue.setText(elementStringValue(Element.EARTH));
-        fireValue.setText(elementStringValue(Element.FIRE));
-        waterValue.setText(elementStringValue(Element.WATER));
-        airValue.setText(elementStringValue(Element.AIR));
+    public void renderPlayer(PlayerController player) {
+        earthValue.setText(elementStringValue(player, Element.EARTH));
+        fireValue.setText(elementStringValue(player, Element.FIRE));
+        waterValue.setText(elementStringValue(player, Element.WATER));
+        airValue.setText(elementStringValue(player, Element.AIR));
+    }
+
+    private String elementStringValue(PlayerController player, Element el) {
+        return String.format(": %d / %d", player.getCurrentElementValue(el), player.getMaxElementValue(el));
     }
 
 }

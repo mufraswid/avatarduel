@@ -11,7 +11,7 @@ public final class PathConverter {
         try {
             return Main.class.getResource(path).toURI();
         } catch (URISyntaxException ex) {
-            ex.printStackTrace();
+            System.err.println("Path: " + path + " not found!");
             return null;
         }
     }
@@ -20,7 +20,7 @@ public final class PathConverter {
         try {
             return Main.class.getResource(path).toURI().toURL().toString();
         } catch (URISyntaxException | MalformedURLException ex) {
-            ex.printStackTrace();
+            System.err.println("Path: " + path + " not found!");
             return null;
         }
     }
