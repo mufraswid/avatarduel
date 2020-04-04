@@ -1,7 +1,8 @@
 package com.avatarduel.view.child.card.status;
 
 import com.avatarduel.Constants;
-import com.avatarduel.controller.CardController;
+import com.avatarduel.controller.card.CardController;
+import com.avatarduel.controller.card.CharacterCardController;
 import com.avatarduel.model.card.CharacterCard;
 import com.avatarduel.view.DefaultText;
 import com.avatarduel.view.child.card.CardView;
@@ -35,14 +36,15 @@ public class CharacterStatusView extends CardView {
     }
 
     @Override
-    public void renderCard(CardController card) {
-        if (card.getCard() != null) {
-            CharacterCard ccard = (CharacterCard) card.getCard();
-            int deltaAttack = ccard.getDeltaAttack();
-            int deltaDefense = ccard.getDeltaDefense();
-            attackText.setText("ATK " + ccard.getAttack() + (deltaAttack == 0 ? "" : deltaAttack));
-            defenseText.setText("DEF " + ccard.getDefense() + (deltaDefense == 0 ? "" : deltaDefense));
-            powerText.setText("PWR " + ccard.getPowerNeeded());
+    public void renderCard(CardController cc) {
+        if (cc != null) {
+            CharacterCardController ccc = (CharacterCardController) cc;
+            int deltaAttack = ccc.getDeltaAttack();
+            int deltaDefense = ccc.getDeltaDefense();
+            CharacterCard card = (CharacterCard) cc.getCard();
+            attackText.setText("ATK " + card.getAttack() + (deltaAttack == 0 ? "" : " + " + deltaAttack));
+            defenseText.setText("DEF " + card.getDefense() + (deltaDefense == 0 ? "" : " + " + deltaDefense));
+            powerText.setText("PWR " + card.getPowerNeeded());
         }
     }
 

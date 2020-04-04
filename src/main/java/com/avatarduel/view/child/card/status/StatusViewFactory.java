@@ -1,6 +1,6 @@
 package com.avatarduel.view.child.card.status;
 
-import com.avatarduel.controller.CardController;
+import com.avatarduel.controller.card.CardController;
 import com.avatarduel.model.card.CharacterCard;
 import com.avatarduel.model.card.skill.SkillCard;
 import com.avatarduel.view.child.card.CardView;

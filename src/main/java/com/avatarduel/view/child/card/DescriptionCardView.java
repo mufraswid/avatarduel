@@ -1,6 +1,6 @@
 package com.avatarduel.view.child.card;
 
-import com.avatarduel.controller.CardController;
+import com.avatarduel.controller.card.CardController;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.view.DefaultText;
 import com.avatarduel.view.child.card.status.StatusViewFactory;

@@ -1,9 +1,8 @@
 package com.avatarduel.view.child.card;
 
-import com.avatarduel.controller.CardController;
+import com.avatarduel.controller.card.CardController;
+import com.avatarduel.controller.card.CharacterCardController;
 import com.avatarduel.model.CardPosition;
-import com.avatarduel.model.card.Card;
-import com.avatarduel.model.card.CharacterCard;
 
 public class PlacedCardView extends CardView {
 
@@ -35,11 +34,11 @@ public class PlacedCardView extends CardView {
     public void renderCard(CardController cc) {
         getChildren().clear();
         if (cc != null) {
-            Card card = cc.getCard();
             add(smallCardView, 0, 0);
             smallCardView.renderCard(cc);
-            if (card instanceof CharacterCard) {
-                setPosition(((CharacterCard) card).getPosition());
+            if (cc instanceof CharacterCardController) {
+                CharacterCardController ccc = (CharacterCardController) cc;
+                setPosition(ccc.getPosition());
             }
         }
     }

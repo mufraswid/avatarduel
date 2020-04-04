@@ -1,7 +1,6 @@
 package com.avatarduel.model.card.skill;
 
 import com.avatarduel.model.Element;
-import com.avatarduel.model.card.CharacterCard;
 
 /**
  * Kelas KartuSkillAura: kelas yang memodelkan konsep kartu skill tipe Aura, diturunkan dari kelas KartuSkill
@@ -16,19 +15,6 @@ public class AuraSkillCard extends SkillCard {
         super(imagePath, id, name, description, elementType, powerNeeded);
         setAttackAddition(attackAddition);
         setDefenseAddition(defenseAddition);
-    }
-
-    // override applyEffect() dari KartuSkill: menambah atk dan defense target saat menyerang/diserang;
-    @Override
-    public void applyEffect(CharacterCard characterCard) {
-        characterCard.addDeltaAttack(this.attackAddition);
-        characterCard.addDeltaDefense(this.defenseAddition);
-    }
-
-    @Override
-    public void revertEffect(CharacterCard characterCard) {
-        characterCard.addDeltaAttack(-this.attackAddition);
-        characterCard.addDeltaDefense(-this.defenseAddition);
     }
 
     //#region setter

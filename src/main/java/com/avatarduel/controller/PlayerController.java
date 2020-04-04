@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.avatarduel.Constants;
+import com.avatarduel.controller.card.CardController;
 import com.avatarduel.model.Element;
 import com.avatarduel.model.Player;
 import com.avatarduel.model.card.Card;

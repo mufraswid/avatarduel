@@ -1,6 +1,6 @@
 package com.avatarduel.view.child.card;
 
-import com.avatarduel.controller.CardController;
+import com.avatarduel.controller.card.CardController;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.util.ElementColorPicker;
 import com.avatarduel.util.PathConverter;
