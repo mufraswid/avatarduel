@@ -23,7 +23,7 @@ public class DescriptionCardView extends CardView {
     @Override
     public void refreshView() {
         if (hasCard()) {
-            statusCardView = StatusViewFactory.createStatusView(card);
+            statusCardView = StatusViewFactory.createStatusView(card, false);
             descriptionText.setText(card.getDescription());
             descriptionText.wrappingWidthProperty().bind(widthProperty().subtract(5)); // .subtract(Constants.GAP)
             getChildren().clear();

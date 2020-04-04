@@ -23,7 +23,7 @@ public class SmallCardView extends CardView {
     private CardView statusCardView;
 
     public SmallCardView(Card card) {
-        super(card, "100", "10,90,10");
+        super(card, "100", "15,70,15");
         nameText = new DefaultText();
         imageView = new ImageView();
         setClosed(true);
@@ -46,7 +46,7 @@ public class SmallCardView extends CardView {
         nameText.setSize(Constants.SMALL_FONT_SIZE);
         imageView.setPreserveRatio(true);
         // imageView.fitWidthProperty().bind(widthProperty().subtract(Constants.GAP));
-        imageView.setFitWidth(100);
+        imageView.setFitWidth(70);
         refreshView();
     }
 
@@ -55,7 +55,7 @@ public class SmallCardView extends CardView {
         if (hasCard()) {
             nameText.setText(card.getName());
             imageView.setImage(new Image(PathConverter.convertPathToURL(card.getImagePath())));
-            statusCardView = StatusViewFactory.createStatusView(card);
+            statusCardView = StatusViewFactory.createStatusView(card, true);
             setBackground(new Background(new BackgroundFill(ElementColorPicker.getColor(card.getElementType()),
                     CornerRadii.EMPTY, Insets.EMPTY)));
             getChildren().clear();
