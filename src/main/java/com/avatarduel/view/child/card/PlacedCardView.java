@@ -1,10 +1,8 @@
 package com.avatarduel.view.child.card;
 
-import com.avatarduel.Constants;
 import com.avatarduel.model.CardPosition;
 import com.avatarduel.model.card.Card;
-
-import javafx.geometry.Insets;
+import com.avatarduel.model.card.CharacterCard;
 
 public class PlacedCardView extends CardView {
 
@@ -20,10 +18,10 @@ public class PlacedCardView extends CardView {
     private void setPosition(CardPosition cardPosition) {
         if (this.cardPosition != cardPosition) {
             boolean isDefense = cardPosition == CardPosition.DEFENSE;
-            double horizontal = isDefense ? 0 : Constants.GAP;
-            double vertical = isDefense ? Constants.GAP : 0;
-            setPadding(new Insets(vertical, horizontal, vertical, horizontal));
-            smallCardView.setRotate(isDefense ? -90 : 90);
+            // double horizontal = isDefense ? 0 : Constants.GAP;
+            // double vertical = isDefense ? Constants.GAP : 0;
+            // setPadding(new Insets(vertical, horizontal, vertical, horizontal));
+            smallCardView.setRotate(isDefense ? -90 : 0);
             this.cardPosition = cardPosition;
         }
     }
@@ -50,12 +48,19 @@ public class PlacedCardView extends CardView {
 
     @Override
     public void initGUI() {
-        add(smallCardView, 0, 0);
+        refreshView();
     }
 
     @Override
     public void refreshView() {
-        smallCardView.refreshView();
+        getChildren().clear();
+        if (hasCard()) {
+            add(smallCardView, 0, 0);
+            smallCardView.refreshView();
+            if (card instanceof CharacterCard) {
+                setPosition(((CharacterCard) card).getPosition());
+            }
+        }
     }
 
     @Override

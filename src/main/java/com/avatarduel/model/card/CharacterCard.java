@@ -3,6 +3,7 @@ package com.avatarduel.model.card;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.avatarduel.model.CardPosition;
 import com.avatarduel.model.Element;
 import com.avatarduel.model.card.skill.SkillCard;
 
@@ -17,6 +18,7 @@ public class CharacterCard extends Card {
     */
     private int powerNeeded, attack, defense, deltaAttack, deltaDefense;
     private List<SkillCard> skillList;
+    private CardPosition cardPosition;
 
     // constructor
     public CharacterCard(String imagePath, int id, String name, String description, Element elementType,
@@ -28,6 +30,12 @@ public class CharacterCard extends Card {
         skillList = new ArrayList<>();
         this.deltaAttack = 0;
         this.deltaDefense = 0;
+        this.cardPosition = CardPosition.ATTACK;
+    }
+
+    public CardPosition switchPosition() {
+        return this.cardPosition = this.cardPosition == CardPosition.ATTACK ? CardPosition.DEFENSE
+                : CardPosition.DEFENSE;
     }
 
     //#region setter
@@ -43,12 +51,16 @@ public class CharacterCard extends Card {
         this.powerNeeded = power;
     }
 
-    public void setDeltaAttack(int delta) {
+    public void addDeltaAttack(int delta) {
         this.deltaAttack += delta;
     }
 
-    public void setDeltaDefense(int delta) {
+    public void addDeltaDefense(int delta) {
         this.deltaDefense += delta;
+    }
+
+    public void setPosition(CardPosition cardPosition) {
+        this.cardPosition = cardPosition;
     }
     //#endregion
 
@@ -76,6 +88,10 @@ public class CharacterCard extends Card {
 
     public int getDeltaDefense() {
         return this.deltaDefense;
+    }
+
+    public CardPosition getPosition() {
+        return this.cardPosition;
     }
     //#endregion
 

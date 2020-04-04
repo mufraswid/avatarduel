@@ -1,11 +1,16 @@
 package com.avatarduel.view.child.card;
 
 import com.avatarduel.model.card.Card;
+import com.avatarduel.util.ElementColorPicker;
 import com.avatarduel.util.PathConverter;
 import com.avatarduel.view.DefaultText;
 
+import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 
 public class BigCardView extends CardView {
 
@@ -15,7 +20,7 @@ public class BigCardView extends CardView {
 
     public BigCardView(Card card) {
         super(card, "100", "10,50,40");
-        this.nameText = new DefaultText();
+        this.nameText = new DefaultText("", true);
         this.imageView = new ImageView();
         this.descCardView = new DescriptionCardView(card);
         initGUI();
@@ -40,6 +45,8 @@ public class BigCardView extends CardView {
     @Override
     public void refreshView() {
         if (hasCard()) {
+            setBackground(new Background(new BackgroundFill(ElementColorPicker.getColor(card.getElementType()),
+                    CornerRadii.EMPTY, Insets.EMPTY)));
             nameText.setText(card.getName());
             imageView.setImage(new Image(PathConverter.convertPathToURL(card.getImagePath())));
         }

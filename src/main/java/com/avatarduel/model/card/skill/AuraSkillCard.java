@@ -11,8 +11,8 @@ public class AuraSkillCard extends SkillCard {
     private int attackAddition, defenseAddition;
 
     // Konstruktor
-    public AuraSkillCard(String imagePath, int id, String name, String description, Element elementType, int powerNeeded,
-            int attackAddition, int defenseAddition) {
+    public AuraSkillCard(String imagePath, int id, String name, String description, Element elementType,
+            int powerNeeded, int attackAddition, int defenseAddition) {
         super(imagePath, id, name, description, elementType, powerNeeded);
         setAttackAddition(attackAddition);
         setDefenseAddition(defenseAddition);
@@ -21,14 +21,14 @@ public class AuraSkillCard extends SkillCard {
     // override applyEffect() dari KartuSkill: menambah atk dan defense target saat menyerang/diserang;
     @Override
     public void applyEffect(CharacterCard characterCard) {
-        characterCard.setDeltaAttack(this.attackAddition);
-        characterCard.setDeltaDefense(this.defenseAddition);
+        characterCard.addDeltaAttack(this.attackAddition);
+        characterCard.addDeltaDefense(this.defenseAddition);
     }
 
     @Override
     public void revertEffect(CharacterCard characterCard) {
-        characterCard.setDeltaAttack(-this.attackAddition);
-        characterCard.setDeltaDefense(-this.defenseAddition);
+        characterCard.addDeltaAttack(-this.attackAddition);
+        characterCard.addDeltaDefense(-this.defenseAddition);
     }
 
     //#region setter

@@ -3,12 +3,14 @@ package com.avatarduel.view.child;
 import com.avatarduel.Constants;
 import com.avatarduel.model.Element;
 import com.avatarduel.model.Player;
+import com.avatarduel.util.ElementColorPicker;
 import com.avatarduel.view.DefaultText;
 import com.avatarduel.view.GridView;
 import com.avatarduel.view.RefreshableView;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.scene.paint.Color;
 
 public class ElementView extends GridView implements RefreshableView {
 
@@ -20,10 +22,14 @@ public class ElementView extends GridView implements RefreshableView {
 
         this.player = player;
 
-        earthText = new DefaultText("Earth");
-        fireText = new DefaultText("Fire");
-        waterText = new DefaultText("Water");
-        airText = new DefaultText("Air");
+        earthText = new DefaultText("Earth", true);
+        earthText.setFill(ElementColorPicker.getColor(Element.EARTH));
+        fireText = new DefaultText("Fire", true);
+        fireText.setFill(ElementColorPicker.getColor(Element.FIRE));
+        waterText = new DefaultText("Water", true);
+        waterText.setFill(Color.BLUE);
+        airText = new DefaultText("Air", true);
+        airText.setFill(ElementColorPicker.getColor(Element.AIR));
 
         earthValue = new DefaultText();
         fireValue = new DefaultText();

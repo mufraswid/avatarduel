@@ -1,6 +1,5 @@
 package com.avatarduel.view.child.card;
 
-import com.avatarduel.Constants;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.model.card.CharacterCard;
 import com.avatarduel.model.card.skill.SkillCard;
@@ -33,7 +32,7 @@ public class DescriptionCardView extends CardView {
                 statusCardView = new CharacterStatusView((CharacterCard) card);
             }
             descriptionText.setText(card.getDescription());
-            descriptionText.wrappingWidthProperty().bind(widthProperty().subtract(Constants.GAP));
+            descriptionText.wrappingWidthProperty().bind(widthProperty().subtract(5)); // .subtract(Constants.GAP)
             getChildren().clear();
             add(descriptionText, 0, 0);
             if (statusCardView != null) {

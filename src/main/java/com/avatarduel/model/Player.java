@@ -6,6 +6,7 @@ import java.util.List;
 import com.avatarduel.Constants;
 import com.avatarduel.controller.Game;
 import com.avatarduel.model.card.Card;
+import com.avatarduel.model.card.CharacterCard;
 import com.avatarduel.view.ViewPosition;
 
 /**
@@ -33,8 +34,9 @@ public class Player {
         this.name = name;
 
         // TODO delete later
-        placedCards[0][0] = Game.getInstance().getCards().get(56);
-        placedCards[0][1] = Game.getInstance().getCards().get(97);
+        placedCards[0][4] = Game.getInstance().getCards().get(56);
+        ((CharacterCard) placedCards[0][4]).switchPosition();
+        placedCards[1][5] = Game.getInstance().getCards().get(97);
     }
 
     //#region getter
