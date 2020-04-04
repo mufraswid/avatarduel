@@ -7,10 +7,10 @@ import javafx.scene.text.Text;
 
 public class DefaultText extends AnchorPane {
 
-    public boolean bold = false;
-    public double size = 16;
-    public String font = "Arial";
-    public Text text;
+    private boolean bold = false;
+    private double size = 16;
+    private String font = "Arial";
+    private Text text;
 
     public DefaultText() {
         this("");
@@ -29,6 +29,10 @@ public class DefaultText extends AnchorPane {
         setRightAnchor(text, 0d);
         setBottomAnchor(text, 0d);
         setLeftAnchor(text, 0d);
+    }
+
+    public Text getText() {
+        return text;
     }
 
     public void setText(String content) {

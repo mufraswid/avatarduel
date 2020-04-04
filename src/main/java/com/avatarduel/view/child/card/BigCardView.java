@@ -15,9 +15,9 @@ import javafx.scene.layout.CornerRadii;
 
 public class BigCardView extends CardView {
 
-    public DefaultText nameText;
-    public ImageView imageView;
-    public DescriptionCardView descCardView;
+    private DefaultText nameText;
+    private ImageView imageView;
+    private DescriptionCardView descCardView;
 
     public BigCardView() {
         super("100", "10,50,40");

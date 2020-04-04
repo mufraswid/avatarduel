@@ -1,12 +1,14 @@
 package com.avatarduel.view.child;
 
+import com.avatarduel.controller.GameController;
 import com.avatarduel.model.Phase;
 import com.avatarduel.view.DefaultText;
 import com.avatarduel.view.GridView;
+import com.avatarduel.view.main.GameRenderer;
 
-public class PhaseView extends GridView {
+public class PhaseView extends GridView implements GameRenderer {
 
-    public DefaultText[] texts;
+    private DefaultText[] texts;
 
     public PhaseView() {
         super("100", "20,20,20,20,20");
@@ -33,6 +35,11 @@ public class PhaseView extends GridView {
         for (int i = 0; i < Phase.values().length; ++i) {
             add(texts[i], 0, i);
         }
+    }
+
+    @Override
+    public void renderGame(GameController game) {
+        setPhase(game.getPhase());
     }
 
 }

@@ -7,8 +7,8 @@ import com.avatarduel.view.child.card.status.StatusViewFactory;
 
 public class DescriptionCardView extends CardView {
 
-    public DefaultText descriptionText;
-    public CardView statusCardView;
+    private DefaultText descriptionText;
+    private CardView statusCardView;
 
     public DescriptionCardView() {
         super("100", "80,20");
@@ -26,7 +26,7 @@ public class DescriptionCardView extends CardView {
             Card card = cc.getCard();
             statusCardView = StatusViewFactory.createStatusView(cc, false);
             descriptionText.setText(card.getDescription());
-            descriptionText.text.wrappingWidthProperty().bind(widthProperty().subtract(5)); // .subtract(Constants.GAP)
+            descriptionText.getText().wrappingWidthProperty().bind(widthProperty().subtract(5)); // .subtract(Constants.GAP)
             getChildren().clear();
             add(descriptionText, 0, 0);
             if (statusCardView != null) {

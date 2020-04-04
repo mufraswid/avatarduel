@@ -67,6 +67,10 @@ public class GameController extends Application {
         return mainView;
     }
 
+    public Phase getPhase() {
+        return phase;
+    }
+
     public List<Card> getCards() {
         return cards;
     }
@@ -77,6 +81,10 @@ public class GameController extends Application {
 
     public PlayerController getPlayer2() {
         return player2;
+    }
+
+    public PlayerController getCurrentPlayerTurn() {
+        return turn;
     }
 
     private List<String[]> getListFromCsv(String path) throws IOException, URISyntaxException {
@@ -133,8 +141,13 @@ public class GameController extends Application {
 
         scene = new Scene(this.mainView = new MainView(), Constants.WIDTH, Constants.HEIGHT);
 
+        phase = Phase.DRAW;
         turn = player1;
-        mainView.rightMainView.phaseView.setPhase(phase = Phase.DRAW);
+        refreshView();
+    }
+
+    public void refreshView() {
+        mainView.renderGame(this);
     }
 
     private void addToPlayers(List<Card> cards, int ratio) {

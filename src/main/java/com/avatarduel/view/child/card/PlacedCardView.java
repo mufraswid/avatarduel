@@ -6,8 +6,8 @@ import com.avatarduel.model.CardPosition;
 
 public class PlacedCardView extends CardView {
 
-    public SmallCardView smallCardView;
-    public CardPosition cardPosition;
+    private SmallCardView smallCardView;
+    private CardPosition cardPosition;
 
     public PlacedCardView() {
         super("100", "100");

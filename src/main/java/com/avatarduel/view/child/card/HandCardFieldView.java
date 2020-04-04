@@ -15,9 +15,8 @@ import javafx.scene.layout.HBox;
 
 public class HandCardFieldView extends ScrollPane implements View, PlayerRenderer {
 
-    public List<SmallCardView> smallCardViews;
-    public boolean closed;
-    public HBox hbox;
+    private List<SmallCardView> smallCardViews;
+    private HBox hbox;
 
     public HandCardFieldView() {
         hbox = new HBox();
@@ -40,7 +39,7 @@ public class HandCardFieldView extends ScrollPane implements View, PlayerRendere
         hbox.getChildren().clear();
         this.smallCardViews = player.getHandCards().stream().map(card -> {
             SmallCardView smallCardView = new SmallCardView();
-            smallCardView.renderCard(card);
+            smallCardView.renderCard(player.isPlaying() ? card : null);
             return smallCardView;
         }).collect(Collectors.toList());
         for (SmallCardView card : smallCardViews) {

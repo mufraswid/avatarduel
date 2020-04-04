@@ -7,7 +7,7 @@ import com.avatarduel.view.child.PlayerRenderer;
 
 public class DeckView extends GridView implements PlayerRenderer {
 
-    public DefaultText deckValueText, deckText;
+    private DefaultText deckValueText, deckText;
 
     public DeckView() {
         super("100", "50,50");

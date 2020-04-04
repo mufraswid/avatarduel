@@ -33,6 +33,20 @@ public class PlayerController {
         hp = 80;
     }
 
+    public boolean isPlaying() {
+        return this == GameController.getInstance().getCurrentPlayerTurn();
+    }
+
+    public void drawCard() {
+        handCards.add(deck.remove(0));
+    }
+
+    public void addElement(Element el) {
+        int i = el.ordinal();
+        ++currentElementValue[i];
+        ++maxElementValue[i];
+    }
+
     public void addToDeck(List<Card> cards) {
         deck.addAll(cards.stream().map(CardController::new).collect(Collectors.toList()));
         totalDeckCount = deck.size();

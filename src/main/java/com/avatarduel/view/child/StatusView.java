@@ -7,7 +7,7 @@ import com.avatarduel.view.ViewPosition;
 
 public class StatusView extends GridView implements PlayerRenderer {
 
-    public DefaultText nameText, hpText;
+    private DefaultText nameText, hpText;
 
     public StatusView() {
         super("100", "50,50");

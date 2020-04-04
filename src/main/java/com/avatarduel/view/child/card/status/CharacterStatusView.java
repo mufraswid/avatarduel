@@ -9,7 +9,7 @@ import com.avatarduel.view.child.card.CardView;
 
 public class CharacterStatusView extends CardView {
 
-    public DefaultText attackText, defenseText, powerText;
+    private DefaultText attackText, defenseText, powerText;
 
     public CharacterStatusView(boolean small) {
         super("34,34,34", "100");

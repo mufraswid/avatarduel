@@ -8,8 +8,8 @@ import com.avatarduel.view.child.PlayerRenderer;
 
 public class CardFieldView extends GridView implements PlayerRenderer {
 
-    public PlacedCardView[][] placedCardViews;
-    public ViewPosition position;
+    private PlacedCardView[][] placedCardViews;
+    private ViewPosition position;
 
     public CardFieldView(ViewPosition position) {
         super("15,15,15,15,15,15,15", "50,50");

@@ -8,7 +8,7 @@ import com.avatarduel.view.child.card.CardView;
 
 public class SkillStatusView extends CardView {
 
-    public DefaultText powerText;
+    private DefaultText powerText;
 
     public SkillStatusView(boolean small) {
         super("100", "100");

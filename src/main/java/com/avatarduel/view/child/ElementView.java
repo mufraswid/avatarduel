@@ -13,19 +13,19 @@ import javafx.scene.paint.Color;
 
 public class ElementView extends GridView implements PlayerRenderer {
 
-    public DefaultText earthText, fireText, waterText, airText, earthValue, fireValue, waterValue, airValue;
+    private DefaultText earthText, fireText, waterText, airText, earthValue, fireValue, waterValue, airValue;
 
     public ElementView() {
         super("40,60", "25,25,25,25");
 
         earthText = new DefaultText("Earth", true);
-        earthText.text.setFill(ElementColorPicker.getColor(Element.EARTH));
+        earthText.getText().setFill(ElementColorPicker.getColor(Element.EARTH));
         fireText = new DefaultText("Fire", true);
-        fireText.text.setFill(ElementColorPicker.getColor(Element.FIRE));
+        fireText.getText().setFill(ElementColorPicker.getColor(Element.FIRE));
         waterText = new DefaultText("Water", true);
-        waterText.text.setFill(Color.BLUE);
+        waterText.getText().setFill(Color.BLUE);
         airText = new DefaultText("Air", true);
-        airText.text.setFill(ElementColorPicker.getColor(Element.AIR));
+        airText.getText().setFill(ElementColorPicker.getColor(Element.AIR));
 
         earthValue = new DefaultText();
         fireValue = new DefaultText();
