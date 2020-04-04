@@ -7,8 +7,8 @@ import com.avatarduel.model.Element;
  */
 public class LandCard extends Card {
     // Konstruktor
-    public LandCard(String imagePath, String name, String description, Element elementType) {
-        super(imagePath, name, description, elementType);
+    public LandCard(String imagePath, int id, String name, String description, Element elementType) {
+        super(imagePath, id, name, description, elementType);
     }
 
     // Method untuk menambah power here

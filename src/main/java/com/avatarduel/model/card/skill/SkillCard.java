@@ -12,13 +12,17 @@ public abstract class SkillCard extends Card {
     // Atribut dari KartuSkill
     private int powerNeeded;
 
-    public SkillCard(String imagePath, String name, String description, Element elementType, int powerNeeded) {
-        super(imagePath, name, description, elementType);
+    // Konstruktor
+    public SkillCard(String imagePath, int id, String name, String description, Element elementType, int powerNeeded) {
+        super(imagePath, id, name, description, elementType);
         setPowerNeeded(powerNeeded);
     }
 
     // Fungsi untuk mengaplikasikan efek ke kartu applyEffect() diaplikasikan
     public abstract void applyEffect(CharacterCard characterCard);
+
+    // Fungsi untuk merevert balik efek yang diaplikasikan apabila SkillCard diremove
+    public abstract void revertEffect(CharacterCard characterCard);
 
     //#region setter
     private void setPowerNeeded(int powerNeeded) {
@@ -30,4 +34,5 @@ public abstract class SkillCard extends Card {
     public int getPowerNeeded() {
         return this.powerNeeded;
     }
+    //#endregion
 }
