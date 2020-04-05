@@ -11,7 +11,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 
-public abstract class GridView extends GridPane implements View {
+public abstract class GridView extends GridPane {
 
     private static final String SEPARATOR = ",";
 
@@ -21,7 +21,7 @@ public abstract class GridView extends GridPane implements View {
             col.setPercentWidth(d);
             // col.setPrefWidth(d * ((Region) getParent()).getPrefWidth() / 100d);
             // col.prefWidthProperty().bind(((Region) getParent()).prefWidthProperty().multiply(d).divide(100d));
-            col.setHgrow(Priority.ALWAYS);
+            col.setHgrow(Priority.SOMETIMES);
             col.setHalignment(HPos.CENTER);
             return col;
         }).toArray();
@@ -32,7 +32,7 @@ public abstract class GridView extends GridPane implements View {
             row.setPercentHeight(d);
             // row.setPrefHeight(d * ((Region) getParent()).getPrefHeight() / 100d);
             // row.prefHeightProperty().bind(((Region) getParent()).prefHeightProperty().multiply(d).divide(100d));
-            row.setVgrow(Priority.ALWAYS);
+            row.setVgrow(Priority.SOMETIMES);
             row.setValignment(VPos.CENTER);
             return row;
         }).toArray();

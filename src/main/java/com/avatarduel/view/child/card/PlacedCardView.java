@@ -1,44 +1,21 @@
 package com.avatarduel.view.child.card;
 
-import com.avatarduel.controller.card.CardController;
-import com.avatarduel.controller.card.CharacterCardController;
+import com.avatarduel.controller.listener.CardEventListener;
 import com.avatarduel.model.CardPosition;
+import com.avatarduel.model.card.ActiveCharacterCard;
+import com.avatarduel.model.card.Card;
 
 public class PlacedCardView extends CardView {
 
-    private SmallCardView smallCardView;
-    private CardPosition cardPosition;
-
-    public PlacedCardView() {
+    public PlacedCardView(Card card, CardEventListener listener) {
         super("100", "100");
-        smallCardView = new SmallCardView();
-        initGUI();
-    }
-
-    public void setPosition(CardPosition cardPosition) {
-        if (this.cardPosition != cardPosition) {
-            boolean isDefense = cardPosition == CardPosition.DEFENSE;
-            // double horizontal = isDefense ? 0 : Constants.GAP;
-            // double vertical = isDefense ? Constants.GAP : 0;
-            // setPadding(new Insets(vertical, horizontal, vertical, horizontal));
-            smallCardView.setRotate(isDefense ? -90 : 0);
-            this.cardPosition = cardPosition;
-        }
-    }
-
-    @Override
-    public void initGUI() {
-    }
-
-    @Override
-    public void renderCard(CardController cc) {
-        getChildren().clear();
-        if (cc != null) {
+        if (card != null) {
+            SmallCardView smallCardView = new SmallCardView(card, listener);
             add(smallCardView, 0, 0);
-            smallCardView.renderCard(cc);
-            if (cc instanceof CharacterCardController) {
-                CharacterCardController ccc = (CharacterCardController) cc;
-                setPosition(ccc.getPosition());
+            if (card instanceof ActiveCharacterCard) {
+                ActiveCharacterCard ccc = (ActiveCharacterCard) card;
+                boolean isDefense = ccc.getPosition() == CardPosition.DEFENSE;
+                smallCardView.setRotate(isDefense ? -90 : 0);
             }
         }
     }

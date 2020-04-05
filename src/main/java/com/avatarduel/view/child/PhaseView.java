@@ -1,27 +1,24 @@
 package com.avatarduel.view.child;
 
-import com.avatarduel.controller.GameController;
+import com.avatarduel.controller.listener.MouseEventListener;
 import com.avatarduel.model.Phase;
 import com.avatarduel.view.DefaultText;
 import com.avatarduel.view.GridView;
-import com.avatarduel.view.main.GameRenderer;
 
-import javafx.scene.Cursor;
+import javafx.scene.input.MouseButton;
 
-public class PhaseView extends GridView implements GameRenderer {
+public class PhaseView extends GridView {
 
-    private DefaultText[] texts;
-
-    public PhaseView() {
+    public PhaseView(Phase phase, MouseEventListener listener) {
         super("100", "20,20,20,20,20");
-        texts = new DefaultText[Phase.values().length];
+        DefaultText[] texts = new DefaultText[Phase.values().length];
         for (int i = 0; i < Phase.values().length; ++i) {
             texts[i] = new DefaultText(Phase.values()[i].toString());
         }
-        initGUI();
-    }
-
-    public void setPhase(Phase phase) {
+        addBorder();
+        for (int i = 0; i < Phase.values().length; ++i) {
+            add(texts[i], 0, i);
+        }
         for (int i = 0; i < Phase.values().length; ++i) {
             if (i == phase.ordinal()) {
                 texts[i].addBorder();
@@ -29,28 +26,15 @@ public class PhaseView extends GridView implements GameRenderer {
                 texts[i].removeBorder();
             }
         }
-    }
-
-    @Override
-    public void initGUI() {
-        addBorder();
-        for (int i = 0; i < Phase.values().length; ++i) {
-            add(texts[i], 0, i);
-        }
-    }
-
-    @Override
-    public void renderGame(GameController game) {
         setOnMouseClicked(e -> {
-            game.nextPhase();
+            if (e.getButton() == MouseButton.PRIMARY) {
+                listener.onMouseLeftClicked();
+            } else {
+                listener.onMouseRightClicked();
+            }
         });
-        setOnMouseEntered(e -> {
-            GameController.getInstance().getScene().setCursor(Cursor.HAND);
-        });
-        setOnMouseExited(e -> {
-            GameController.getInstance().getScene().setCursor(Cursor.DEFAULT);
-        });
-        setPhase(game.getPhase());
+        setOnMouseEntered(e -> listener.onMouseEntered());
+        setOnMouseExited(e -> listener.onMouseExited());
     }
 
 }

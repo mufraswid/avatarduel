@@ -1,29 +1,26 @@
-package com.avatarduel.controller.card;
+package com.avatarduel.model.card;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.avatarduel.model.CardPosition;
-import com.avatarduel.model.card.CharacterCard;
+import com.avatarduel.model.card.ActiveCharacterCard;
 import com.avatarduel.model.card.skill.AuraSkillCard;
 
-public class CharacterCardController extends CardController {
+public class ActiveCharacterCard extends CharacterCard {
 
     private List<AuraSkillCard> auraSkillList;
     private CardPosition position;
 
-    public CharacterCardController(CharacterCard card) {
-        super(card);
+    public ActiveCharacterCard(CharacterCard card) {
+        super(card.getImagePath(), card.getId(), card.getName(), card.getDescription(), card.getElementType(),
+                card.getPowerNeeded(), card.getAttack(), card.getDefense());
         setPosition(CardPosition.ATTACK);
         auraSkillList = new ArrayList<>();
     }
 
     public CardPosition getPosition() {
         return position;
-    }
-
-    public CharacterCard getCharacterCard() {
-        return (CharacterCard) getCard();
     }
 
     public void setPosition(CardPosition position) {
@@ -59,11 +56,11 @@ public class CharacterCardController extends CardController {
     }
 
     public int getTotalAttack() {
-        return getCharacterCard().getAttack() + getDeltaAttack();
+        return getAttack() + getDeltaAttack();
     }
 
     public int getTotalDefense() {
-        return getCharacterCard().getDefense() + getDeltaDefense();
+        return getDefense() + getDeltaDefense();
     }
 
 }

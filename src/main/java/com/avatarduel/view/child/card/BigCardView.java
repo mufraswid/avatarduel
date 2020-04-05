@@ -1,6 +1,5 @@
 package com.avatarduel.view.child.card;
 
-import com.avatarduel.controller.card.CardController;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.util.ElementColorPicker;
 import com.avatarduel.util.PathConverter;
@@ -15,35 +14,18 @@ import javafx.scene.layout.CornerRadii;
 
 public class BigCardView extends CardView {
 
-    private DefaultText nameText;
-    private ImageView imageView;
-    private DescriptionCardView descCardView;
-
-    public BigCardView() {
+    public BigCardView(Card card) {
         super("100", "10,50,40");
-        this.nameText = new DefaultText("", true);
-        this.imageView = new ImageView();
-        this.descCardView = new DescriptionCardView();
-        initGUI();
-    }
-
-    @Override
-    public void initGUI() {
+        DefaultText nameText = new DefaultText("", true);
+        ImageView imageView = new ImageView();
+        DescriptionCardView descCardView = new DescriptionCardView(card);
+        setBackground(new Background(new BackgroundFill(ElementColorPicker.getColor(card.getElementType()),
+                CornerRadii.EMPTY, Insets.EMPTY)));
+        nameText.setText(card.getName());
+        imageView.setImage(new Image(PathConverter.convertPathToURL(card.getImagePath())));
         add(nameText, 0, 0);
         add(imageView, 0, 1);
         add(descCardView, 0, 2);
-    }
-
-    @Override
-    public void renderCard(CardController cc) {
-        if (cc != null) {
-            Card card = cc.getCard();
-            setBackground(new Background(new BackgroundFill(ElementColorPicker.getColor(card.getElementType()),
-                    CornerRadii.EMPTY, Insets.EMPTY)));
-            nameText.setText(card.getName());
-            imageView.setImage(new Image(PathConverter.convertPathToURL(card.getImagePath())));
-            descCardView.renderCard(cc);
-        }
     }
 
 }

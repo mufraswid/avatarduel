@@ -1,39 +1,24 @@
 package com.avatarduel.view.main;
 
 import com.avatarduel.Constants;
-import com.avatarduel.controller.GameController;
+import com.avatarduel.controller.listener.CardEventListener;
+import com.avatarduel.controller.listener.MouseEventListener;
+import com.avatarduel.model.Phase;
+import com.avatarduel.model.Player;
+import com.avatarduel.model.card.Card;
 import com.avatarduel.view.GridView;
 
 import javafx.geometry.Insets;
 
-public class MainView extends GridView implements GameRenderer {
+public class MainView extends GridView {
 
-    private LeftMainView leftMainView;
-    private CenterMainView centerMainView;
-    private RightMainView rightMainView;
-
-    public MainView() {
+    public MainView(Phase phase, Player player1, Player player2, Card lastTouchedCard,
+            CardEventListener handCardListener, CardEventListener cardFieldListener, MouseEventListener phaseListener) {
         super("20,70,10", "100");
-        leftMainView = new LeftMainView();
-        centerMainView = new CenterMainView();
-        rightMainView = new RightMainView();
         setPadding(new Insets(Constants.GAP, Constants.GAP, Constants.GAP, Constants.GAP));
-        initGUI();
-    }
-
-    @Override
-    public void initGUI() {
-        add(leftMainView, 0, 0);
-        add(centerMainView, 1, 0);
-        add(rightMainView, 2, 0);
-    }
-
-    @Override
-    public void renderGame(GameController game) {
-        leftMainView.renderGame(game);
-        leftMainView.renderCard(game.getLastTouchedCard());
-        centerMainView.renderGame(game);
-        rightMainView.renderGame(game);
+        add(new LeftMainView(player1, player2, lastTouchedCard), 0, 0);
+        add(new CenterMainView(player1, player2, handCardListener, cardFieldListener), 1, 0);
+        add(new RightMainView(phase, player1, player2, phaseListener), 2, 0);
     }
 
 }

@@ -1,43 +1,21 @@
 package com.avatarduel.view.child.card;
 
 import com.avatarduel.Constants;
-import com.avatarduel.controller.GameController;
-import com.avatarduel.controller.PlayerController;
-import com.avatarduel.controller.card.CardController;
+import com.avatarduel.controller.listener.CardEventListener;
+import com.avatarduel.model.Player;
+import com.avatarduel.model.card.Card;
 import com.avatarduel.view.GridView;
 import com.avatarduel.view.ViewPosition;
-import com.avatarduel.view.child.PlayerRenderer;
 
-public class CardFieldView extends GridView implements PlayerRenderer {
+public class CardFieldView extends GridView {
 
-    private PlacedCardView[][] placedCardViews;
-    private ViewPosition position;
-
-    public CardFieldView(ViewPosition position) {
+    public CardFieldView(Player player, ViewPosition position, CardEventListener listener) {
         super("15,15,15,15,15,15,15", "50,50");
-        this.position = position;
-        placedCardViews = new PlacedCardView[Constants.CARD_ROW][Constants.CARD_COLUMN];
-        initGUI();
-    }
-
-    @Override
-    public void initGUI() {
         for (int i = 0; i < Constants.CARD_ROW; ++i) {
             for (int j = 0; j < Constants.CARD_COLUMN; ++j) {
+                Card card = player.getPlacedCard(i, j);
                 int row = position == ViewPosition.BOTTOM ? i : (i + 1) % 2;
-                add(placedCardViews[i][j] = new PlacedCardView(), j, row);
-            }
-        }
-    }
-
-    @Override
-    public void renderPlayer(PlayerController player) {
-        for (int i = 0; i < Constants.CARD_ROW; ++i) {
-            for (int j = 0; j < Constants.CARD_COLUMN; ++j) {
-                CardController card = player.getPlacedCard(i, j);
-                placedCardViews[i][j].renderCard(card == null ? null
-                        : player.isPlaying() ? player.getPlacedCard(i, j)
-                                : GameController.getInstance().getClosedCard());
+                add(new PlacedCardView(card == null ? null : player.getPlacedCard(i, j), listener), j, row);
             }
         }
     }

@@ -1,8 +1,8 @@
 package com.avatarduel.view.child;
 
 import com.avatarduel.Constants;
-import com.avatarduel.controller.PlayerController;
 import com.avatarduel.model.Element;
+import com.avatarduel.model.Player;
 import com.avatarduel.util.ElementColorPicker;
 import com.avatarduel.view.DefaultText;
 import com.avatarduel.view.GridView;
@@ -11,32 +11,20 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.paint.Color;
 
-public class ElementView extends GridView implements PlayerRenderer {
+public class ElementView extends GridView {
 
-    private DefaultText earthText, fireText, waterText, airText, earthValue, fireValue, waterValue, airValue;
-
-    public ElementView() {
+    public ElementView(Player player) {
         super("40,60", "25,25,25,25");
 
-        earthText = new DefaultText("Earth", true);
+        DefaultText earthText = new DefaultText("Earth", true);
         earthText.getText().setFill(ElementColorPicker.getColor(Element.EARTH));
-        fireText = new DefaultText("Fire", true);
+        DefaultText fireText = new DefaultText("Fire", true);
         fireText.getText().setFill(ElementColorPicker.getColor(Element.FIRE));
-        waterText = new DefaultText("Water", true);
+        DefaultText waterText = new DefaultText("Water", true);
         waterText.getText().setFill(Color.BLUE);
-        airText = new DefaultText("Air", true);
+        DefaultText airText = new DefaultText("Air", true);
         airText.getText().setFill(ElementColorPicker.getColor(Element.AIR));
 
-        earthValue = new DefaultText();
-        fireValue = new DefaultText();
-        waterValue = new DefaultText();
-        airValue = new DefaultText();
-
-        initGUI();
-    }
-
-    @Override
-    public void initGUI() {
         getColumnConstraints().forEach(col -> col.setHalignment(HPos.LEFT));
         setPadding(new Insets(0, 0, 0, Constants.GAP));
         addBorder();
@@ -46,21 +34,13 @@ public class ElementView extends GridView implements PlayerRenderer {
         add(waterText, 0, 2);
         add(airText, 0, 3);
 
-        add(earthValue, 1, 0);
-        add(fireValue, 1, 1);
-        add(waterValue, 1, 2);
-        add(airValue, 1, 3);
+        add(new DefaultText(elementStringValue(player, Element.EARTH)), 1, 0);
+        add(new DefaultText(elementStringValue(player, Element.FIRE)), 1, 1);
+        add(new DefaultText(elementStringValue(player, Element.WATER)), 1, 2);
+        add(new DefaultText(elementStringValue(player, Element.AIR)), 1, 3);
     }
 
-    @Override
-    public void renderPlayer(PlayerController player) {
-        earthValue.setText(elementStringValue(player, Element.EARTH));
-        fireValue.setText(elementStringValue(player, Element.FIRE));
-        waterValue.setText(elementStringValue(player, Element.WATER));
-        airValue.setText(elementStringValue(player, Element.AIR));
-    }
-
-    private String elementStringValue(PlayerController player, Element el) {
+    private String elementStringValue(Player player, Element el) {
         return String.format(": %d / %d", player.getCurrentElementValue(el), player.getMaxElementValue(el));
     }
 

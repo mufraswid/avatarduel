@@ -1,49 +1,21 @@
 package com.avatarduel.view.main;
 
-import com.avatarduel.controller.GameController;
-import com.avatarduel.controller.card.CardController;
+import com.avatarduel.model.Player;
+import com.avatarduel.model.card.Card;
 import com.avatarduel.view.GridView;
 import com.avatarduel.view.child.StatusView;
 import com.avatarduel.view.child.card.BigCardView;
-import com.avatarduel.view.child.card.CardRenderer;
 import com.avatarduel.view.child.card.DeckView;
 
-public class LeftMainView extends GridView implements GameRenderer, CardRenderer {
+public class LeftMainView extends GridView {
 
-    private BigCardView bigCardView;
-    private DeckView deckView1, deckView2;
-    private StatusView statusView1, statusView2;
-
-    public LeftMainView() {
+    public LeftMainView(Player player1, Player player2, Card card) {
         super("25,75", "15,70,15");
-        bigCardView = new BigCardView();
-        deckView1 = new DeckView();
-        deckView2 = new DeckView();
-        statusView1 = new StatusView();
-        statusView2 = new StatusView();
-        initGUI();
-    }
-
-    @Override
-    public void initGUI() {
-        add(deckView2, 0, 0);
-        add(statusView2, 1, 0);
-        add(bigCardView, 0, 1, 2, 1);
-        add(statusView1, 1, 2);
-        add(deckView1, 0, 2);
-    }
-
-    @Override
-    public void renderCard(CardController card) {
-        bigCardView.renderCard(card);
-    }
-
-    @Override
-    public void renderGame(GameController game) {
-        deckView1.renderPlayer(game.getPlayer1());
-        deckView2.renderPlayer(game.getPlayer2());
-        statusView1.renderPlayer(game.getPlayer1());
-        statusView2.renderPlayer(game.getPlayer2());
+        add(new DeckView(player2), 0, 0);
+        add(new StatusView(player2), 1, 0);
+        add(new BigCardView(card), 0, 1, 2, 1);
+        add(new StatusView(player1), 1, 2);
+        add(new DeckView(player1), 0, 2);
     }
 
 }

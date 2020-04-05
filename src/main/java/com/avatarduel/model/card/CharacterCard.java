@@ -53,6 +53,10 @@ public class CharacterCard extends Card {
     public String getDescription() {
         return "CHARACTER CARD\n" + super.getDescription();
     }
+
+    public ActiveCharacterCard createActiveCard() {
+        return new ActiveCharacterCard(this);
+    }
     //#endregion
 
 }

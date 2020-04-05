@@ -1,52 +1,24 @@
 package com.avatarduel.view.child.card;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.avatarduel.Constants;
-import com.avatarduel.controller.GameController;
-import com.avatarduel.controller.PlayerController;
-import com.avatarduel.view.BorderBuilder;
-import com.avatarduel.view.View;
-import com.avatarduel.view.child.PlayerRenderer;
+import com.avatarduel.controller.listener.CardEventListener;
+import com.avatarduel.model.Player;
 
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 
-public class HandCardFieldView extends ScrollPane implements View, PlayerRenderer {
+public class HandCardFieldView extends ScrollPane {
 
-    private List<SmallCardView> smallCardViews;
-    private HBox hbox;
-
-    public HandCardFieldView() {
-        hbox = new HBox();
-        initGUI();
-    }
-
-    public void addBorder() {
-        setBorder(BorderBuilder.createDefaultBorder());
-    }
-
-    @Override
-    public void initGUI() {
-        setContent(hbox);
-        // addBorder();
+    public HandCardFieldView(Player player, CardEventListener listener) {
+        HBox hbox = new HBox();
         hbox.setSpacing(Constants.GAP);
+        setContent(hbox);
         setFitToHeight(true);
-        // setVbarPolicy(ScrollBarPolicy.NEVER);
-    }
-
-    @Override
-    public void renderPlayer(PlayerController player) {
-        hbox.getChildren().clear();
-        this.smallCardViews = player.getHandCards().stream().map(card -> {
-            SmallCardView smallCardView = new SmallCardView();
-            smallCardView.renderCard(player.isPlaying() ? card : GameController.getInstance().getClosedCard());
-            return smallCardView;
-        }).collect(Collectors.toList());
-        for (SmallCardView smallCardView : smallCardViews) {
+        player.getHandCards().stream().forEach(card -> {
+            SmallCardView smallCardView = new SmallCardView(card, listener);
+            // smallCardView.renderCard(player.isPlaying() ? card : GameController.getInstance().getClosedCard());
             hbox.getChildren().add(smallCardView);
-        }
+        });
     }
 
 }

@@ -9,10 +9,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.avatarduel.Constants;
-import com.avatarduel.controller.card.CardController;
+import com.avatarduel.controller.listener.CardEventListener;
+import com.avatarduel.controller.listener.MouseEventListener;
 import com.avatarduel.model.Element;
 import com.avatarduel.model.Phase;
 import com.avatarduel.model.Player;
+import com.avatarduel.model.card.ActiveCharacterCard;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.model.card.CharacterCard;
 import com.avatarduel.model.card.ClosedCard;
@@ -27,6 +29,7 @@ import com.avatarduel.view.ViewPosition;
 import com.avatarduel.view.main.MainView;
 
 import javafx.application.Application;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -43,9 +46,8 @@ public class GameController extends Application {
     }
 
     private List<Card> cards;
-    private PlayerController player1, player2, turn;
-    private CardController lastTouched, closedCard;
-    private MainView mainView;
+    private Player player1, player2, turn;
+    private Card lastTouchedCard, closedCard;
     private Scene scene;
     private Phase phase;
 
@@ -64,23 +66,19 @@ public class GameController extends Application {
         refreshView();
     }
 
-    public CardController getLastTouchedCard() {
-        return lastTouched;
+    public Card getLastTouchedCard() {
+        return lastTouchedCard;
     }
 
-    public void setTouchedCard(CardController cc) {
-        if (lastTouched != cc) {
-            lastTouched = cc;
+    public void setTouchedCard(Card cc) {
+        if (lastTouchedCard != cc) {
+            lastTouchedCard = cc;
             refreshView();
         }
     }
 
     public Scene getScene() {
         return scene;
-    }
-
-    public MainView getMainView() {
-        return mainView;
     }
 
     public Phase getPhase() {
@@ -91,15 +89,15 @@ public class GameController extends Application {
         return cards;
     }
 
-    public PlayerController getPlayer1() {
+    public Player getPlayer1() {
         return player1;
     }
 
-    public PlayerController getPlayer2() {
+    public Player getPlayer2() {
         return player2;
     }
 
-    public PlayerController getCurrentPlayerTurn() {
+    public Player getCurrentPlayerTurn() {
         return turn;
     }
 
@@ -146,8 +144,8 @@ public class GameController extends Application {
     @Override
     public void init() throws Exception {
         this.loadCards();
-        player1 = new PlayerController(new Player("Player 1"), ViewPosition.BOTTOM);
-        player2 = new PlayerController(new Player("Player 2"), ViewPosition.TOP);
+        player1 = new Player("Player 1", ViewPosition.BOTTOM);
+        player2 = new Player("Player 2", ViewPosition.TOP);
 
         Collections.shuffle(cards);
         addToPlayers(cards.stream().filter(c -> c instanceof SkillCard).collect(Collectors.toList()),
@@ -157,22 +155,26 @@ public class GameController extends Application {
         addToPlayers(cards.stream().filter(c -> c instanceof LandCard).collect(Collectors.toList()),
                 Constants.CARD_RATIO * 2);
 
-        lastTouched = closedCard = new CardController(new ClosedCard());
-        scene = new Scene(this.mainView = new MainView(), Constants.WIDTH, Constants.HEIGHT);
+        lastTouchedCard = closedCard = new ClosedCard();
 
         player1.drawCard(Constants.FIRST_CARD_DRAWN);
         player2.drawCard(Constants.FIRST_CARD_DRAWN);
 
         phase = Phase.values()[0];
         turn = player1;
+        scene = new Scene(createMainView(), Constants.WIDTH, Constants.HEIGHT);
 
         // TODO delete later
         player1.putCard(0, 5, player1.getHandCards().get(0));
+        ActiveCharacterCard ac = ((CharacterCard) cards.stream().filter(c -> c instanceof CharacterCard).findAny()
+                .get()).createActiveCard();
+        ac.switchPosition();
+        player1.putCard(0, 4, ac);
 
         playPhase();
     }
 
-    public CardController getClosedCard() {
+    public Card getClosedCard() {
         return closedCard;
     }
 
@@ -202,8 +204,64 @@ public class GameController extends Application {
         refreshView();
     }
 
+    public MainView createMainView() {
+        CardEventListener defaultCardEventListener = new CardEventListener() {
+
+            @Override
+            public void onMouseEntered(Card card) {
+                setLastTouchedCard(card);
+                getScene().setCursor(Cursor.HAND);
+            }
+
+            @Override
+            public void onMouseExited(Card card) {
+                getScene().setCursor(Cursor.DEFAULT);
+            }
+
+            @Override
+            public void onMouseRightClicked(Card card) {
+
+            }
+
+            @Override
+            public void onMouseLeftClicked(Card card) {
+
+            }
+
+        };
+        return new MainView(phase, player1, player2, lastTouchedCard, defaultCardEventListener,
+                defaultCardEventListener, new MouseEventListener() {
+
+                    @Override
+                    public void onMouseEntered() {
+                        getScene().setCursor(Cursor.HAND);
+                    }
+
+                    @Override
+                    public void onMouseExited() {
+                        getScene().setCursor(Cursor.DEFAULT);
+                    }
+
+                    @Override
+                    public void onMouseRightClicked() {
+
+                    }
+
+                    @Override
+                    public void onMouseLeftClicked() {
+                        nextPhase();
+                    }
+
+                });
+    }
+
+    protected void setLastTouchedCard(Card card) {
+        lastTouchedCard = card;
+        refreshView();
+    }
+
     public void refreshView() {
-        mainView.renderGame(this);
+        this.scene.setRoot(createMainView());
     }
 
     private void addToPlayers(List<Card> cards, int ratio) {

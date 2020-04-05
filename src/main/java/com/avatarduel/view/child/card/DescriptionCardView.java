@@ -1,36 +1,21 @@
 package com.avatarduel.view.child.card;
 
-import com.avatarduel.controller.card.CardController;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.view.DefaultText;
 import com.avatarduel.view.child.card.status.StatusViewFactory;
 
 public class DescriptionCardView extends CardView {
 
-    private DefaultText descriptionText;
-    private CardView statusCardView;
-
-    public DescriptionCardView() {
+    public DescriptionCardView(Card card) {
         super("100", "80,20");
-        descriptionText = new DefaultText();
-        initGUI();
-    }
-
-    @Override
-    public void initGUI() {
-    }
-
-    @Override
-    public void renderCard(CardController cc) {
-        if (cc != null) {
-            Card card = cc.getCard();
-            statusCardView = StatusViewFactory.createStatusView(cc, false);
+        DefaultText descriptionText = new DefaultText();
+        if (card != null) {
+            CardView statusCardView = StatusViewFactory.createStatusView(card, false);
             descriptionText.setText(card.getDescription());
             descriptionText.getText().wrappingWidthProperty().bind(widthProperty().subtract(5)); // .subtract(Constants.GAP)
             getChildren().clear();
             add(descriptionText, 0, 0);
             if (statusCardView != null) {
-                statusCardView.renderCard(cc);
                 add(statusCardView, 0, 1);
             }
         }
