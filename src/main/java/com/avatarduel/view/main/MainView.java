@@ -3,7 +3,6 @@ package com.avatarduel.view.main;
 import com.avatarduel.Constants;
 import com.avatarduel.controller.GameController;
 import com.avatarduel.view.GridView;
-import com.avatarduel.view.child.card.BigCardView;
 
 import javafx.geometry.Insets;
 
@@ -20,10 +19,6 @@ public class MainView extends GridView implements GameRenderer {
         rightMainView = new RightMainView();
         setPadding(new Insets(Constants.GAP, Constants.GAP, Constants.GAP, Constants.GAP));
         initGUI();
-    }
-
-    public BigCardView getBigCardView() {
-        return leftMainView.getBigCardView();
     }
 
     @Override

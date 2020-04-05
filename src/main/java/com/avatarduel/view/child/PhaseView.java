@@ -6,6 +6,8 @@ import com.avatarduel.view.DefaultText;
 import com.avatarduel.view.GridView;
 import com.avatarduel.view.main.GameRenderer;
 
+import javafx.scene.Cursor;
+
 public class PhaseView extends GridView implements GameRenderer {
 
     private DefaultText[] texts;
@@ -39,6 +41,15 @@ public class PhaseView extends GridView implements GameRenderer {
 
     @Override
     public void renderGame(GameController game) {
+        setOnMouseClicked(e -> {
+            game.nextPhase();
+        });
+        setOnMouseEntered(e -> {
+            GameController.getInstance().getScene().setCursor(Cursor.HAND);
+        });
+        setOnMouseExited(e -> {
+            GameController.getInstance().getScene().setCursor(Cursor.DEFAULT);
+        });
         setPhase(game.getPhase());
     }
 

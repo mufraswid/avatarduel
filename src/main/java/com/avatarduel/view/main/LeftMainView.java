@@ -24,10 +24,6 @@ public class LeftMainView extends GridView implements GameRenderer, CardRenderer
         initGUI();
     }
 
-    public BigCardView getBigCardView() {
-        return bigCardView;
-    }
-
     @Override
     public void initGUI() {
         add(deckView2, 0, 0);

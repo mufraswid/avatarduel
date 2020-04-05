@@ -20,6 +20,8 @@ public class CharacterStatusView extends CardView {
             attackText.setSize(Constants.SMALL_FONT_SIZE);
             defenseText.setSize(Constants.SMALL_FONT_SIZE);
             powerText.setSize(Constants.SMALL_FONT_SIZE);
+            setHgap(0);
+            setVgap(0);
         }
         initGUI();
     }
@@ -37,7 +39,7 @@ public class CharacterStatusView extends CardView {
 
     @Override
     public void renderCard(CardController cc) {
-        if (cc != null) {
+        if (cc != null && cc instanceof CharacterCardController) {
             CharacterCardController ccc = (CharacterCardController) cc;
             int deltaAttack = ccc.getDeltaAttack();
             int deltaDefense = ccc.getDeltaDefense();

@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.avatarduel.Constants;
+import com.avatarduel.controller.GameController;
 import com.avatarduel.controller.PlayerController;
 import com.avatarduel.view.BorderBuilder;
 import com.avatarduel.view.View;
 import com.avatarduel.view.child.PlayerRenderer;
 
-import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 
@@ -31,7 +31,7 @@ public class HandCardFieldView extends ScrollPane implements View, PlayerRendere
     public void initGUI() {
         setContent(hbox);
         addBorder();
-        setPadding(new Insets(Constants.GAP, Constants.GAP, Constants.GAP, Constants.GAP));
+        hbox.setSpacing(Constants.GAP);
     }
 
     @Override
@@ -39,11 +39,11 @@ public class HandCardFieldView extends ScrollPane implements View, PlayerRendere
         hbox.getChildren().clear();
         this.smallCardViews = player.getHandCards().stream().map(card -> {
             SmallCardView smallCardView = new SmallCardView();
-            smallCardView.renderCard(player.isPlaying() ? card : null);
+            smallCardView.renderCard(player.isPlaying() ? card : GameController.getInstance().getClosedCard());
             return smallCardView;
         }).collect(Collectors.toList());
-        for (SmallCardView card : smallCardViews) {
-            hbox.getChildren().add(card);
+        for (SmallCardView smallCardView : smallCardViews) {
+            hbox.getChildren().add(smallCardView);
         }
     }
 

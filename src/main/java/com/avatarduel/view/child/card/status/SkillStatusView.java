@@ -30,7 +30,7 @@ public class SkillStatusView extends CardView {
 
     @Override
     public void renderCard(CardController cc) {
-        if (cc != null) {
+        if (cc != null && cc.getCard() instanceof SkillCard) {
             SkillCard card = (SkillCard) cc.getCard();
             powerText.setText("PWR " + card.getPowerNeeded());
         }

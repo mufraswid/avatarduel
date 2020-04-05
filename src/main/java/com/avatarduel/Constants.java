@@ -17,6 +17,7 @@ public final class Constants {
     public static final int CARD_ROW = 2;
     public static final int CARD_COLUMN = 7;
     public static final int CARD_RATIO = 4;
+    public static final int FIRST_CARD_DRAWN = 7;
 
     // Margin
     public static final double GAP = 10;

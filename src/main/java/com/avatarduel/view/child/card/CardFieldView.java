@@ -1,7 +1,9 @@
 package com.avatarduel.view.child.card;
 
 import com.avatarduel.Constants;
+import com.avatarduel.controller.GameController;
 import com.avatarduel.controller.PlayerController;
+import com.avatarduel.controller.card.CardController;
 import com.avatarduel.view.GridView;
 import com.avatarduel.view.ViewPosition;
 import com.avatarduel.view.child.PlayerRenderer;
@@ -32,7 +34,10 @@ public class CardFieldView extends GridView implements PlayerRenderer {
     public void renderPlayer(PlayerController player) {
         for (int i = 0; i < Constants.CARD_ROW; ++i) {
             for (int j = 0; j < Constants.CARD_COLUMN; ++j) {
-                placedCardViews[i][j].renderCard(player == null ? null : player.getPlacedCard(i, j));
+                CardController card = player.getPlacedCard(i, j);
+                placedCardViews[i][j].renderCard(card == null ? null
+                        : player.isPlaying() ? player.getPlacedCard(i, j)
+                                : GameController.getInstance().getClosedCard());
             }
         }
     }

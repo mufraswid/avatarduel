@@ -12,7 +12,7 @@ public class CenterMainView extends GridView implements GameRenderer {
     private CardFieldView cardFieldView1, cardFieldView2;
 
     public CenterMainView() {
-        super("100", "15,35,35,15");
+        super("100", "18,32,32,18");
         handCardView1 = new HandCardFieldView();
         handCardView2 = new HandCardFieldView();
         cardFieldView1 = new CardFieldView(ViewPosition.BOTTOM);

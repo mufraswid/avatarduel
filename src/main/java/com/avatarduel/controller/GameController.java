@@ -9,11 +9,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.avatarduel.Constants;
+import com.avatarduel.controller.card.CardController;
 import com.avatarduel.model.Element;
 import com.avatarduel.model.Phase;
 import com.avatarduel.model.Player;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.model.card.CharacterCard;
+import com.avatarduel.model.card.ClosedCard;
 import com.avatarduel.model.card.LandCard;
 import com.avatarduel.model.card.skill.AuraSkillCard;
 import com.avatarduel.model.card.skill.DestroySkillCard;
@@ -42,6 +44,7 @@ public class GameController extends Application {
 
     private List<Card> cards;
     private PlayerController player1, player2, turn;
+    private CardController lastTouched, closedCard;
     private MainView mainView;
     private Scene scene;
     private Phase phase;
@@ -56,6 +59,19 @@ public class GameController extends Application {
             turn = turn == player1 ? player2 : player1;
         } else {
             phase = Phase.values()[phase.ordinal() + 1];
+        }
+        playPhase();
+        refreshView();
+    }
+
+    public CardController getLastTouchedCard() {
+        return lastTouched;
+    }
+
+    public void setTouchedCard(CardController cc) {
+        if (lastTouched != cc) {
+            lastTouched = cc;
+            refreshView();
         }
     }
 
@@ -133,16 +149,52 @@ public class GameController extends Application {
         player1 = new PlayerController(new Player("Player 1"), ViewPosition.BOTTOM);
         player2 = new PlayerController(new Player("Player 2"), ViewPosition.TOP);
 
-        int ratio = Constants.CARD_RATIO;
         Collections.shuffle(cards);
-        addToPlayers(cards.stream().filter(c -> c instanceof SkillCard).collect(Collectors.toList()), ratio);
-        addToPlayers(cards.stream().filter(c -> c instanceof CharacterCard).collect(Collectors.toList()), ratio * 2);
-        addToPlayers(cards.stream().filter(c -> c instanceof LandCard).collect(Collectors.toList()), ratio * 2);
+        addToPlayers(cards.stream().filter(c -> c instanceof SkillCard).collect(Collectors.toList()),
+                Constants.CARD_RATIO);
+        addToPlayers(cards.stream().filter(c -> c instanceof CharacterCard).collect(Collectors.toList()),
+                Constants.CARD_RATIO * 2);
+        addToPlayers(cards.stream().filter(c -> c instanceof LandCard).collect(Collectors.toList()),
+                Constants.CARD_RATIO * 2);
 
+        lastTouched = closedCard = new CardController(new ClosedCard());
         scene = new Scene(this.mainView = new MainView(), Constants.WIDTH, Constants.HEIGHT);
 
-        phase = Phase.DRAW;
+        player1.drawCard(Constants.FIRST_CARD_DRAWN);
+        player2.drawCard(Constants.FIRST_CARD_DRAWN);
+
+        phase = Phase.values()[0];
         turn = player1;
+        playPhase();
+    }
+
+    public CardController getClosedCard() {
+        return closedCard;
+    }
+
+    public void playPhase() {
+        switch (phase) {
+            case DRAW: {
+                turn.drawCard();
+                break;
+            }
+            case MAIN1: {
+
+                break;
+            }
+            case BATTLE: {
+
+                break;
+            }
+            case MAIN2: {
+
+                break;
+            }
+            case END: {
+
+                break;
+            }
+        }
         refreshView();
     }
 

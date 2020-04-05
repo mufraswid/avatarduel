@@ -7,9 +7,11 @@ import java.util.stream.Collectors;
 
 import com.avatarduel.Constants;
 import com.avatarduel.controller.card.CardController;
+import com.avatarduel.controller.card.CharacterCardController;
 import com.avatarduel.model.Element;
 import com.avatarduel.model.Player;
 import com.avatarduel.model.card.Card;
+import com.avatarduel.model.card.CharacterCard;
 import com.avatarduel.view.ViewPosition;
 
 public class PlayerController {
@@ -37,6 +39,12 @@ public class PlayerController {
         return this == GameController.getInstance().getCurrentPlayerTurn();
     }
 
+    public void drawCard(int count) {
+        List<CardController> subList = deck.subList(0, count);
+        handCards.addAll(subList);
+        deck.removeAll(subList);
+    }
+
     public void drawCard() {
         handCards.add(deck.remove(0));
     }
@@ -48,7 +56,8 @@ public class PlayerController {
     }
 
     public void addToDeck(List<Card> cards) {
-        deck.addAll(cards.stream().map(CardController::new).collect(Collectors.toList()));
+        deck.addAll(cards.stream().map(c -> c instanceof CharacterCard ? new CharacterCardController((CharacterCard) c)
+                : new CardController(c)).collect(Collectors.toList()));
         totalDeckCount = deck.size();
     }
 

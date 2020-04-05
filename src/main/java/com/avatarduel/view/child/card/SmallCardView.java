@@ -1,6 +1,7 @@
 package com.avatarduel.view.child.card;
 
 import com.avatarduel.Constants;
+import com.avatarduel.controller.GameController;
 import com.avatarduel.controller.card.CardController;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.util.ElementColorPicker;
@@ -9,6 +10,7 @@ import com.avatarduel.view.DefaultText;
 import com.avatarduel.view.child.card.status.StatusViewFactory;
 
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -22,34 +24,32 @@ public class SmallCardView extends CardView {
     private CardView statusCardView;
 
     public SmallCardView() {
-        super("100", "15,70,15");
+        super("100", "10,80,10");
         nameText = new DefaultText();
         imageView = new ImageView();
+        setVgap(0);
+        setHgap(0);
         initGUI();
     }
 
     @Override
     public void initGUI() {
-        // hoverProperty().addListener((observable, oldValue, newValue) -> {
-        //     if (!hasCard()) {
-        //         return;
-        //     }
-        //     if (newValue) {
-        //         GameController.getInstance().getMainView().getBigCardView().setCard(getCard());
-        //         GameController.getInstance().getScene().setCursor(Cursor.HAND);
-        //     } else {
-        //         GameController.getInstance().getScene().setCursor(Cursor.DEFAULT);
-        //     }
-        // });
         nameText.setSize(Constants.SMALL_FONT_SIZE);
         imageView.setPreserveRatio(true);
         // imageView.fitWidthProperty().bind(widthProperty().subtract(Constants.GAP));
-        imageView.setFitWidth(70);
+        imageView.setFitWidth(80);
     }
 
     @Override
     public void renderCard(CardController cc) {
         if (cc != null) {
+            setOnMouseDragEntered(e -> {
+                GameController.getInstance().setTouchedCard(cc);
+                GameController.getInstance().getScene().setCursor(Cursor.HAND);
+            });
+            setOnMouseExited(e -> {
+                GameController.getInstance().getScene().setCursor(Cursor.DEFAULT);
+            });
             Card card = cc.getCard();
             nameText.setText(card.getName());
             imageView.setImage(new Image(PathConverter.convertPathToURL(card.getImagePath())));
@@ -57,10 +57,15 @@ public class SmallCardView extends CardView {
             setBackground(new Background(new BackgroundFill(ElementColorPicker.getColor(card.getElementType()),
                     CornerRadii.EMPTY, Insets.EMPTY)));
             getChildren().clear();
-            add(nameText, 0, 0);
-            add(imageView, 0, 1);
-            if (statusCardView != null) {
-                add(statusCardView, 0, 2);
+            if (cc == GameController.getInstance().getClosedCard()) {
+                add(imageView, 0, 0, 1, 3);
+            } else {
+                add(nameText, 0, 0);
+                add(imageView, 0, 1);
+                if (statusCardView != null) {
+                    add(statusCardView, 0, 2);
+                    statusCardView.renderCard(cc);
+                }
             }
         }
     }
