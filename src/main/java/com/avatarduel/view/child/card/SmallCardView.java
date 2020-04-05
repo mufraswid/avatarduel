@@ -43,7 +43,7 @@ public class SmallCardView extends CardView {
     @Override
     public void renderCard(CardController cc) {
         if (cc != null) {
-            setOnMouseDragEntered(e -> {
+            setOnMouseEntered(e -> {
                 GameController.getInstance().setTouchedCard(cc);
                 GameController.getInstance().getScene().setCursor(Cursor.HAND);
             });

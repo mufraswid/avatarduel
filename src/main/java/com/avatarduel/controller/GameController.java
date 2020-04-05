@@ -165,6 +165,10 @@ public class GameController extends Application {
 
         phase = Phase.values()[0];
         turn = player1;
+
+        // TODO delete later
+        player1.putCard(0, 5, player1.getHandCards().get(0));
+
         playPhase();
     }
 

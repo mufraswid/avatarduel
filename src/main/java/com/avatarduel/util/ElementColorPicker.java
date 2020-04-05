@@ -18,6 +18,6 @@ public class ElementColorPicker {
                     return Color.RED.brighter();
             }
         }
-        return Color.WHITE;
+        return Color.BLACK;
     }
 }

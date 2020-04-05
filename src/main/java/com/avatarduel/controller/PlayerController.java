@@ -61,6 +61,11 @@ public class PlayerController {
         totalDeckCount = deck.size();
     }
 
+    public void putCard(int i, int j, CardController card) {
+        handCards.remove(card);
+        placedCards[i][j] = card;
+    }
+
     public void shuffleDeck() {
         Collections.shuffle(deck);
     }

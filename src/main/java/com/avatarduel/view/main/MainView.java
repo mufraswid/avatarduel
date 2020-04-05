@@ -31,6 +31,7 @@ public class MainView extends GridView implements GameRenderer {
     @Override
     public void renderGame(GameController game) {
         leftMainView.renderGame(game);
+        leftMainView.renderCard(game.getLastTouchedCard());
         centerMainView.renderGame(game);
         rightMainView.renderGame(game);
     }

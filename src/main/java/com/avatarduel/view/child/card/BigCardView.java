@@ -42,6 +42,7 @@ public class BigCardView extends CardView {
                     CornerRadii.EMPTY, Insets.EMPTY)));
             nameText.setText(card.getName());
             imageView.setImage(new Image(PathConverter.convertPathToURL(card.getImagePath())));
+            descCardView.renderCard(cc);
         }
     }
 

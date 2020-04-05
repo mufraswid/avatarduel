@@ -30,8 +30,10 @@ public class HandCardFieldView extends ScrollPane implements View, PlayerRendere
     @Override
     public void initGUI() {
         setContent(hbox);
-        addBorder();
+        // addBorder();
         hbox.setSpacing(Constants.GAP);
+        setFitToHeight(true);
+        // setVbarPolicy(ScrollBarPolicy.NEVER);
     }
 
     @Override
