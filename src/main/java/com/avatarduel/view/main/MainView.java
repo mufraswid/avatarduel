@@ -12,13 +12,65 @@ import javafx.geometry.Insets;
 
 public class MainView extends GridView {
 
-    public MainView(Phase phase, Player player1, Player player2, Card lastTouchedCard,
-            CardEventListener handCardListener, CardEventListener cardFieldListener, MouseEventListener phaseListener) {
+    private LeftMainView leftMainView;
+    private CenterMainView centerMainView;
+    private RightMainView rightMainView;
+
+    public MainView(CardEventListener handCardEventListener, CardEventListener cardFieldEventListener,
+            MouseEventListener phaseEventListener) {
         super("20,70,10", "100");
         setPadding(new Insets(Constants.GAP, Constants.GAP, Constants.GAP, Constants.GAP));
-        add(new LeftMainView(player1, player2, lastTouchedCard), 0, 0);
-        add(new CenterMainView(player1, player2, handCardListener, cardFieldListener), 1, 0);
-        add(new RightMainView(phase, player1, player2, phaseListener), 2, 0);
+        add(leftMainView = new LeftMainView(), 0, 0);
+        add(centerMainView = new CenterMainView(handCardEventListener, cardFieldEventListener), 1, 0);
+        add(rightMainView = new RightMainView(phaseEventListener), 2, 0);
+    }
+
+    public void renderDeckView2(Player player) {
+        leftMainView.renderDeckView2(player);
+    }
+
+    public void renderStatusView2(Player player) {
+        leftMainView.renderStatusView2(player);
+    }
+
+    public void renderBigCardView(Card card) {
+        leftMainView.renderBigCardView(card);
+    }
+
+    public void renderStatusView1(Player player) {
+        leftMainView.renderStatusView1(player);
+    }
+
+    public void renderDeckView1(Player player) {
+        leftMainView.renderDeckView1(player);
+    }
+
+    public void renderHandCardView2(Player player) {
+        centerMainView.renderHandCardView2(player);
+    }
+
+    public void renderHandCardView1(Player player) {
+        centerMainView.renderHandCardView1(player);
+    }
+
+    public void renderCardFieldView2(Player player) {
+        centerMainView.renderCardFieldView2(player);
+    }
+
+    public void renderCardFieldView1(Player player) {
+        centerMainView.renderCardFieldView1(player);
+    }
+
+    public void renderElementView2(Player player) {
+        rightMainView.renderElementView2(player);
+    }
+
+    public void renderPhase(Phase phase) {
+        rightMainView.renderPhase(phase);
+    }
+
+    public void renderElementView1(Player player) {
+        rightMainView.renderElementView1(player);
     }
 
 }

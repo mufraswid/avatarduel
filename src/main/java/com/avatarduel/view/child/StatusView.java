@@ -7,15 +7,22 @@ import com.avatarduel.view.ViewPosition;
 
 public class StatusView extends GridView {
 
-    public StatusView(Player player) {
+    private DefaultText nameText, hpText;
+
+    public StatusView(ViewPosition position) {
         super("100", "50,50");
-        DefaultText nameText = new DefaultText(player.getName());
-        DefaultText hpText = new DefaultText(player.getHP() + " HP");
+        nameText = new DefaultText();
+        hpText = new DefaultText();
         addBorder();
 
-        boolean isTop = player.getPosition() == ViewPosition.TOP;
+        boolean isTop = position == ViewPosition.TOP;
         add(nameText, 0, isTop ? 0 : 1);
         add(hpText, 0, isTop ? 1 : 0);
+    }
+
+    public void render(Player player) {
+        nameText.setText(player.getName());
+        hpText.setText(player.getHP() + " HP");
     }
 
 }

@@ -9,14 +9,22 @@ import javafx.scene.layout.HBox;
 
 public class HandCardFieldView extends ScrollPane {
 
-    public HandCardFieldView(Player player, CardEventListener listener) {
-        HBox hbox = new HBox();
+    private HBox hbox;
+    private CardEventListener listener;
+
+    public HandCardFieldView(CardEventListener listener) {
+        this.listener = listener;
+        hbox = new HBox();
         hbox.setSpacing(Constants.GAP);
         setContent(hbox);
         setFitToHeight(true);
+    }
+
+    public void render(Player player) {
+        hbox.getChildren().clear();
         player.getHandCards().stream().forEach(card -> {
-            SmallCardView smallCardView = new SmallCardView(card, listener);
-            // smallCardView.renderCard(player.isPlaying() ? card : GameController.getInstance().getClosedCard());
+            SmallCardView smallCardView = new SmallCardView(listener);
+            smallCardView.render(card);
             hbox.getChildren().add(smallCardView);
         });
     }

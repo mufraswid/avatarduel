@@ -9,22 +9,17 @@ import javafx.scene.input.MouseButton;
 
 public class PhaseView extends GridView {
 
-    public PhaseView(Phase phase, MouseEventListener listener) {
+    private DefaultText[] texts;
+
+    public PhaseView(MouseEventListener listener) {
         super("100", "20,20,20,20,20");
-        DefaultText[] texts = new DefaultText[Phase.values().length];
+        texts = new DefaultText[Phase.values().length];
         for (int i = 0; i < Phase.values().length; ++i) {
             texts[i] = new DefaultText(Phase.values()[i].toString());
         }
         addBorder();
         for (int i = 0; i < Phase.values().length; ++i) {
             add(texts[i], 0, i);
-        }
-        for (int i = 0; i < Phase.values().length; ++i) {
-            if (i == phase.ordinal()) {
-                texts[i].addBorder();
-            } else {
-                texts[i].removeBorder();
-            }
         }
         setOnMouseClicked(e -> {
             if (e.getButton() == MouseButton.PRIMARY) {
@@ -35,6 +30,16 @@ public class PhaseView extends GridView {
         });
         setOnMouseEntered(e -> listener.onMouseEntered());
         setOnMouseExited(e -> listener.onMouseExited());
+    }
+
+    public void render(Phase phase) {
+        for (int i = 0; i < Phase.values().length; ++i) {
+            if (i == phase.ordinal()) {
+                texts[i].addBorder();
+            } else {
+                texts[i].removeBorder();
+            }
+        }
     }
 
 }

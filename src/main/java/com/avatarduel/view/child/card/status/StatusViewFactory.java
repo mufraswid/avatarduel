@@ -8,9 +8,13 @@ import com.avatarduel.view.child.card.CardView;
 public final class StatusViewFactory {
     public static CardView createStatusView(Card card, boolean small) {
         if (card instanceof SkillCard) {
-            return new SkillStatusView((SkillCard) card, small);
+            SkillStatusView skillStatusView = new SkillStatusView(small);
+            skillStatusView.render((SkillCard) card);
+            return skillStatusView;
         } else if (card instanceof CharacterCard) {
-            return new CharacterStatusView((CharacterCard) card, small);
+            CharacterStatusView characterStatusView = new CharacterStatusView(small);
+            characterStatusView.render((CharacterCard) card);
+            return characterStatusView;
         }
         return null;
     }

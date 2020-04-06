@@ -7,20 +7,17 @@ import java.util.List;
 import com.avatarduel.Constants;
 import com.avatarduel.controller.GameController;
 import com.avatarduel.model.card.Card;
-import com.avatarduel.view.ViewPosition;
 
 public class Player {
 
-    private ViewPosition position;
     private int[] currentElementValue, maxElementValue;
     private int totalDeckCount, hp;
     private List<Card> deck, handCards;
     private Card[][] placedCards;
     private String name;
 
-    public Player(String name, ViewPosition viewPosition) {
+    public Player(String name) {
         this.name = name;
-        this.position = viewPosition;
         this.currentElementValue = new int[Element.values().length];
         this.maxElementValue = new int[Element.values().length];
         totalDeckCount = 0;
@@ -70,10 +67,6 @@ public class Player {
 
     public int getHP() {
         return hp;
-    }
-
-    public ViewPosition getPosition() {
-        return position;
     }
 
     public int getCurrentElementValue(Element element) {

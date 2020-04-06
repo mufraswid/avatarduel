@@ -9,13 +9,31 @@ import com.avatarduel.view.child.card.HandCardFieldView;
 
 public class CenterMainView extends GridView {
 
-    public CenterMainView(Player player1, Player player2, CardEventListener handCardListener,
-            CardEventListener cardFieldListener) {
+    private HandCardFieldView handCardFieldView1, handCardFieldView2;
+    private CardFieldView cardFieldView1, cardFieldView2;
+
+    public CenterMainView(CardEventListener handCardListener, CardEventListener cardFieldListener) {
         super("100", "18,32,32,18");
-        add(new HandCardFieldView(player2, handCardListener), 0, 0);
-        add(new CardFieldView(player2, ViewPosition.TOP, cardFieldListener), 0, 1);
-        add(new CardFieldView(player1, ViewPosition.BOTTOM, cardFieldListener), 0, 2);
-        add(new HandCardFieldView(player1, handCardListener), 0, 3);
+        add(handCardFieldView2 = new HandCardFieldView(handCardListener), 0, 0);
+        add(cardFieldView2 = new CardFieldView(ViewPosition.TOP, cardFieldListener), 0, 1);
+        add(cardFieldView1 = new CardFieldView(ViewPosition.BOTTOM, cardFieldListener), 0, 2);
+        add(handCardFieldView1 = new HandCardFieldView(handCardListener), 0, 3);
+    }
+
+    public void renderHandCardView2(Player player) {
+        handCardFieldView2.render(player);
+    }
+
+    public void renderHandCardView1(Player player) {
+        handCardFieldView1.render(player);
+    }
+
+    public void renderCardFieldView2(Player player) {
+        cardFieldView2.render(player);
+    }
+
+    public void renderCardFieldView1(Player player) {
+        cardFieldView1.render(player);
     }
 
 }

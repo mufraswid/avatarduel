@@ -6,11 +6,17 @@ import com.avatarduel.view.GridView;
 
 public class DeckView extends GridView {
 
-    public DeckView(Player player) {
+    private DefaultText deckValue;
+
+    public DeckView() {
         super("100", "50,50");
         addBorder();
         add(new DefaultText("DECK"), 0, 0);
-        add(new DefaultText(String.format("%d / %d", player.getCurrentDeckCount(), player.getTotalDeckCount())), 0, 1);
+        add(deckValue = new DefaultText(), 0, 1);
+    }
+
+    public void render(Player player) {
+        deckValue.setText(String.format("%d / %d", player.getCurrentDeckCount(), player.getTotalDeckCount()));
     }
 
 }

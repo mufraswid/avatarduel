@@ -14,18 +14,26 @@ import javafx.scene.layout.CornerRadii;
 
 public class BigCardView extends CardView {
 
-    public BigCardView(Card card) {
+    private DefaultText nameText;
+    private ImageView imageView;
+    private DescriptionCardView descCardView;
+
+    public BigCardView() {
         super("100", "10,50,40");
-        DefaultText nameText = new DefaultText("", true);
-        ImageView imageView = new ImageView();
-        DescriptionCardView descCardView = new DescriptionCardView(card);
+        nameText = new DefaultText("", true);
+        imageView = new ImageView();
+        descCardView = new DescriptionCardView();
+        add(nameText, 0, 0);
+        add(imageView, 0, 1);
+        add(descCardView, 0, 2);
+    }
+
+    public void render(Card card) {
         setBackground(new Background(new BackgroundFill(ElementColorPicker.getColor(card.getElementType()),
                 CornerRadii.EMPTY, Insets.EMPTY)));
         nameText.setText(card.getName());
         imageView.setImage(new Image(PathConverter.convertPathToURL(card.getImagePath())));
-        add(nameText, 0, 0);
-        add(imageView, 0, 1);
-        add(descCardView, 0, 2);
+        descCardView.renderCard(card);
     }
 
 }

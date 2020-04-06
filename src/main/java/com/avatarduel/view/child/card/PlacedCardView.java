@@ -7,10 +7,18 @@ import com.avatarduel.model.card.Card;
 
 public class PlacedCardView extends CardView {
 
-    public PlacedCardView(Card card, CardEventListener listener) {
+    private CardEventListener listener;
+
+    public PlacedCardView(CardEventListener listener) {
         super("100", "100");
+        this.listener = listener;
+    }
+
+    public void render(Card card) {
+        getChildren().clear();
         if (card != null) {
-            SmallCardView smallCardView = new SmallCardView(card, listener);
+            SmallCardView smallCardView = new SmallCardView(listener);
+            smallCardView.render(card);
             add(smallCardView, 0, 0);
             if (card instanceof ActiveCharacterCard) {
                 ActiveCharacterCard ccc = (ActiveCharacterCard) card;

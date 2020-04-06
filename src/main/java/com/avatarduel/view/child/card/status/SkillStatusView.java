@@ -7,14 +7,19 @@ import com.avatarduel.view.child.card.CardView;
 
 public class SkillStatusView extends CardView {
 
-    public SkillStatusView(SkillCard card, boolean small) {
+    private DefaultText powerText;
+
+    public SkillStatusView(boolean small) {
         super("100", "100");
-        DefaultText powerText = new DefaultText();
+        powerText = new DefaultText();
         if (small) {
             powerText.setSize(Constants.SMALL_FONT_SIZE);
         }
-        powerText.setText("PWR " + card.getPowerNeeded());
         add(powerText, 0, 0);
+    }
+
+    public void render(SkillCard card) {
+        powerText.setText("PWR " + card.getPowerNeeded());
     }
 
 }

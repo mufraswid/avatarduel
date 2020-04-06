@@ -8,11 +8,13 @@ import com.avatarduel.view.child.card.CardView;
 
 public class CharacterStatusView extends CardView {
 
-    public CharacterStatusView(CharacterCard card, boolean small) {
+    private DefaultText attackText, defenseText, powerText;
+
+    public CharacterStatusView(boolean small) {
         super("34,34,34", "100");
-        DefaultText attackText = new DefaultText();
-        DefaultText defenseText = new DefaultText();
-        DefaultText powerText = new DefaultText();
+        attackText = new DefaultText();
+        defenseText = new DefaultText();
+        powerText = new DefaultText();
         if (small) {
             attackText.setSize(Constants.SMALL_FONT_SIZE);
             defenseText.setSize(Constants.SMALL_FONT_SIZE);
@@ -20,6 +22,12 @@ public class CharacterStatusView extends CardView {
             setHgap(0);
             setVgap(0);
         }
+        add(attackText, 0, 0);
+        add(defenseText, 1, 0);
+        add(powerText, 2, 0);
+    }
+
+    public void render(CharacterCard card) {
         String atk = "ATK " + card.getAttack();
         String def = "DEF " + card.getDefense();
         if (card instanceof ActiveCharacterCard) {
@@ -36,9 +44,6 @@ public class CharacterStatusView extends CardView {
         attackText.setText(atk);
         defenseText.setText(def);
         powerText.setText("PWR " + card.getPowerNeeded());
-        add(attackText, 0, 0);
-        add(defenseText, 1, 0);
-        add(powerText, 2, 0);
     }
 
 }

@@ -3,19 +3,44 @@ package com.avatarduel.view.main;
 import com.avatarduel.model.Player;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.view.GridView;
+import com.avatarduel.view.ViewPosition;
 import com.avatarduel.view.child.StatusView;
 import com.avatarduel.view.child.card.BigCardView;
 import com.avatarduel.view.child.card.DeckView;
 
 public class LeftMainView extends GridView {
 
-    public LeftMainView(Player player1, Player player2, Card card) {
+    private DeckView deckView1, deckView2;
+    private StatusView statusView1, statusView2;
+    private BigCardView bigCardView;
+
+    public LeftMainView() {
         super("25,75", "15,70,15");
-        add(new DeckView(player2), 0, 0);
-        add(new StatusView(player2), 1, 0);
-        add(new BigCardView(card), 0, 1, 2, 1);
-        add(new StatusView(player1), 1, 2);
-        add(new DeckView(player1), 0, 2);
+        add(deckView2 = new DeckView(), 0, 0);
+        add(statusView2 = new StatusView(ViewPosition.TOP), 1, 0);
+        add(bigCardView = new BigCardView(), 0, 1, 2, 1);
+        add(statusView1 = new StatusView(ViewPosition.BOTTOM), 1, 2);
+        add(deckView1 = new DeckView(), 0, 2);
+    }
+
+    public void renderDeckView2(Player player) {
+        deckView2.render(player);
+    }
+
+    public void renderStatusView2(Player player) {
+        statusView2.render(player);
+    }
+
+    public void renderBigCardView(Card card) {
+        bigCardView.render(card);
+    }
+
+    public void renderStatusView1(Player player) {
+        statusView1.render(player);
+    }
+
+    public void renderDeckView1(Player player) {
+        deckView1.render(player);
     }
 
 }

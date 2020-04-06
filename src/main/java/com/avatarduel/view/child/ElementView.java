@@ -13,7 +13,9 @@ import javafx.scene.paint.Color;
 
 public class ElementView extends GridView {
 
-    public ElementView(Player player) {
+    private DefaultText earthValue, fireValue, waterValue, airValue;
+
+    public ElementView() {
         super("40,60", "25,25,25,25");
 
         DefaultText earthText = new DefaultText("Earth", true);
@@ -34,14 +36,21 @@ public class ElementView extends GridView {
         add(waterText, 0, 2);
         add(airText, 0, 3);
 
-        add(new DefaultText(elementStringValue(player, Element.EARTH)), 1, 0);
-        add(new DefaultText(elementStringValue(player, Element.FIRE)), 1, 1);
-        add(new DefaultText(elementStringValue(player, Element.WATER)), 1, 2);
-        add(new DefaultText(elementStringValue(player, Element.AIR)), 1, 3);
+        add(earthValue = new DefaultText(), 1, 0);
+        add(fireValue = new DefaultText(), 1, 1);
+        add(waterValue = new DefaultText(), 1, 2);
+        add(airValue = new DefaultText(), 1, 3);
     }
 
     private String elementStringValue(Player player, Element el) {
         return String.format(": %d / %d", player.getCurrentElementValue(el), player.getMaxElementValue(el));
+    }
+
+    public void render(Player player) {
+        earthValue.setText(elementStringValue(player, Element.EARTH));
+        fireValue.setText(elementStringValue(player, Element.FIRE));
+        waterValue.setText(elementStringValue(player, Element.WATER));
+        airValue.setText(elementStringValue(player, Element.AIR));
     }
 
 }

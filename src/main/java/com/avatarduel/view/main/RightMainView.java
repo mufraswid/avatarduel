@@ -9,11 +9,26 @@ import com.avatarduel.view.child.PhaseView;
 
 public class RightMainView extends GridView {
 
-    public RightMainView(Phase phase, Player player1, Player player2, MouseEventListener listener) {
+    private ElementView elementView1, elementView2;
+    private PhaseView phaseView;
+
+    public RightMainView(MouseEventListener listener) {
         super("100", "15,20,30,20,15");
-        add(new ElementView(player2), 0, 1);
-        add(new PhaseView(phase, listener), 0, 2);
-        add(new ElementView(player1), 0, 3);
+        add(elementView2 = new ElementView(), 0, 1);
+        add(phaseView = new PhaseView(listener), 0, 2);
+        add(elementView1 = new ElementView(), 0, 3);
+    }
+
+    public void renderElementView2(Player player) {
+        elementView2.render(player);
+    }
+
+    public void renderPhase(Phase phase) {
+        phaseView.render(phase);
+    }
+
+    public void renderElementView1(Player player) {
+        elementView1.render(player);
     }
 
 }
