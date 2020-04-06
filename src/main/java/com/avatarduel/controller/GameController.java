@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.avatarduel.Constants;
-import com.avatarduel.controller.listener.CardEventListener;
-import com.avatarduel.controller.listener.MouseEventListener;
 import com.avatarduel.model.Element;
 import com.avatarduel.model.Phase;
 import com.avatarduel.model.Player;
@@ -26,7 +24,11 @@ import com.avatarduel.util.CSVReader;
 import com.avatarduel.util.PathConverter;
 
 import javafx.application.Application;
-import javafx.scene.Cursor;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 public class GameController extends Application {
@@ -154,59 +156,22 @@ public class GameController extends Application {
     }
 
     public RenderController createRenderController() {
-        CardEventListener defaultCardEventListener = new CardEventListener() {
+        return new RenderController(player1, player2, new CardHandEventListener(this, renderController),
+                new CardFieldEventListener(this, renderController), new PhaseEventListener(this, renderController));
+    }
 
-            @Override
-            public void onMouseEntered(Card card) {
-                renderController.setLastTouchedCard(card);
-                renderController.getScene().setCursor(Cursor.HAND);
-            }
-
-            @Override
-            public void onMouseExited(Card card) {
-                renderController.getScene().setCursor(Cursor.DEFAULT);
-            }
-
-            @Override
-            public void onMouseRightClicked(Card card) {
-
-            }
-
-            @Override
-            public void onMouseLeftClicked(Card card) {
-
-            }
-
-        };
-        return new RenderController(player1, player2, defaultCardEventListener, defaultCardEventListener,
-                new MouseEventListener() {
-
-                    @Override
-                    public void onMouseEntered() {
-                        renderController.getScene().setCursor(Cursor.HAND);
-                    }
-
-                    @Override
-                    public void onMouseExited() {
-                        renderController.getScene().setCursor(Cursor.DEFAULT);
-                    }
-
-                    @Override
-                    public void onMouseRightClicked() {
-
-                    }
-
-                    @Override
-                    public void onMouseLeftClicked() {
-                        nextPhase();
-                    }
-
-                });
+    public Player getEnemyCurrentTurn() {
+        return turn == player1 ? player2 : player1;
     }
 
     public void playPhase() {
+        renderController.updatePhase(phase);
         switch (phase) {
             case DRAW: {
+                if (turn.getCurrentDeckCount() <= 0) {
+                    endGame(getEnemyCurrentTurn());
+                    return;
+                }
                 turn.drawCard();
                 renderController.updateHandCard(turn);
                 break;
@@ -228,7 +193,13 @@ public class GameController extends Application {
                 break;
             }
         }
-        renderController.updatePhase(phase);
+    }
+
+    public void endGame(Player winner) {
+        Alert alert = new Alert(AlertType.INFORMATION, winner.getName() + " win!", ButtonType.OK);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        alert.showAndWait();
+        Platform.exit();
     }
 
     private void addToPlayers(List<Card> cards, int ratio) {
