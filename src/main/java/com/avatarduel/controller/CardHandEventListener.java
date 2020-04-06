@@ -1,6 +1,7 @@
 package com.avatarduel.controller;
 
 import com.avatarduel.controller.listener.CardEventListener;
+import com.avatarduel.model.Player;
 import com.avatarduel.model.card.Card;
 
 import javafx.scene.Cursor;
@@ -26,14 +27,19 @@ public class CardHandEventListener implements CardEventListener {
 
     @Override
     public void onMouseRightClicked(Card card) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void onMouseLeftClicked(Card card) {
-        // TODO Auto-generated method stub
-
+        RenderController renderController = gameController.getRenderController();
+        if (card == renderController.getClosedCard()) {
+            return;
+        }
+        Player turn = gameController.getPlayerController().getCurrentPlayerTurn();
+        turn.putCard(card);
+        renderController.updateFieldCard(turn);
+        renderController.updateHandCard(turn);
+        renderController.updateElementValues(turn);
     }
 
 }

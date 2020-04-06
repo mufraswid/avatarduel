@@ -78,4 +78,12 @@ public class RenderController {
         }
     }
 
+    public void updateElementValues(Player turn) {
+        if (turn == player1) {
+            mainView.renderElementView1(turn);
+        } else if (turn == player2) {
+            mainView.renderElementView2(turn);
+        }
+    }
+
 }
