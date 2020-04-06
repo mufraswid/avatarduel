@@ -4,31 +4,32 @@ import java.net.URI;
 
 import com.avatarduel.Main;
 
-public final class PathConverter {
+public final class ResourceFinder {
 
     private static final String NOT_FOUND_CARD_PATH = "card/image/notfound.png";
 
-    public static URI convertPathToURI(String path) {
+    private ResourceFinder() {
+    }
+
+    public static URI getURI(String path) {
         try {
             return Main.class.getResource(path).toURI();
         } catch (Exception ex) {
-            // System.err.println("Path: " + path + " not found!");
             if (path.equals(NOT_FOUND_CARD_PATH)) {
                 return null;
             }
-            return convertPathToURI(NOT_FOUND_CARD_PATH);
+            return getURI(NOT_FOUND_CARD_PATH);
         }
     }
 
-    public static String convertPathToURL(String path) {
+    public static String getURL(String path) {
         try {
             return Main.class.getResource(path).toURI().toURL().toString();
         } catch (Exception ex) {
-            // System.err.println("Path: " + path + " not found!");
             if (path.equals(NOT_FOUND_CARD_PATH)) {
                 return null;
             }
-            return convertPathToURL(NOT_FOUND_CARD_PATH);
+            return getURL(NOT_FOUND_CARD_PATH);
         }
     }
 }

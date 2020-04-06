@@ -1,6 +1,7 @@
 package com.avatarduel.model.card;
 
 import com.avatarduel.model.Element;
+import com.avatarduel.util.ResourceFinder;
 
 /**
  * Kelas Abstrak Kartu: kelas yang memodelkan konsep kartu pada permainan, diturunkan menjadi berbagai jenis kartu: Karakter, Land, dan Skill
@@ -48,6 +49,10 @@ public abstract class Card {
 
     private void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+        // TODO delete later
+        if (ResourceFinder.getURL(imagePath).contains("notfound.png")) {
+            System.err.println("Path: " + imagePath + " not found!");
+        }
     }
 
     private void setNama(String nama) {

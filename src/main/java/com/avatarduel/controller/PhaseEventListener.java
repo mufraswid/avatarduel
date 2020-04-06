@@ -7,21 +7,19 @@ import javafx.scene.Cursor;
 public class PhaseEventListener implements MouseEventListener {
 
     private GameController gameController;
-    private RenderController renderController;
 
-    public PhaseEventListener(GameController gameController, RenderController renderController) {
+    public PhaseEventListener(GameController gameController) {
         this.gameController = gameController;
-        this.renderController = renderController;
     }
 
     @Override
     public void onMouseEntered() {
-        renderController.getScene().setCursor(Cursor.HAND);
+        gameController.getRenderController().getScene().setCursor(Cursor.HAND);
     }
 
     @Override
     public void onMouseExited() {
-        renderController.getScene().setCursor(Cursor.DEFAULT);
+        gameController.getRenderController().getScene().setCursor(Cursor.DEFAULT);
     }
 
     @Override

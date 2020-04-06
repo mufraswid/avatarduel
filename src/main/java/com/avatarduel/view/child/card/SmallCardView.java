@@ -4,7 +4,7 @@ import com.avatarduel.Constants;
 import com.avatarduel.controller.listener.CardEventListener;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.util.ElementColorPicker;
-import com.avatarduel.util.PathConverter;
+import com.avatarduel.util.ResourceFinder;
 import com.avatarduel.view.DefaultText;
 import com.avatarduel.view.child.card.status.StatusViewFactory;
 
@@ -38,7 +38,7 @@ public class SmallCardView extends CardView {
 
     public void render(Card card) {
         nameText.setText(card.getName());
-        imageView.setImage(new Image(PathConverter.convertPathToURL(card.getImagePath())));
+        imageView.setImage(new Image(ResourceFinder.getURL(card.getImagePath())));
         CardView statusCardView = StatusViewFactory.createStatusView(card, true);
         setBackground(new Background(new BackgroundFill(ElementColorPicker.getColor(card.getElementType()),
                 CornerRadii.EMPTY, Insets.EMPTY)));

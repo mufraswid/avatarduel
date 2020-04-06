@@ -8,22 +8,20 @@ import javafx.scene.Cursor;
 public class CardHandEventListener implements CardEventListener {
 
     private GameController gameController;
-    private RenderController renderController;
 
-    public CardHandEventListener(GameController gameController, RenderController renderController) {
+    public CardHandEventListener(GameController gameController) {
         this.gameController = gameController;
-        this.renderController = renderController;
     }
 
     @Override
     public void onMouseEntered(Card card) {
-        renderController.setLastTouchedCard(card);
-        renderController.getScene().setCursor(Cursor.HAND);
+        gameController.getRenderController().setLastTouchedCard(card);
+        gameController.getRenderController().getScene().setCursor(Cursor.HAND);
     }
 
     @Override
     public void onMouseExited(Card card) {
-        renderController.getScene().setCursor(Cursor.DEFAULT);
+        gameController.getRenderController().getScene().setCursor(Cursor.DEFAULT);
     }
 
     @Override

@@ -73,4 +73,12 @@ public class RenderController {
         }
     }
 
+    public void updateDeckCount(Player turn) {
+        if (turn == player1) {
+            mainView.renderDeckView1(turn);
+        } else if (turn == player2) {
+            mainView.renderDeckView2(turn);
+        }
+    }
+
 }

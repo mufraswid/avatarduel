@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import com.avatarduel.Constants;
-import com.avatarduel.controller.GameController;
 import com.avatarduel.model.card.Card;
 
 public class Player {
@@ -18,8 +17,9 @@ public class Player {
 
     public Player(String name) {
         this.name = name;
-        this.currentElementValue = new int[Element.values().length];
-        this.maxElementValue = new int[Element.values().length];
+        int elementLenght = Element.values().length;
+        currentElementValue = new int[elementLenght];
+        maxElementValue = new int[elementLenght];
         totalDeckCount = 0;
         deck = new ArrayList<>();
         handCards = new ArrayList<>();
@@ -27,14 +27,10 @@ public class Player {
         hp = 80;
     }
 
-    public boolean isPlaying() {
-        return this == GameController.getInstance().getCurrentPlayerTurn();
-    }
-
     public void drawCard(int count) {
         List<Card> subList = deck.subList(0, count);
         handCards.addAll(subList);
-        deck.removeAll(subList);
+        subList.clear();
     }
 
     public void drawCard() {

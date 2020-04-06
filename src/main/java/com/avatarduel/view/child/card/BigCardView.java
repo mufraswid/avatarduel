@@ -2,7 +2,7 @@ package com.avatarduel.view.child.card;
 
 import com.avatarduel.model.card.Card;
 import com.avatarduel.util.ElementColorPicker;
-import com.avatarduel.util.PathConverter;
+import com.avatarduel.util.ResourceFinder;
 import com.avatarduel.view.DefaultText;
 
 import javafx.geometry.Insets;
@@ -32,7 +32,7 @@ public class BigCardView extends CardView {
         setBackground(new Background(new BackgroundFill(ElementColorPicker.getColor(card.getElementType()),
                 CornerRadii.EMPTY, Insets.EMPTY)));
         nameText.setText(card.getName());
-        imageView.setImage(new Image(PathConverter.convertPathToURL(card.getImagePath())));
+        imageView.setImage(new Image(ResourceFinder.getURL(card.getImagePath())));
         descCardView.renderCard(card);
     }
 
