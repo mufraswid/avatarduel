@@ -67,28 +67,28 @@ public class CardDao {
 
     public CharacterCard getCharacterCard() {
         Random rand = new Random();
-        int rIdx = rand.nextInt(this.landCardList.size());
+        int rIdx = rand.nextInt(this.characterCardList.size());
         return new CharacterCard(characterCardList[rIdx][4], Integer.parseInt(characterCardList[rIdx][0]), characterCardList[rIdx][1], characterCardList[rIdx][3], Element.valueOf(characterCardList[rIdx][2]),
                     Integer.parseInt(characterCardList[rIdx][7]), Integer.parseInt(characterCardList[rIdx][5]), Integer.parseInt(characterCardList[rIdx][6]))
     }
 
     public AuraSkillCard getAuraSkillCard() {
         Random rand = new Random();
-        int rIdx = rand.nextInt(this.landCardList.size());
+        int rIdx = rand.nextInt(this.auraSkillList.size());
         return new AuraSkillCard(auraSkillList[rIdx][4], Integer.parseInt(auraSkillList[rIdx][0]), auraSkillList[rIdx][1], auraSkillList[rIdx][3], Element.valueOf(auraSkillList[rIdx][2]),
                     Integer.parseInt(auraSkillList[rIdx][5]), Integer.parseInt(auraSkillList[rIdx][6]), Integer.parseInt(auraSkillList[rIdx][7]))
     }
 
     public DestroySkillCard getDestroySkillCard() {
         Random rand = new Random();
-        int rIdx = rand.nextInt(this.landCardList.size());
+        int rIdx = rand.nextInt(this.destroySkillList.size());
         return new DestroySkillCard(destroySkillList[rIdx][4], Integer.parseInt(destroySkillList[rIdx][0]), destroySkillList[rIdx][1], destroySkillList[rIdx][3], Element.valueOf(destroySkillList[rIdx][2]),
                     Integer.parseInt(destroySkillList[rIdx][5]))
     }
 
     public PowerUpSkillCard getPowerUpSkillCard() {
         Random rand = new Random();
-        int rIdx = rand.nextInt(this.landCardList.size());
+        int rIdx = rand.nextInt(this.powerUpSkillList.size());
         return new PowerUpSkillCard(powerUpSkillList[rIdx][4], Integer.parseInt(powerUpSkillList[rIdx][0]), powerUpSkillList[rIdx][1], powerUpSkillList[rIdx][3], Element.valueOf(powerUpSkillList[rIdx][2]))
     }
 
