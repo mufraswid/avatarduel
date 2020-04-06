@@ -2,6 +2,7 @@ package com.avatarduel.view.main;
 
 import com.avatarduel.controller.listener.CardEventListener;
 import com.avatarduel.model.Player;
+import com.avatarduel.model.card.Card;
 import com.avatarduel.view.GridView;
 import com.avatarduel.view.ViewPosition;
 import com.avatarduel.view.child.card.CardFieldView;
@@ -20,12 +21,12 @@ public class CenterMainView extends GridView {
         add(handCardFieldView1 = new HandCardFieldView(handCardListener), 0, 3);
     }
 
-    public void renderHandCardView2(Player player) {
-        handCardFieldView2.render(player);
+    public void renderHandCardView2(Player player, Card closed) {
+        handCardFieldView2.render(player, closed);
     }
 
-    public void renderHandCardView1(Player player) {
-        handCardFieldView1.render(player);
+    public void renderHandCardView1(Player player, Card closed) {
+        handCardFieldView1.render(player, closed);
     }
 
     public void renderCardFieldView2(Player player) {

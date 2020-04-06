@@ -45,12 +45,12 @@ public class MainView extends GridView {
         leftMainView.renderDeckView1(player);
     }
 
-    public void renderHandCardView2(Player player) {
-        centerMainView.renderHandCardView2(player);
+    public void renderHandCardView2(Player player, Card closed) {
+        centerMainView.renderHandCardView2(player, closed);
     }
 
-    public void renderHandCardView1(Player player) {
-        centerMainView.renderHandCardView1(player);
+    public void renderHandCardView1(Player player, Card closed) {
+        centerMainView.renderHandCardView1(player, closed);
     }
 
     public void renderCardFieldView2(Player player) {

@@ -28,15 +28,15 @@ public class RenderController {
     }
 
     private void initView() {
-        mainView.renderBigCardView(closedCard);
+        setLastTouchedCard(closedCard);
         mainView.renderCardFieldView1(player1);
         mainView.renderCardFieldView2(player2);
         mainView.renderDeckView1(player1);
         mainView.renderDeckView2(player2);
         mainView.renderElementView1(player1);
         mainView.renderElementView2(player2);
-        mainView.renderHandCardView1(player1);
-        mainView.renderHandCardView2(player2);
+        // mainView.renderHandCardView1(player1);
+        // mainView.renderHandCardView2(player2);
         mainView.renderStatusView1(player1);
         mainView.renderStatusView2(player2);
     }
@@ -58,11 +58,8 @@ public class RenderController {
     }
 
     public void updateHandCard(Player turn) {
-        if (turn == player1) {
-            mainView.renderHandCardView1(turn);
-        } else if (turn == player2) {
-            mainView.renderHandCardView2(turn);
-        }
+        mainView.renderHandCardView1(player1, turn == player1 ? null : closedCard);
+        mainView.renderHandCardView2(player2, turn == player2 ? null : closedCard);
     }
 
     public void updateFieldCard(Player turn) {

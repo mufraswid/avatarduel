@@ -12,15 +12,13 @@ public class DescriptionCardView extends CardView {
 
     public void renderCard(Card card) {
         getChildren().clear();
-        if (card != null) {
-            DefaultText descriptionText = new DefaultText();
-            CardView statusCardView = StatusViewFactory.createStatusView(card, false);
-            descriptionText.setText(card.getDescription());
-            descriptionText.getText().wrappingWidthProperty().bind(widthProperty().subtract(5)); // .subtract(Constants.GAP)
-            add(descriptionText, 0, 0);
-            if (statusCardView != null) {
-                add(statusCardView, 0, 1);
-            }
+        DefaultText descriptionText = new DefaultText();
+        CardView statusCardView = StatusViewFactory.createStatusView(card, false);
+        descriptionText.setText(card.getDescription());
+        descriptionText.getText().wrappingWidthProperty().bind(widthProperty().subtract(5)); // .subtract(Constants.GAP)
+        add(descriptionText, 0, 0);
+        if (statusCardView != null) {
+            add(statusCardView, 0, 1);
         }
     }
 
