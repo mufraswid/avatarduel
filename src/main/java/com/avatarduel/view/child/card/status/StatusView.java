@@ -28,7 +28,7 @@ public class StatusView extends CardView {
         add(powerText, 2, 0);
     }
 
-    public void renderCharacterCard(CharacterCard card) {
+    public void render(CharacterCard card) {
         String atk = "ATK " + card.getAttack();
         String def = "DEF " + card.getDefense();
         if (card instanceof ActiveCharacterCard) {
@@ -47,9 +47,11 @@ public class StatusView extends CardView {
         powerText.setText("PWR " + card.getPowerNeeded());
     }
 
-    public void renderAuraSkillCard(AuraSkillCard card) {
-        attackText.setText("ATK " + card.getAttackAddition());
-        defenseText.setText("DEF " + card.getDefenseAddition());
+    public void render(AuraSkillCard card) {
+        int datk = card.getAttackAddition();
+        int ddef = card.getDefenseAddition();
+        attackText.setText("ATK " + (datk > 0 ? "+" : "") + datk);
+        defenseText.setText("DEF " + (ddef > 0 ? "+" : "") + ddef);
         powerText.setText("PWR " + card.getPowerNeeded());
     }
 
