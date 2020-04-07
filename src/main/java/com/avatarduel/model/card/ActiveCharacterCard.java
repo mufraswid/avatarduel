@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.avatarduel.model.CardPosition;
 import com.avatarduel.model.card.skill.AuraSkillCard;
+import com.avatarduel.model.card.skill.PowerUpSkillCard;
 import com.avatarduel.model.card.skill.SkillCard;
 
 public class ActiveCharacterCard extends CharacterCard {
@@ -94,6 +95,10 @@ public class ActiveCharacterCard extends CharacterCard {
 
     public List<SkillCard> getSkillCardList() {
         return skillCardList;
+    }
+
+    public boolean isPoweredUp() {
+        return skillCardList.stream().anyMatch(c -> c instanceof PowerUpSkillCard);
     }
 
 }

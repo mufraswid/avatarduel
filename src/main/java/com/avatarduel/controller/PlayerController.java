@@ -113,7 +113,7 @@ public class PlayerController {
                 return false;
             }
             removeCardFromField(defender);
-            if (!isDefensePosition) {
+            if (!isDefensePosition || attacker.isPoweredUp()) {
                 getEnemyCurrentTurn().damage(selisih);
             }
         }
