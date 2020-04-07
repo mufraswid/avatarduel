@@ -14,7 +14,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 
 public class SmallCardView extends CardView {
 
@@ -37,6 +39,11 @@ public class SmallCardView extends CardView {
     }
 
     public void render(Card card) {
+        if (card.isClicked()) {
+            addBorder(Color.BLACK, BorderStrokeStyle.DASHED, 3);
+        } else {
+            addBorder();
+        }
         nameText.setText(card.getName());
         imageView.setImage(new Image(ResourceFinder.getURL(card.getImagePath())));
         CardView statusCardView = StatusViewFactory.createStatusView(card, true);

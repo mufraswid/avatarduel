@@ -2,10 +2,15 @@ package com.avatarduel.controller;
 
 import com.avatarduel.Constants;
 import com.avatarduel.model.Player;
+import com.avatarduel.model.card.ActivableCard;
+import com.avatarduel.model.card.ActiveCharacterCard;
+import com.avatarduel.model.card.Card;
+import com.avatarduel.model.card.skill.SkillCard;
 
 public class PlayerController {
 
     private Player player1, player2, turn;
+    private Card clickedCard;
 
     public PlayerController(CardDao cardDao) {
         player1 = new Player("Player 1");
@@ -18,6 +23,57 @@ public class PlayerController {
         player2.drawCard(Constants.FIRST_CARD_DRAWN);
 
         turn = player1;
+    }
+
+    public void removeCharacterCardFromField(ActiveCharacterCard card) {
+        int i = 0;
+        for (int j = 0; j < Constants.CARD_COLUMN; ++j) {
+            if (player1.getFieldCard(i, j) == card) {
+                for (SkillCard c : card.getSkillCardList()) {
+                    if (c instanceof ActivableCard) {
+                        removeCardFromField((ActivableCard) c);
+                    }
+                }
+                removeCardFromField(card);
+            }
+        }
+    }
+
+    public void removeCardFromField(ActivableCard card) {
+        for (int i = 0; i < Constants.CARD_ROW; ++i) {
+            for (int j = 0; j < Constants.CARD_COLUMN; ++j) {
+                if (player1.getFieldCard(i, j) == card) {
+                    player1.removeFieldCard(i, j);
+                    return;
+                }
+                if (player2.getFieldCard(i, j) == card) {
+                    player2.removeFieldCard(i, j);
+                    return;
+                }
+            }
+        }
+    }
+
+    public void setClickedCard(Card card) {
+        if (clickedCard != null) {
+            clickedCard.setClicked(false);
+        }
+        clickedCard = card;
+        if (card != null) {
+            card.setClicked(true);
+        }
+    }
+
+    public Card getClickedCard() {
+        return clickedCard;
+    }
+
+    public boolean doDrawPhase() {
+        if (turn.getCurrentDeckCount() <= 0) {
+            return false;
+        }
+        turn.drawCard();
+        return true;
     }
 
     public Player getPlayer1() {
@@ -38,6 +94,11 @@ public class PlayerController {
 
     public void switchTurn() {
         turn = turn == player1 ? player2 : player1;
+    }
+
+    public void resetPlayerState() {
+        turn.resetState();
+        setClickedCard(null);
     }
 
 }

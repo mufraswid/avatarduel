@@ -50,12 +50,12 @@ public class GameController {
         renderController.updatePhase(phase);
         switch (phase) {
             case DRAW: {
-                Player turn = playerController.getCurrentPlayerTurn();
-                if (turn.getCurrentDeckCount() <= 0) {
+                playerController.resetPlayerState();
+                if (!playerController.doDrawPhase()) {
                     endGame(playerController.getEnemyCurrentTurn());
                     return;
                 }
-                turn.drawCard();
+                Player turn = playerController.getCurrentPlayerTurn();
                 renderController.updateElementValues(turn);
                 renderController.updateHandCard(turn);
                 renderController.updateDeckCount(turn);

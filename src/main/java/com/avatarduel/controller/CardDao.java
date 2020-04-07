@@ -31,33 +31,31 @@ public class CardDao {
 
         // Land
         for (String[] row : getListFromCsv(Constants.LAND_CSV_FILE_PATH)) {
-            landCardList.add(new LandCard(row[4], Integer.parseInt(row[0]), row[1], row[3], Element.valueOf(row[2])));
+            landCardList.add(new LandCard(row[4], row[1], row[3], Element.valueOf(row[2])));
         }
 
         // Character
         for (String[] row : getListFromCsv(Constants.CHARACTER_CSV_FILE_PATH)) {
-            characterCardList
-                    .add(new CharacterCard(row[4], Integer.parseInt(row[0]), row[1], row[3], Element.valueOf(row[2]),
-                            Integer.parseInt(row[7]), Integer.parseInt(row[5]), Integer.parseInt(row[6])));
+            characterCardList.add(new CharacterCard(row[4], row[1], row[3], Element.valueOf(row[2]),
+                    Integer.parseInt(row[7]), Integer.parseInt(row[5]), Integer.parseInt(row[6])));
         }
 
         // Aura skill
         for (String[] row : getListFromCsv(Constants.AURA_SKILL_CSV_FILE_PATH)) {
-            auraSkillList
-                    .add(new AuraSkillCard(row[4], Integer.parseInt(row[0]), row[1], row[3], Element.valueOf(row[2]),
-                            Integer.parseInt(row[5]), Integer.parseInt(row[6]), Integer.parseInt(row[7])));
+            auraSkillList.add(new AuraSkillCard(row[4], row[1], row[3], Element.valueOf(row[2]),
+                    Integer.parseInt(row[5]), Integer.parseInt(row[6]), Integer.parseInt(row[7])));
         }
 
         // Destroy skill
         for (String[] row : getListFromCsv(Constants.DESTROY_SKILL_CSV_FILE_PATH)) {
-            destroySkillList.add(new DestroySkillCard(row[4], Integer.parseInt(row[0]), row[1], row[3],
-                    Element.valueOf(row[2]), Integer.parseInt(row[5])));
+            destroySkillList.add(
+                    new DestroySkillCard(row[4], row[1], row[3], Element.valueOf(row[2]), Integer.parseInt(row[5])));
         }
 
         // Powerup skill
         for (String[] row : getListFromCsv(Constants.POWERUP_SKILL_CSV_FILE_PATH)) {
-            powerUpSkillList.add(new PowerUpSkillCard(row[4], Integer.parseInt(row[0]), row[1], row[3],
-                    Element.valueOf(row[2]), Integer.parseInt(row[5])));
+            powerUpSkillList.add(
+                    new PowerUpSkillCard(row[4], row[1], row[3], Element.valueOf(row[2]), Integer.parseInt(row[5])));
         }
     }
 

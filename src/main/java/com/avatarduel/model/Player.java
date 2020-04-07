@@ -1,13 +1,15 @@
 package com.avatarduel.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import com.avatarduel.Constants;
+import com.avatarduel.model.card.ActivableCard;
+import com.avatarduel.model.card.ActiveCharacterCard;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.model.card.CharacterCard;
 import com.avatarduel.model.card.LandCard;
+import com.avatarduel.model.card.PoweredCard;
 
 public class Player {
 
@@ -37,15 +39,30 @@ public class Player {
         subList.clear();
     }
 
-    public void drawCard() {
-        handCards.add(deck.remove(0));
+    public void resetState() {
         hasPutLandCard = false;
+        for (Element el : Element.values()) {
+            currentElementValue[el.ordinal()] = maxElementValue[el.ordinal()];
+        }
+        int i = 0;
+        for (int j = 0; j < Constants.CARD_COLUMN; ++j) {
+            ActiveCharacterCard acc = (ActiveCharacterCard) fieldCards[i][j];
+            acc.setHasAttacked(false);
+            acc.setIsEnableToAttack(true);
+        }
     }
 
-    public void addElement(Element el) {
-        int i = el.ordinal();
-        ++currentElementValue[i];
-        ++maxElementValue[i];
+    public void drawCard() {
+        handCards.add(deck.remove(0));
+    }
+
+    public void addMaxElement(Element el) {
+        addCurrentElement(el, 1);
+        ++maxElementValue[el.ordinal()];
+    }
+
+    public void addCurrentElement(Element el, int count) {
+        currentElementValue[el.ordinal()] += count;
     }
 
     public void addToDeck(List<Card> cards) {
@@ -54,39 +71,55 @@ public class Player {
     }
 
     private void putCard(int i, int j, Card card) {
-        handCards.remove(card);
-        fieldCards[i][j] = card instanceof CharacterCard ? ((CharacterCard) card).createActiveCard() : card;
+        fieldCards[i][j] = card;
     }
 
-    private boolean putLandCard(LandCard card) {
-        if (hasPutLandCard) {
-            return false;
-        }
-        handCards.remove(card);
+    private void putLandCard(LandCard card) {
         hasPutLandCard = true;
-        addElement(card.getElementType());
-        return true;
+        addMaxElement(card.getElementType());
     }
 
     public boolean putCard(Card card) {
+        if (!canPutCard(card)) {
+            return false;
+        }
+        handCards.remove(card);
+        if (card instanceof LandCard) {
+            putLandCard((LandCard) card);
+            return true;
+        }
+        if (card instanceof PoweredCard) {
+            addCurrentElement(card.getElementType(), -((PoweredCard) card).getPowerNeeded());
+        }
+        if (card instanceof ActivableCard) {
+            int i = card instanceof CharacterCard ? 0 : 1;
+            for (int j = 0; j < fieldCards[i].length; ++j) {
+                if (fieldCards[i][j] == null) {
+                    putCard(i, j, ((ActivableCard) card).createActiveCard());
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean canPutCard(Card card) {
         if (!handCards.contains(card)) {
             return false;
         }
-        if (card instanceof LandCard) {
-            return putLandCard((LandCard) card);
-        }
-        int i = card instanceof CharacterCard ? 0 : 1;
-        for (int j = 0; j < fieldCards[i].length; ++j) {
-            if (fieldCards[i][j] == null) {
-                putCard(i, j, card);
-                return true;
+        if (card instanceof ActivableCard) {
+            boolean hasEmpty = false;
+            int i = card instanceof CharacterCard ? 0 : 1;
+            for (int j = 0; j < fieldCards[i].length; ++j) {
+                if (fieldCards[i][j] == null) {
+                    hasEmpty = true;
+                }
+            }
+            if (!hasEmpty) {
+                return false;
             }
         }
-        return false;
-    }
-
-    public void shuffleDeck() {
-        Collections.shuffle(deck);
+        return (card instanceof LandCard && !hasPutLandCard) || (card instanceof PoweredCard
+                && ((PoweredCard) card).getPowerNeeded() <= currentElementValue[card.getElementType().ordinal()]);
     }
 
     public String getName() {
@@ -119,6 +152,10 @@ public class Player {
 
     public Card getFieldCard(int row, int col) {
         return fieldCards[row][col];
+    }
+
+    public void removeFieldCard(int row, int col) {
+        fieldCards[row][col] = null;
     }
 
 }

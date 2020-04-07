@@ -1,8 +1,10 @@
 package com.avatarduel.controller;
 
 import com.avatarduel.controller.listener.CardEventListener;
+import com.avatarduel.model.Phase;
 import com.avatarduel.model.Player;
 import com.avatarduel.model.card.Card;
+import com.avatarduel.model.card.skill.SkillCard;
 
 import javafx.scene.Cursor;
 
@@ -31,15 +33,28 @@ public class CardHandEventListener implements CardEventListener {
 
     @Override
     public void onMouseLeftClicked(Card card) {
+        Phase phase = gameController.getPhase();
+        if (phase != Phase.MAIN1 && phase != Phase.MAIN2) {
+            return;
+        }
         RenderController renderController = gameController.getRenderController();
+        PlayerController playerController = gameController.getPlayerController();
         if (card == renderController.getClosedCard()) {
             return;
         }
-        Player turn = gameController.getPlayerController().getCurrentPlayerTurn();
-        turn.putCard(card);
-        renderController.updateFieldCard(turn);
+        Player turn = playerController.getCurrentPlayerTurn();
+        Card clicked = playerController.getClickedCard();
+        if (card instanceof SkillCard) {
+            playerController.setClickedCard(card != clicked && turn.canPutCard(card) ? card : null);
+        } else {
+            playerController.setClickedCard(null);
+            if (turn.canPutCard(card)) {
+                turn.putCard(card);
+                renderController.updateFieldCard(turn);
+                renderController.updateElementValues(turn);
+            }
+        }
         renderController.updateHandCard(turn);
-        renderController.updateElementValues(turn);
     }
 
 }

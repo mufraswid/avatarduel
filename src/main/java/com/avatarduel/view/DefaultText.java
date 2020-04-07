@@ -1,6 +1,11 @@
 package com.avatarduel.view;
 
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -40,7 +45,7 @@ public class DefaultText extends AnchorPane {
     }
 
     public void addBorder() {
-        setBorder(BorderBuilder.createDefaultBorder());
+        setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, new BorderWidths(1))));
     }
 
     public void removeBorder() {

@@ -1,7 +1,11 @@
 package com.avatarduel.controller;
 
 import com.avatarduel.controller.listener.CardEventListener;
+import com.avatarduel.model.Player;
+import com.avatarduel.model.card.ActiveCharacterCard;
 import com.avatarduel.model.card.Card;
+import com.avatarduel.model.card.skill.DestroySkillCard;
+import com.avatarduel.model.card.skill.SkillCard;
 
 import javafx.scene.Cursor;
 
@@ -32,8 +36,20 @@ public class CardFieldEventListener implements CardEventListener {
 
     @Override
     public void onMouseLeftClicked(Card card) {
-        // TODO Auto-generated method stub
-
+        RenderController renderController = gameController.getRenderController();
+        PlayerController playerController = gameController.getPlayerController();
+        Player turn = playerController.getCurrentPlayerTurn();
+        Card clicked = playerController.getClickedCard();
+        if (clicked != null) {
+            if (clicked instanceof SkillCard && card instanceof ActiveCharacterCard) {
+                ActiveCharacterCard acc = (ActiveCharacterCard) card;
+                if (clicked instanceof DestroySkillCard) {
+                    playerController.removeCardFromField(acc);
+                } else {
+                    acc.addSkill((SkillCard) clicked);
+                }
+            }
+        }
     }
 
 }

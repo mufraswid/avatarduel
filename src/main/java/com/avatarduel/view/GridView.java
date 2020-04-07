@@ -2,14 +2,17 @@ package com.avatarduel.view;
 
 import java.util.Arrays;
 
-import com.avatarduel.Constants;
-
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.paint.Color;
 
 public abstract class GridView extends GridPane {
 
@@ -19,8 +22,6 @@ public abstract class GridView extends GridPane {
         Object[] arr = Arrays.stream(colPercentages).mapToObj(d -> {
             ColumnConstraints col = new ColumnConstraints();
             col.setPercentWidth(d);
-            // col.setPrefWidth(d * ((Region) getParent()).getPrefWidth() / 100d);
-            // col.prefWidthProperty().bind(((Region) getParent()).prefWidthProperty().multiply(d).divide(100d));
             col.setHgrow(Priority.SOMETIMES);
             col.setHalignment(HPos.CENTER);
             return col;
@@ -30,20 +31,22 @@ public abstract class GridView extends GridPane {
         arr = Arrays.stream(rowPercentages).mapToObj(d -> {
             RowConstraints row = new RowConstraints();
             row.setPercentHeight(d);
-            // row.setPrefHeight(d * ((Region) getParent()).getPrefHeight() / 100d);
-            // row.prefHeightProperty().bind(((Region) getParent()).prefHeightProperty().multiply(d).divide(100d));
             row.setVgrow(Priority.SOMETIMES);
             row.setValignment(VPos.CENTER);
             return row;
         }).toArray();
         getRowConstraints().setAll(Arrays.copyOf(arr, arr.length, RowConstraints[].class));
 
-        setHgap(Constants.GAP);
-        setVgap(Constants.GAP);
+        // setHgap(Constants.GAP);
+        // setVgap(Constants.GAP);
     }
 
     public void addBorder() {
-        setBorder(BorderBuilder.createDefaultBorder());
+        addBorder(Color.BLACK, BorderStrokeStyle.SOLID, 1);
+    }
+
+    public void addBorder(Color color, BorderStrokeStyle style, int widths) {
+        setBorder(new Border(new BorderStroke(color, style, null, new BorderWidths(widths))));
     }
 
     public void removeBorder() {

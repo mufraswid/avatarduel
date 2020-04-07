@@ -1,5 +1,7 @@
 package com.avatarduel.model.card;
 
+import java.util.UUID;
+
 import com.avatarduel.model.Element;
 import com.avatarduel.util.ResourceFinder;
 
@@ -8,34 +10,18 @@ import com.avatarduel.util.ResourceFinder;
  */
 public abstract class Card {
     // atribut
-    private int id;
+    private UUID id;
     private String name, description, imagePath;
     private Element elementType;
-    private boolean isClosed;
+    private boolean isClosed, isClicked;
 
-    public Card(String imagePath, int id, String name, String description, Element elementType) {
+    public Card(String imagePath, String name, String description, Element elementType) {
         setImagePath(imagePath);
-        setId(id);
         setNama(name);
         setDesc(description);
         setElementType(elementType);
         setClosed(false);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Card)) {
-            return false;
-        }
-        Card card = (Card) o;
-        return id == card.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return id;
+        id = UUID.randomUUID();
     }
 
     //#region setter
@@ -43,13 +29,8 @@ public abstract class Card {
         this.isClosed = closed;
     }
 
-    private void setId(int id) {
-        this.id = id;
-    }
-
     private void setImagePath(String imagePath) {
         this.imagePath = imagePath;
-        // TODO delete later
         if (ResourceFinder.getURL(imagePath).contains("notfound.png")) {
             System.err.println("Path: " + imagePath + " not found!");
         }
@@ -66,15 +47,19 @@ public abstract class Card {
     private void setElementType(Element elementType) {
         this.elementType = elementType;
     }
+
+    public void setClicked(boolean clicked) {
+        this.isClicked = clicked;
+    }
     //#endregion
 
     //#region getter
-    public boolean isClosed() {
-        return isClosed;
+    public boolean isClicked() {
+        return isClicked;
     }
 
-    public int getId() {
-        return this.id;
+    public boolean isClosed() {
+        return isClosed;
     }
 
     public String getImagePath() {
@@ -93,4 +78,30 @@ public abstract class Card {
         return this.elementType;
     }
     //#endregion
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Card other = (Card) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
+    }
+
 }

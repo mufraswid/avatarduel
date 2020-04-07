@@ -5,7 +5,7 @@ import com.avatarduel.model.Element;
 /**
  * Kelas CharacterCard: kelas yang memodelkan konsep kartu karakter, merupakan subclass dari kelas Kartu
  */
-public class CharacterCard extends Card {
+public class CharacterCard extends Card implements PoweredCard, ActivableCard {
 
     /** 
     * Atribut dari CharacterCard: atk untuk attack, def untuk defense dari kartu, powerNeeded untuk jumlah power yang dibutuhkan, 
@@ -14,9 +14,9 @@ public class CharacterCard extends Card {
     private int powerNeeded, attack, defense;
 
     // constructor
-    public CharacterCard(String imagePath, int id, String name, String description, Element elementType,
-            int powerNeeded, int attack, int defense) {
-        super(imagePath, id, name, description, elementType);
+    public CharacterCard(String imagePath, String name, String description, Element elementType, int powerNeeded,
+            int attack, int defense) {
+        super(imagePath, name, description, elementType);
         setPowerNeeded(powerNeeded);
         setAttack(attack);
         setDefense(defense);
@@ -54,6 +54,7 @@ public class CharacterCard extends Card {
         return "CHARACTER CARD\n" + super.getDescription();
     }
 
+    @Override
     public ActiveCharacterCard createActiveCard() {
         return new ActiveCharacterCard(this);
     }
