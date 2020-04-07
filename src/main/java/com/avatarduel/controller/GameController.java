@@ -48,35 +48,16 @@ public class GameController {
 
     public void playPhase() {
         renderController.updatePhase(phase);
-        switch (phase) {
-            case DRAW: {
-                playerController.resetPlayerState();
-                if (!playerController.doDrawPhase()) {
-                    endGame(playerController.getEnemyCurrentTurn());
-                    return;
-                }
-                Player turn = playerController.getCurrentPlayerTurn();
-                renderController.updateElementValues(turn);
-                renderController.updateHandCard(turn);
-                renderController.updateDeckCount(turn);
-                break;
+        if (phase == Phase.DRAW) {
+            playerController.resetPlayerState();
+            if (!playerController.doDrawPhase()) {
+                endGame(playerController.getEnemyCurrentTurn());
+                return;
             }
-            case MAIN1: {
-
-                break;
-            }
-            case BATTLE: {
-
-                break;
-            }
-            case MAIN2: {
-
-                break;
-            }
-            case END: {
-
-                break;
-            }
+            Player turn = playerController.getCurrentPlayerTurn();
+            renderController.updateElementValues(turn);
+            renderController.updateHandCard(turn);
+            renderController.updateDeckCount(turn);
         }
     }
 

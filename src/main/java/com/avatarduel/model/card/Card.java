@@ -10,7 +10,7 @@ import com.avatarduel.util.ResourceFinder;
  */
 public abstract class Card {
     // atribut
-    private UUID id;
+    private final UUID uuid;
     private String name, description, imagePath;
     private Element elementType;
     private boolean isClosed, isClicked;
@@ -21,7 +21,7 @@ public abstract class Card {
         setDesc(description);
         setElementType(elementType);
         setClosed(false);
-        id = UUID.randomUUID();
+        uuid = UUID.randomUUID();
     }
 
     //#region setter
@@ -83,7 +83,7 @@ public abstract class Card {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((uuid == null) ? 0 : uuid.hashCode());
         return result;
     }
 
@@ -96,10 +96,10 @@ public abstract class Card {
         if (getClass() != obj.getClass())
             return false;
         Card other = (Card) obj;
-        if (id == null) {
-            if (other.id != null)
+        if (uuid == null) {
+            if (other.uuid != null)
                 return false;
-        } else if (!id.equals(other.id))
+        } else if (!uuid.equals(other.uuid))
             return false;
         return true;
     }
