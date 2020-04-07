@@ -3,14 +3,15 @@ package com.avatarduel.view.child.card.status;
 import com.avatarduel.Constants;
 import com.avatarduel.model.card.ActiveCharacterCard;
 import com.avatarduel.model.card.CharacterCard;
+import com.avatarduel.model.card.skill.AuraSkillCard;
 import com.avatarduel.view.DefaultText;
 import com.avatarduel.view.child.card.CardView;
 
-public class CharacterStatusView extends CardView {
+public class StatusView extends CardView {
 
     private DefaultText attackText, defenseText, powerText;
 
-    public CharacterStatusView(boolean small) {
+    public StatusView(boolean small) {
         super("34,34,34", "100");
         attackText = new DefaultText();
         defenseText = new DefaultText();
@@ -27,7 +28,7 @@ public class CharacterStatusView extends CardView {
         add(powerText, 2, 0);
     }
 
-    public void render(CharacterCard card) {
+    public void renderCharacterCard(CharacterCard card) {
         String atk = "ATK " + card.getAttack();
         String def = "DEF " + card.getDefense();
         if (card instanceof ActiveCharacterCard) {
@@ -43,6 +44,12 @@ public class CharacterStatusView extends CardView {
         }
         attackText.setText(atk);
         defenseText.setText(def);
+        powerText.setText("PWR " + card.getPowerNeeded());
+    }
+
+    public void renderAuraSkillCard(AuraSkillCard card) {
+        attackText.setText("ATK " + card.getAttackAddition());
+        defenseText.setText("DEF " + card.getDefenseAddition());
         powerText.setText("PWR " + card.getPowerNeeded());
     }
 

@@ -1,15 +1,15 @@
 package com.avatarduel.view.child.card.status;
 
 import com.avatarduel.Constants;
-import com.avatarduel.model.card.skill.SkillCard;
+import com.avatarduel.model.card.PoweredCard;
 import com.avatarduel.view.DefaultText;
 import com.avatarduel.view.child.card.CardView;
 
-public class SkillStatusView extends CardView {
+public class PowerStatusView extends CardView {
 
     private DefaultText powerText;
 
-    public SkillStatusView(boolean small) {
+    public PowerStatusView(boolean small) {
         super("100", "100");
         powerText = new DefaultText();
         if (small) {
@@ -18,7 +18,7 @@ public class SkillStatusView extends CardView {
         add(powerText, 0, 0);
     }
 
-    public void render(SkillCard card) {
+    public void render(PoweredCard card) {
         powerText.setText("PWR " + card.getPowerNeeded());
     }
 

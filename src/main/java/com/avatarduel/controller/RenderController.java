@@ -86,4 +86,12 @@ public class RenderController {
         }
     }
 
+    public void updateStatus(Player turn) {
+        if (turn == player1) {
+            mainView.renderStatusView1(turn);
+        } else if (turn == player2) {
+            mainView.renderStatusView2(turn);
+        }
+    }
+
 }

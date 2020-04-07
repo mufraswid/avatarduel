@@ -2,6 +2,7 @@ package com.avatarduel.controller;
 
 import com.avatarduel.model.Phase;
 import com.avatarduel.model.Player;
+import com.avatarduel.model.card.Card;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -47,17 +48,21 @@ public class GameController {
     }
 
     public void playPhase() {
+        Card clicked = playerController.getClickedCard();
         renderController.updatePhase(phase);
+        playerController.setClickedCard(null);
+        Player turn = playerController.getCurrentPlayerTurn();
         if (phase == Phase.DRAW) {
             playerController.resetPlayerState();
             if (!playerController.doDrawPhase()) {
                 endGame(playerController.getEnemyCurrentTurn());
                 return;
             }
-            Player turn = playerController.getCurrentPlayerTurn();
             renderController.updateElementValues(turn);
             renderController.updateHandCard(turn);
             renderController.updateDeckCount(turn);
+        } else if (clicked != null) {
+            renderController.updateHandCard(turn);
         }
     }
 
@@ -66,6 +71,19 @@ public class GameController {
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.showAndWait();
         Platform.exit();
+    }
+
+    public void checkEndGame() {
+        Player winner = null;
+        Player player1 = playerController.getPlayer1(), player2 = playerController.getPlayer2();
+        if (player1.getHP() <= 0) {
+            winner = player2;
+        } else if (player2.getHP() <= 0) {
+            winner = player1;
+        }
+        if (winner != null) {
+            endGame(winner);
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package com.avatarduel.controller;
 
 import com.avatarduel.Constants;
+import com.avatarduel.model.CardPosition;
 import com.avatarduel.model.Player;
 import com.avatarduel.model.card.ActivableCard;
 import com.avatarduel.model.card.ActiveCharacterCard;
@@ -99,6 +100,25 @@ public class PlayerController {
     public void resetPlayerState() {
         turn.resetState();
         setClickedCard(null);
+    }
+
+    public boolean doAttack(ActiveCharacterCard attacker, ActiveCharacterCard defender) {
+        if (defender == null) {
+            getEnemyCurrentTurn().damage(attacker.getTotalAttack());
+        } else {
+            boolean isDefensePosition = defender.getPosition() == CardPosition.DEFENSE;
+            int defValue = isDefensePosition ? defender.getTotalDefense() : defender.getTotalAttack();
+            int selisih = attacker.getTotalAttack() - defValue;
+            if (selisih < 0) {
+                return false;
+            }
+            removeCardFromField(defender);
+            if (!isDefensePosition) {
+                getEnemyCurrentTurn().damage(selisih);
+            }
+        }
+        attacker.setHasAttacked(true);
+        return true;
     }
 
 }

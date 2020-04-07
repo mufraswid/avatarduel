@@ -1,6 +1,7 @@
 package com.avatarduel.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.avatarduel.Constants;
@@ -31,6 +32,12 @@ public class Player {
         fieldCards = new Card[Constants.CARD_ROW][Constants.CARD_COLUMN];
         hp = 80;
         hasPutLandCard = false;
+
+        // TODO delete later
+        for (int i = 0; i < elementLenght; ++i) {
+            currentElementValue[i] = 89;
+            maxElementValue[i] = 89;
+        }
     }
 
     public void drawCard(int count) {
@@ -52,6 +59,14 @@ public class Player {
                 acc.setIsEnableToAttack(true);
             }
         }
+    }
+
+    public boolean hasCardOnField(ActiveCharacterCard card) {
+        return Arrays.stream(fieldCards[0]).anyMatch(c -> c == card);
+    }
+
+    public boolean hasActiveCharacterCard() {
+        return Arrays.stream(fieldCards[0]).anyMatch(c -> c != null);
     }
 
     public void drawCard() {
@@ -98,6 +113,7 @@ public class Player {
             for (int j = 0; j < fieldCards[i].length; ++j) {
                 if (fieldCards[i][j] == null) {
                     putCard(i, j, ((ActivableCard) card).createActiveCard());
+                    return true;
                 }
             }
         }
@@ -158,6 +174,10 @@ public class Player {
 
     public void removeFieldCard(int row, int col) {
         fieldCards[row][col] = null;
+    }
+
+    public void damage(int damage) {
+        hp -= damage;
     }
 
 }

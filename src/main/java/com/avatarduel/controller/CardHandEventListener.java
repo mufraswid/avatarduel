@@ -45,16 +45,22 @@ public class CardHandEventListener implements CardEventListener {
         Player turn = playerController.getCurrentPlayerTurn();
         Card clicked = playerController.getClickedCard();
         if (card instanceof SkillCard) {
-            playerController.setClickedCard(card != clicked && turn.canPutCard(card) ? card : null);
+            Card next = card != clicked && turn.canPutCard(card) ? card : null;
+            playerController.setClickedCard(next);
+            if (next != clicked) {
+                renderController.updateHandCard(turn);
+            }
         } else {
             playerController.setClickedCard(null);
             if (turn.canPutCard(card)) {
                 turn.putCard(card);
                 renderController.updateFieldCard(turn);
                 renderController.updateElementValues(turn);
+                renderController.updateHandCard(turn);
+            } else if (clicked != null) {
+                renderController.updateHandCard(turn);
             }
         }
-        renderController.updateHandCard(turn);
     }
 
 }
