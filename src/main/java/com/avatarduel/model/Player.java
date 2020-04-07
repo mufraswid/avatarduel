@@ -61,8 +61,9 @@ public class Player {
         }
     }
 
-    public boolean hasCardOnField(ActiveCharacterCard card) {
-        return Arrays.stream(fieldCards[0]).anyMatch(c -> c == card);
+    public boolean hasCardOnField(Card card) {
+        return Arrays.stream(fieldCards[0]).anyMatch(c -> c == card)
+                || Arrays.stream(fieldCards[1]).anyMatch(c -> c == card);
     }
 
     public boolean hasActiveCharacterCard() {

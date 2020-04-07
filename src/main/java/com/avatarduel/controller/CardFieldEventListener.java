@@ -4,6 +4,7 @@ import com.avatarduel.controller.listener.CardEventListener;
 import com.avatarduel.model.CardPosition;
 import com.avatarduel.model.Phase;
 import com.avatarduel.model.Player;
+import com.avatarduel.model.card.ActivableCard;
 import com.avatarduel.model.card.ActiveCharacterCard;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.model.card.skill.DestroySkillCard;
@@ -32,8 +33,22 @@ public class CardFieldEventListener implements CardEventListener {
 
     @Override
     public void onMouseRightClicked(Card card) {
-        // TODO Auto-generated method stub
-
+        Phase phase = gameController.getPhase();
+        if (phase == Phase.DRAW || phase == Phase.END) {
+            return;
+        }
+        RenderController renderController = gameController.getRenderController();
+        PlayerController playerController = gameController.getPlayerController();
+        if (card == renderController.getClosedCard()) {
+            return;
+        }
+        Player turn = playerController.getCurrentPlayerTurn();
+        if (turn.hasCardOnField(card)) {
+            if (phase != Phase.BATTLE || card instanceof ActiveCharacterCard) {
+                playerController.removeCardFromField((ActivableCard) card);
+                renderController.updateFieldCard(turn);
+            }
+        }
     }
 
     @Override
