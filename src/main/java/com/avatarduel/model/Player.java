@@ -46,9 +46,11 @@ public class Player {
         }
         int i = 0;
         for (int j = 0; j < Constants.CARD_COLUMN; ++j) {
-            ActiveCharacterCard acc = (ActiveCharacterCard) fieldCards[i][j];
-            acc.setHasAttacked(false);
-            acc.setIsEnableToAttack(true);
+            if (fieldCards[i][j] != null) {
+                ActiveCharacterCard acc = (ActiveCharacterCard) fieldCards[i][j];
+                acc.setHasAttacked(false);
+                acc.setIsEnableToAttack(true);
+            }
         }
     }
 
