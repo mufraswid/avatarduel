@@ -60,4 +60,9 @@ public class CharacterCard extends Card implements PoweredCard, ActivableCard {
     }
     //#endregion
 
+    @Override
+    public Card copy() {
+        return new CharacterCard(imagePath, name, description, elementType, powerNeeded, attack, defense);
+    }
+
 }

@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.avatarduel.Constants;
 import com.avatarduel.model.CardType;
@@ -128,10 +129,10 @@ public class CardDao {
         int listLength = collect.size();
         while (count > 0) {
             int take = Math.min(count, listLength);
-            if (take == count) {
+            if (take != listLength) {
                 Collections.shuffle(collect);
             }
-            res.addAll(collect.subList(0, take));
+            res.addAll(collect.subList(0, take).stream().map(c -> c.copy()).collect(Collectors.toList()));
             count -= take;
         }
         return res;

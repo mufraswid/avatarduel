@@ -2,6 +2,7 @@ package com.avatarduel.model.card.skill;
 
 import com.avatarduel.model.Element;
 import com.avatarduel.model.card.ActivableCard;
+import com.avatarduel.model.card.Card;
 
 /**
  * Kelas KartuSkillAura: kelas yang memodelkan konsep kartu skill tipe Aura, diturunkan dari kelas KartuSkill
@@ -46,5 +47,11 @@ public class AuraSkillCard extends SkillCard implements ActivableCard {
     @Override
     public AuraSkillCard createActiveCard() {
         return this;
+    }
+
+    @Override
+    public Card copy() {
+        return new AuraSkillCard(imagePath, name, description, elementType, powerNeeded, attackAddition,
+                defenseAddition);
     }
 }

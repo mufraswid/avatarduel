@@ -10,19 +10,13 @@ import com.avatarduel.model.card.PoweredCard;
  */
 public abstract class SkillCard extends Card implements PoweredCard {
     // Atribut dari KartuSkill
-    private int powerNeeded;
+    protected int powerNeeded;
 
     // Konstruktor
     public SkillCard(String imagePath, String name, String description, Element elementType, int powerNeeded) {
         super(imagePath, name, description, elementType);
-        setPowerNeeded(powerNeeded);
-    }
-
-    //#region setter
-    private void setPowerNeeded(int powerNeeded) {
         this.powerNeeded = powerNeeded;
     }
-    //#endregion
 
     //#region getter
     @Override

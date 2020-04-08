@@ -1,6 +1,7 @@
 package com.avatarduel.model.card.skill;
 
 import com.avatarduel.model.Element;
+import com.avatarduel.model.card.Card;
 
 /**
  * Kelas KartuSkillDestroy: kelas yang memodelkan konsep kartu skill tipe destroy, diturunkan dari kelas KartuSkill
@@ -14,6 +15,11 @@ public class DestroySkillCard extends SkillCard {
     @Override
     public String getDescription() {
         return "DESTROY SKILL CARD\n" + super.getDescription();
+    }
+
+    @Override
+    public Card copy() {
+        return new DestroySkillCard(imagePath, name, description, elementType, powerNeeded);
     }
 
 }

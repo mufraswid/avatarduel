@@ -2,6 +2,7 @@ package com.avatarduel.model.card.skill;
 
 import com.avatarduel.model.Element;
 import com.avatarduel.model.card.ActivableCard;
+import com.avatarduel.model.card.Card;
 
 /**
  * Kelas KartuSkillPowerUp: kelas yang memodelkan konsep kartu skill tipe power up, diturunkan dari kelas KartuSkill
@@ -20,6 +21,11 @@ public class PowerUpSkillCard extends SkillCard implements ActivableCard {
     @Override
     public PowerUpSkillCard createActiveCard() {
         return this;
+    }
+
+    @Override
+    public Card copy() {
+        return new PowerUpSkillCard(imagePath, name, description, elementType, powerNeeded);
     }
 
 }

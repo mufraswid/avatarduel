@@ -10,10 +10,10 @@ import com.avatarduel.util.ResourceFinder;
  */
 public abstract class Card {
     // atribut
-    private final UUID uuid;
-    private String name, description, imagePath;
-    private Element elementType;
-    private boolean isClosed, isClicked;
+    protected final UUID uuid;
+    protected String name, description, imagePath;
+    protected Element elementType;
+    protected boolean isClosed, isClicked;
 
     public Card(String imagePath, String name, String description, Element elementType) {
         setImagePath(imagePath);
@@ -78,6 +78,8 @@ public abstract class Card {
         return this.elementType;
     }
     //#endregion
+
+    public abstract Card copy();
 
     @Override
     public int hashCode() {

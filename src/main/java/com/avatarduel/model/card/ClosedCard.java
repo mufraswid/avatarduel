@@ -6,4 +6,9 @@ public class ClosedCard extends Card {
         super("card/image/closed.png", "", "", null);
     }
 
+    @Override
+    public Card copy() {
+        return this;
+    }
+
 }

@@ -19,7 +19,7 @@ public class Main extends Application {
         GameController game = new GameController(new CardDao());
         primaryStage.setTitle("Avatar Duel by K03-G01");
         primaryStage.setScene(game.getRenderController().getScene());
-        // primaryStage.setResizable(false);
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 }
