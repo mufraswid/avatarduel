@@ -19,7 +19,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 public class LogicTest {
 
@@ -61,14 +61,9 @@ public class LogicTest {
 
     @DisplayName("Testing attack and defend calculation")
     @ParameterizedTest(name = "AttackValue {0}, PowerUp {1}, Auras {2} attacking AttackValue {3}, DefenseValue {4}, Auras {5}, with Position {6} should be resulting damage {7} to the enemy player!")
-    @CsvSource(delimiter = '\t', emptyValue = "-", value = { "20	-	-	10	10	-	DEFENSE	0",
-            "30	-	-	10	10	-	DEFENSE	0", "30	-	-	10	10	-	ATTACK	-20",
-            "30	-	-	-	-	-	-	-30", "30	TRUE	-	20	10	-	DEFENSE	-20",
-            "44	TRUE	20 0;-17 0	90	45	-	DEFENSE	-2",
-            "44	TRUE	20 124;-17 999	90	45	110 1;-99 1	DEFENSE	0" })
+    @CsvFileSource(resources = "testAttack.csv", delimiter = '\t', emptyValue = "-")
     public void testAttack(int atk, String powerUp, String auras, String atkDef, String defDef, String aurasDef,
-            String position, int damage) {
-        int hp = getEnemyHP();
+            String position, int damage, boolean succeed) {
         ActiveCharacterCard attacker = createCharacterCard(atk, 0);
         if (!powerUp.equals("-")) {
             attacker.addSkill(createPowerUpCard());
@@ -92,7 +87,8 @@ public class LogicTest {
             }
         }
 
-        playerController.doAttack(attacker, defender);
+        int hp = getEnemyHP();
+        assertEquals(succeed, playerController.doAttack(attacker, defender));
         assertEquals(damage, getEnemyHP() - hp);
     }
 
