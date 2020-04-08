@@ -5,12 +5,13 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.avatarduel.Constants;
-import com.avatarduel.model.card.ActivableCard;
-import com.avatarduel.model.card.ActiveCharacterCard;
+import com.avatarduel.model.card.ArenaCharacterCard;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.model.card.CharacterCard;
 import com.avatarduel.model.card.LandCard;
 import com.avatarduel.model.card.PoweredCard;
+import com.avatarduel.model.card.PutableCard;
+import com.avatarduel.model.card.skill.SkillCard;
 
 public class Player {
 
@@ -54,7 +55,7 @@ public class Player {
         int i = 0;
         for (int j = 0; j < Constants.CARD_COLUMN; ++j) {
             if (fieldCards[i][j] != null) {
-                ActiveCharacterCard acc = (ActiveCharacterCard) fieldCards[i][j];
+                ArenaCharacterCard acc = (ArenaCharacterCard) fieldCards[i][j];
                 acc.setHasAttacked(false);
                 acc.setIsEnableToAttack(true);
             }

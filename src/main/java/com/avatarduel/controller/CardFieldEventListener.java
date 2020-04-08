@@ -4,8 +4,7 @@ import com.avatarduel.controller.listener.CardEventListener;
 import com.avatarduel.model.CardPosition;
 import com.avatarduel.model.Phase;
 import com.avatarduel.model.Player;
-import com.avatarduel.model.card.ActivableCard;
-import com.avatarduel.model.card.ActiveCharacterCard;
+import com.avatarduel.model.card.ArenaCharacterCard;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.model.card.skill.DestroySkillCard;
 import com.avatarduel.model.card.skill.SkillCard;
@@ -44,8 +43,8 @@ public class CardFieldEventListener implements CardEventListener {
         }
         Player turn = playerController.getCurrentPlayerTurn();
         if (turn.hasCardOnField(card)) {
-            if (phase != Phase.BATTLE || card instanceof ActiveCharacterCard) {
-                playerController.removeCardFromField((ActivableCard) card);
+            if (phase != Phase.BATTLE || card instanceof ArenaCharacterCard) {
+                playerController.removeCardFromField((ArenaCharacterCard) card);
                 renderController.updateFieldCard(turn);
                 renderController.updateFieldCard(playerController.getEnemyCurrentTurn());
             }
@@ -65,8 +64,8 @@ public class CardFieldEventListener implements CardEventListener {
         }
         Player turn = playerController.getCurrentPlayerTurn();
         Card clicked = playerController.getClickedCard();
-        if (card instanceof ActiveCharacterCard) {
-            ActiveCharacterCard acc = (ActiveCharacterCard) card;
+        if (card instanceof ArenaCharacterCard) {
+            ArenaCharacterCard acc = (ArenaCharacterCard) card;
             boolean turnsCard = turn.hasCardOnField(acc);
             Player enemy = playerController.getEnemyCurrentTurn();
             if (phase == Phase.BATTLE) {
@@ -80,8 +79,8 @@ public class CardFieldEventListener implements CardEventListener {
                         renderController.updateStatus(enemy);
                         gameController.checkEndGame();
                     }
-                } else if (!turnsCard && clicked instanceof ActiveCharacterCard) {
-                    ActiveCharacterCard accClicked = (ActiveCharacterCard) clicked;
+                } else if (!turnsCard && clicked instanceof ArenaCharacterCard) {
+                    ArenaCharacterCard accClicked = (ArenaCharacterCard) clicked;
                     if (turn.hasCardOnField(accClicked) && playerController.doAttack(accClicked, acc)) {
                         renderController.updateFieldCard(enemy);
                         renderController.updateStatus(enemy);
@@ -92,7 +91,8 @@ public class CardFieldEventListener implements CardEventListener {
                 }
             } else {
                 if (clicked instanceof SkillCard) {
-                    if (turn.putCard(clicked)) {
+                    if (turn.canPutCard(clicked)) {
+                        turn.putCard(clicked);
                         playerController.setClickedCard(null);
                         if (clicked instanceof DestroySkillCard) {
                             playerController.removeCardFromField(acc);

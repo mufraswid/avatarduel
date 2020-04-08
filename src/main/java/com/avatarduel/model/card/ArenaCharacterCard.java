@@ -8,14 +8,14 @@ import com.avatarduel.model.card.skill.AuraSkillCard;
 import com.avatarduel.model.card.skill.PowerUpSkillCard;
 import com.avatarduel.model.card.skill.SkillCard;
 
-public class ActiveCharacterCard extends CharacterCard {
+public class ArenaCharacterCard extends CharacterCard {
 
     private List<SkillCard> skillCardList;
     private CardPosition position;
 
     private boolean hasAttacked, isEnableToAttack;
 
-    public ActiveCharacterCard(CharacterCard card) {
+    public ArenaCharacterCard(CharacterCard card) {
         super(card.getImagePath(), card.getName(), card.getDescription(), card.getElementType(), card.getPowerNeeded(),
                 card.getAttack(), card.getDefense());
         setPosition(CardPosition.ATTACK);

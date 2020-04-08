@@ -13,6 +13,11 @@ public class DestroySkillCard extends SkillCard {
     }
 
     @Override
+    public String getDescription() {
+        return "Destroy Skill Card\n" + super.getDescription();
+    }
+
+    @Override
     public Card copy() {
         return new DestroySkillCard(imagePath, name, description, elementType, powerNeeded);
     }

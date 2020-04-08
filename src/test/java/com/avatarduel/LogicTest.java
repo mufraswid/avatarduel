@@ -10,7 +10,7 @@ import com.avatarduel.controller.CardDao;
 import com.avatarduel.controller.PlayerController;
 import com.avatarduel.model.CardPosition;
 import com.avatarduel.model.Element;
-import com.avatarduel.model.card.ActiveCharacterCard;
+import com.avatarduel.model.card.ArenaCharacterCard;
 import com.avatarduel.model.card.CharacterCard;
 import com.avatarduel.model.card.skill.AuraSkillCard;
 import com.avatarduel.model.card.skill.PowerUpSkillCard;
@@ -36,7 +36,7 @@ public class LogicTest {
         playerController = new PlayerController(new CardDao());
     }
 
-    private ActiveCharacterCard createCharacterCard(int attack, int defense) {
+    private ArenaCharacterCard createCharacterCard(int attack, int defense) {
         return createCharacterCard(attack, defense, CardPosition.ATTACK);
     }
 
@@ -48,9 +48,8 @@ public class LogicTest {
         return new AuraSkillCard("", "", "", Element.AIR, 0, datk, ddef);
     }
 
-    private ActiveCharacterCard createCharacterCard(int attack, int defense, CardPosition position) {
-        ActiveCharacterCard res = new ActiveCharacterCard(
-                new CharacterCard("", "", "", Element.AIR, 0, attack, defense));
+    private ArenaCharacterCard createCharacterCard(int attack, int defense, CardPosition position) {
+        ArenaCharacterCard res = new ArenaCharacterCard(new CharacterCard("", "", "", Element.AIR, 0, attack, defense));
         res.setPosition(position);
         return res;
     }
@@ -64,7 +63,7 @@ public class LogicTest {
     @CsvFileSource(resources = "testAttack.csv", delimiter = '\t', emptyValue = "-")
     public void testAttack(int atk, String powerUp, String auras, String atkDef, String defDef, String aurasDef,
             String position, int damage, boolean succeed) {
-        ActiveCharacterCard attacker = createCharacterCard(atk, 0);
+        ArenaCharacterCard attacker = createCharacterCard(atk, 0);
         if (!powerUp.equals("-")) {
             attacker.addSkill(createPowerUpCard());
         }
@@ -75,7 +74,7 @@ public class LogicTest {
             }
         }
 
-        ActiveCharacterCard defender = null;
+        ArenaCharacterCard defender = null;
         if (!atkDef.equals("-") && !defDef.equals("-")) {
             defender = createCharacterCard(Integer.parseInt(atkDef), Integer.parseInt(defDef),
                     position.equals("-") ? CardPosition.ATTACK : CardPosition.valueOf(position.toUpperCase()));

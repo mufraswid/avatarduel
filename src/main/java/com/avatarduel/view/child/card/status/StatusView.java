@@ -1,7 +1,7 @@
 package com.avatarduel.view.child.card.status;
 
 import com.avatarduel.Constants;
-import com.avatarduel.model.card.ActiveCharacterCard;
+import com.avatarduel.model.card.ArenaCharacterCard;
 import com.avatarduel.model.card.CharacterCard;
 import com.avatarduel.model.card.skill.AuraSkillCard;
 import com.avatarduel.view.DefaultText;
@@ -31,8 +31,8 @@ public class StatusView extends CardView {
     public void renderCharacterCard(CharacterCard card) {
         String atk = "ATK " + card.getAttack();
         String def = "DEF " + card.getDefense();
-        if (card instanceof ActiveCharacterCard) {
-            ActiveCharacterCard acc = (ActiveCharacterCard) card;
+        if (card instanceof ArenaCharacterCard) {
+            ArenaCharacterCard acc = (ArenaCharacterCard) card;
             int dAtk = acc.getDeltaAttack();
             if (dAtk != 0) {
                 atk += (dAtk > 0 ? "+" : "") + dAtk;

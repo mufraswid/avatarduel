@@ -12,6 +12,11 @@ public class LandCard extends Card {
     }
 
     @Override
+    public String getDescription() {
+        return "Land Card\n" + super.getDescription();
+    }
+
+    @Override
     public Card copy() {
         return new LandCard(imagePath, name, description, elementType);
     }
