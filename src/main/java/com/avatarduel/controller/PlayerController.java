@@ -50,19 +50,15 @@ public class PlayerController {
                 Card c = player1.getFieldCard(i, j);
                 if (c instanceof ActiveCharacterCard && card instanceof SkillCard) {
                     ((ActiveCharacterCard) c).removeSkill((SkillCard) card);
-                }
-                if (c == card) {
+                } else if (c == card) {
                     player1.removeFieldCard(i, j);
-                    return;
                 }
 
                 c = player2.getFieldCard(i, j);
                 if (c instanceof ActiveCharacterCard && card instanceof SkillCard) {
                     ((ActiveCharacterCard) c).removeSkill((SkillCard) card);
-                }
-                if (c == card) {
+                } else if (c == card) {
                     player2.removeFieldCard(i, j);
-                    return;
                 }
             }
         }

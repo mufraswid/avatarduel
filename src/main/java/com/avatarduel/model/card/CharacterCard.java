@@ -50,11 +50,6 @@ public class CharacterCard extends Card implements PoweredCard, ActivableCard {
     }
 
     @Override
-    public String getDescription() {
-        return "CHARACTER CARD\n" + super.getDescription();
-    }
-
-    @Override
     public ActiveCharacterCard createActiveCard() {
         return new ActiveCharacterCard(this);
     }

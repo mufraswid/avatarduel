@@ -14,11 +14,6 @@ public class PowerUpSkillCard extends SkillCard implements ActivableCard {
     }
 
     @Override
-    public String getDescription() {
-        return "POWERUP SKILL CARD\n" + super.getDescription();
-    }
-
-    @Override
     public PowerUpSkillCard createActiveCard() {
         return this;
     }

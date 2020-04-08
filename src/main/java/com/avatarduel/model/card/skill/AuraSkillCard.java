@@ -37,11 +37,6 @@ public class AuraSkillCard extends SkillCard implements ActivableCard {
     public int getDefenseAddition() {
         return this.defenseAddition;
     }
-
-    @Override
-    public String getDescription() {
-        return "AURA SKILL CARD\n" + super.getDescription();
-    }
     //#endregion
 
     @Override
