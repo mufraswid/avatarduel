@@ -2,6 +2,9 @@ package com.avatarduel;
 
 public final class Constants {
 
+    private Constants() {
+    }
+
     // Cards Count
     public static final int CARD_ROW = 2;
     public static final int CARD_COLUMN = 7;

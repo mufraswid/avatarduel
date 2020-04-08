@@ -1,7 +1,6 @@
 package com.avatarduel;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -17,19 +16,12 @@ import com.avatarduel.model.card.skill.PowerUpSkillCard;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
 public class LogicTest {
 
     private PlayerController playerController;
-
-    @DisplayName("Example Test Method with No Business Logic")
-    @Test
-    public void testTheTest() {
-        assertTrue(true);
-    }
 
     @BeforeEach
     public void init() throws IOException, URISyntaxException {
