@@ -12,11 +12,14 @@ import com.avatarduel.model.CardPosition;
 import com.avatarduel.model.Element;
 import com.avatarduel.model.card.ActiveCharacterCard;
 import com.avatarduel.model.card.CharacterCard;
+import com.avatarduel.model.card.skill.AuraSkillCard;
 import com.avatarduel.model.card.skill.PowerUpSkillCard;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class LogicTest {
 
@@ -37,14 +40,12 @@ public class LogicTest {
         return createCharacterCard(attack, defense, CardPosition.ATTACK);
     }
 
-    private ActiveCharacterCard createCharacterCard(int attack, int defense, boolean poweredUp) {
-        ActiveCharacterCard res = createCharacterCard(attack, defense, CardPosition.ATTACK);
-        res.addSkill(createPowerUpCard());
-        return res;
-    }
-
     private PowerUpSkillCard createPowerUpCard() {
         return new PowerUpSkillCard("", "", "", Element.AIR, 0);
+    }
+
+    private AuraSkillCard createAuraCard(int datk, int ddef) {
+        return new AuraSkillCard("", "", "", Element.AIR, 0, datk, ddef);
     }
 
     private ActiveCharacterCard createCharacterCard(int attack, int defense, CardPosition position) {
@@ -58,28 +59,41 @@ public class LogicTest {
         return playerController.getEnemyCurrentTurn().getHP();
     }
 
-    @Test
-    public void testAttack() {
+    @DisplayName("Testing attack and defend calculation")
+    @ParameterizedTest(name = "AttackValue {0}, PowerUp {1}, Auras {2} attacking AttackValue {3}, DefenseValue {4}, Auras {5}, with Position {6} should be resulting damage {7} to the enemy player!")
+    @CsvSource(delimiter = '\t', emptyValue = "-", value = { "20	-	-	10	10	-	DEFENSE	0",
+            "30	-	-	10	10	-	DEFENSE	0", "30	-	-	10	10	-	ATTACK	-20",
+            "30	-	-	-	-	-	-	-30", "30	TRUE	-	20	10	-	DEFENSE	-20",
+            "44	TRUE	20 0;-17 0	90	45	-	DEFENSE	-2",
+            "44	TRUE	20 124;-17 999	90	45	110 1;-99 1	DEFENSE	0" })
+    public void testAttack(int atk, String powerUp, String auras, String atkDef, String defDef, String aurasDef,
+            String position, int damage) {
         int hp = getEnemyHP();
-        playerController.doAttack(createCharacterCard(20, 20), createCharacterCard(20, 20));
-        assertEquals(0, getEnemyHP() - hp, "(20, 20, attack) nyerang (20, 20, attack), HP lawan tetap");
+        ActiveCharacterCard attacker = createCharacterCard(atk, 0);
+        if (!powerUp.equals("-")) {
+            attacker.addSkill(createPowerUpCard());
+        }
+        if (!auras.equals("-")) {
+            for (String aura : auras.split(";")) {
+                String[] split = aura.split(" ");
+                attacker.addSkill(createAuraCard(Integer.parseInt(split[0]), Integer.parseInt(split[1])));
+            }
+        }
 
-        hp = getEnemyHP();
-        playerController.doAttack(createCharacterCard(30, 30), createCharacterCard(10, 10, CardPosition.DEFENSE));
-        assertEquals(0, getEnemyHP() - hp, "(30, 30, attack) nyerang (10, 10, defend), HP lawan tetap");
+        ActiveCharacterCard defender = null;
+        if (!atkDef.equals("-") && !defDef.equals("-")) {
+            defender = createCharacterCard(Integer.parseInt(atkDef), Integer.parseInt(defDef),
+                    position.equals("-") ? CardPosition.ATTACK : CardPosition.valueOf(position.toUpperCase()));
+            if (!aurasDef.equals("-")) {
+                for (String aura : aurasDef.split(";")) {
+                    String[] split = aura.split(" ");
+                    defender.addSkill(createAuraCard(Integer.parseInt(split[0]), Integer.parseInt(split[1])));
+                }
+            }
+        }
 
-        hp = getEnemyHP();
-        playerController.doAttack(createCharacterCard(30, 30), createCharacterCard(10, 10));
-        assertEquals(-20, getEnemyHP() - hp, "(30, 30, attack) nyerang (10, 10, attack), HP lawan berkurang 20");
-
-        hp = getEnemyHP();
-        playerController.doAttack(createCharacterCard(30, 30), null);
-        assertEquals(-30, getEnemyHP() - hp, "(30, 30, attack) nyerang null, HP lawan berkurang 30");
-
-        hp = getEnemyHP();
-        playerController.doAttack(createCharacterCard(30, 30, true), createCharacterCard(20, 10, CardPosition.DEFENSE));
-        assertEquals(-20, getEnemyHP() - hp,
-                "(30, 30, attack, powerup) nyerang (20, 10, defend), HP lawan berkurang 20");
+        playerController.doAttack(attacker, defender);
+        assertEquals(damage, getEnemyHP() - hp);
     }
 
 }
