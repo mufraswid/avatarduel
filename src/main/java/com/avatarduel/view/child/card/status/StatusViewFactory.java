@@ -11,9 +11,9 @@ public final class StatusViewFactory {
         if (card instanceof CharacterCard || card instanceof AuraSkillCard) {
             StatusView statusView = new StatusView(small);
             if (card instanceof CharacterCard) {
-                statusView.renderCharacterCard((CharacterCard) card);
+                statusView.render((CharacterCard) card);
             } else {
-                statusView.renderAuraSkillCard((AuraSkillCard) card);
+                statusView.render((AuraSkillCard) card);
             }
             return statusView;
         } else if (card instanceof PoweredCard) {
@@ -23,4 +23,5 @@ public final class StatusViewFactory {
         }
         return null;
     }
+
 }

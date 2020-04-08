@@ -11,7 +11,6 @@ import com.avatarduel.model.card.CharacterCard;
 import com.avatarduel.model.card.LandCard;
 import com.avatarduel.model.card.PoweredCard;
 import com.avatarduel.model.card.PutableCard;
-import com.avatarduel.model.card.skill.SkillCard;
 
 public class Player {
 
@@ -24,9 +23,9 @@ public class Player {
 
     public Player(String name) {
         this.name = name;
-        int elementLenght = Element.values().length;
-        currentElementValue = new int[elementLenght];
-        maxElementValue = new int[elementLenght];
+        int elementLength = Element.values().length;
+        currentElementValue = new int[elementLength];
+        maxElementValue = new int[elementLength];
         totalDeckCount = 0;
         deck = new ArrayList<>();
         handCards = new ArrayList<>();
@@ -35,7 +34,7 @@ public class Player {
         hasPutLandCard = false;
 
         // TODO delete later
-        for (int i = 0; i < elementLenght; ++i) {
+        for (int i = 0; i < elementLength; ++i) {
             currentElementValue[i] = 89;
             maxElementValue[i] = 89;
         }
@@ -110,11 +109,11 @@ public class Player {
         if (card instanceof PoweredCard) {
             addCurrentElement(card.getElementType(), -((PoweredCard) card).getPowerNeeded());
         }
-        if (card instanceof ActivableCard) {
+        if (card instanceof PutableCard) {
             int i = card instanceof CharacterCard ? 0 : 1;
             for (int j = 0; j < fieldCards[i].length; ++j) {
                 if (fieldCards[i][j] == null) {
-                    putCard(i, j, ((ActivableCard) card).createActiveCard());
+                    putCard(i, j, ((PutableCard) card).createArenaCard());
                     return true;
                 }
             }
@@ -126,7 +125,7 @@ public class Player {
         if (!handCards.contains(card)) {
             return false;
         }
-        if (card instanceof ActivableCard) {
+        if (card instanceof PutableCard) {
             boolean hasEmpty = false;
             int i = card instanceof CharacterCard ? 0 : 1;
             for (int j = 0; j < fieldCards[i].length; ++j) {
