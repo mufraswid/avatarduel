@@ -32,6 +32,12 @@ public class Player {
         fieldCards = new Card[Constants.CARD_ROW][Constants.CARD_COLUMN];
         hp = 80;
         hasPutLandCard = false;
+
+        // TODO delete later
+        for (int i = 0; i < elementLenght; ++i) {
+            currentElementValue[i] = 89;
+            maxElementValue[i] = 89;
+        }
     }
 
     public void drawCard(int count) {

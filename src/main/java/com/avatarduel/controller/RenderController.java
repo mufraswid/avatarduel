@@ -35,8 +35,6 @@ public class RenderController {
         mainView.renderDeckView2(player2);
         mainView.renderElementView1(player1);
         mainView.renderElementView2(player2);
-        // mainView.renderHandCardView1(player1);
-        // mainView.renderHandCardView2(player2);
         mainView.renderStatusView1(player1);
         mainView.renderStatusView2(player2);
     }

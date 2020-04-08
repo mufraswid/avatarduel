@@ -47,6 +47,7 @@ public class CardFieldEventListener implements CardEventListener {
             if (phase != Phase.BATTLE || card instanceof ActiveCharacterCard) {
                 playerController.removeCardFromField((ActivableCard) card);
                 renderController.updateFieldCard(turn);
+                renderController.updateFieldCard(playerController.getEnemyCurrentTurn());
             }
         }
     }
@@ -99,7 +100,8 @@ public class CardFieldEventListener implements CardEventListener {
                             acc.addSkill((SkillCard) clicked);
                         }
                         renderController.updateHandCard(turn);
-                        renderController.updateFieldCard(turnsCard ? turn : enemy);
+                        renderController.updateFieldCard(turn);
+                        renderController.updateFieldCard(enemy);
                     }
                 } else if (clicked != null) {
                     playerController.setClickedCard(null);

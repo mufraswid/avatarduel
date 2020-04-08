@@ -34,7 +34,6 @@ public class SmallCardView extends CardView {
 
         nameText.setSize(Constants.SMALL_FONT_SIZE);
         imageView.setPreserveRatio(true);
-        // imageView.fitWidthProperty().bind(widthProperty().subtract(Constants.GAP));
         imageView.setFitWidth(80);
     }
 

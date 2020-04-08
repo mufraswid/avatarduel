@@ -36,9 +36,6 @@ public abstract class GridView extends GridPane {
             return row;
         }).toArray();
         getRowConstraints().setAll(Arrays.copyOf(arr, arr.length, RowConstraints[].class));
-
-        // setHgap(Constants.GAP);
-        // setVgap(Constants.GAP);
     }
 
     public void addBorder() {

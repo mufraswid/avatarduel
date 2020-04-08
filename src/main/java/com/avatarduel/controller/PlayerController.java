@@ -1,7 +1,5 @@
 package com.avatarduel.controller;
 
-import java.util.Iterator;
-
 import com.avatarduel.Constants;
 import com.avatarduel.model.CardPosition;
 import com.avatarduel.model.Player;
@@ -29,36 +27,50 @@ public class PlayerController {
     }
 
     public void removeCardFromField(ActivableCard card) {
+        removeCardFromField(card, true);
+    }
+
+    public void removeCardFromField(ActivableCard card, boolean checkCharacterSkill) {
         if (card instanceof ActiveCharacterCard) {
             ActiveCharacterCard acc = (ActiveCharacterCard) card;
             int i = 0;
             for (int j = 0; j < Constants.CARD_COLUMN; ++j) {
                 if (player1.getFieldCard(i, j) == card) {
-                    Iterator<SkillCard> it = acc.getSkillCardList().iterator();
-                    while (it.hasNext()) {
-                        SkillCard next = it.next();
+                    for (SkillCard next : acc.getSkillCardList()) {
                         if (next instanceof ActivableCard) {
-                            it.remove();
-                            removeCardFromField((ActivableCard) next);
+                            removeCardFromField((ActivableCard) next, false);
                         }
                     }
+                    player1.removeFieldCard(i, j);
+                    return;
+                } else if (player2.getFieldCard(i, j) == card) {
+                    for (SkillCard next : acc.getSkillCardList()) {
+                        if (next instanceof ActivableCard) {
+                            removeCardFromField((ActivableCard) next, false);
+                        }
+                    }
+                    player2.removeFieldCard(i, j);
+                    return;
                 }
             }
-        }
-        for (int i = 0; i < Constants.CARD_ROW; ++i) {
-            for (int j = 0; j < Constants.CARD_COLUMN; ++j) {
-                Card c = player1.getFieldCard(i, j);
-                if (c instanceof ActiveCharacterCard && card instanceof SkillCard) {
-                    ((ActiveCharacterCard) c).removeSkill((SkillCard) card);
-                } else if (c == card) {
-                    player1.removeFieldCard(i, j);
-                }
+        } else if (card instanceof SkillCard) {
+            for (int i = 0; i < Constants.CARD_ROW; ++i) {
+                for (int j = 0; j < Constants.CARD_COLUMN; ++j) {
+                    Card c = player1.getFieldCard(i, j);
+                    if (c instanceof ActiveCharacterCard && checkCharacterSkill) {
+                        ((ActiveCharacterCard) c).removeSkill((SkillCard) card);
+                    } else if (c == card) {
+                        player1.removeFieldCard(i, j);
+                        return;
+                    }
 
-                c = player2.getFieldCard(i, j);
-                if (c instanceof ActiveCharacterCard && card instanceof SkillCard) {
-                    ((ActiveCharacterCard) c).removeSkill((SkillCard) card);
-                } else if (c == card) {
-                    player2.removeFieldCard(i, j);
+                    c = player2.getFieldCard(i, j);
+                    if (c instanceof ActiveCharacterCard && checkCharacterSkill) {
+                        ((ActiveCharacterCard) c).removeSkill((SkillCard) card);
+                    } else if (c == card) {
+                        player2.removeFieldCard(i, j);
+                        return;
+                    }
                 }
             }
         }
