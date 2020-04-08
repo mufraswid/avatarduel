@@ -10,6 +10,8 @@ import com.avatarduel.model.card.skill.SkillCard;
 
 public class PlayerController {
 
+    private static final int FIRST_CARD_DRAWN = 7;
+
     private Player player1, player2, turn;
     private Card clickedCard;
 
@@ -20,8 +22,8 @@ public class PlayerController {
         player1.addToDeck(cardDao.getRandomDeck(24, 24, 4, 4, 4));
         player2.addToDeck(cardDao.getRandomDeck(24, 24, 4, 4, 4));
 
-        player1.drawCard(Constants.FIRST_CARD_DRAWN);
-        player2.drawCard(Constants.FIRST_CARD_DRAWN);
+        player1.drawCard(FIRST_CARD_DRAWN);
+        player2.drawCard(FIRST_CARD_DRAWN);
 
         turn = player1;
     }

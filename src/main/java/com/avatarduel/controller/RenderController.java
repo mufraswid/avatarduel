@@ -1,6 +1,5 @@
 package com.avatarduel.controller;
 
-import com.avatarduel.Constants;
 import com.avatarduel.controller.listener.CardEventListener;
 import com.avatarduel.controller.listener.MouseEventListener;
 import com.avatarduel.model.Phase;
@@ -12,6 +11,10 @@ import com.avatarduel.view.main.MainView;
 import javafx.scene.Scene;
 
 public class RenderController {
+
+    private static final double WIDTH = 1280;
+    private static final double HEIGHT = 720;
+
     private MainView mainView;
     private Scene scene;
     private Card closedCard;
@@ -20,7 +23,7 @@ public class RenderController {
     public RenderController(Player player1, Player player2, CardEventListener handCardEventListener,
             CardEventListener cardFieldEventListener, MouseEventListener phaseEventListener) {
         scene = new Scene(mainView = new MainView(handCardEventListener, cardFieldEventListener, phaseEventListener),
-                Constants.WIDTH, Constants.HEIGHT);
+                WIDTH, HEIGHT);
         closedCard = new ClosedCard();
         this.player1 = player1;
         this.player2 = player2;

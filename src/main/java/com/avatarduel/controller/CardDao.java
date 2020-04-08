@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.avatarduel.Constants;
 import com.avatarduel.model.CardType;
 import com.avatarduel.model.Element;
 import com.avatarduel.model.card.Card;
@@ -21,6 +20,13 @@ import com.avatarduel.util.CSVReader;
 import com.avatarduel.util.ResourceFinder;
 
 public class CardDao {
+
+    private static final String LAND_CSV_FILE_PATH = "card/data/land.csv";
+    private static final String CHARACTER_CSV_FILE_PATH = "card/data/character.csv";
+    private static final String AURA_SKILL_CSV_FILE_PATH = "card/data/skill/aura.csv";
+    private static final String DESTROY_SKILL_CSV_FILE_PATH = "card/data/skill/destroy.csv";
+    private static final String POWERUP_SKILL_CSV_FILE_PATH = "card/data/skill/powerup.csv";
+
     private List<Card> landCardList, characterCardList, auraSkillList, destroySkillList, powerUpSkillList;
 
     public CardDao() throws IOException, URISyntaxException {
@@ -31,30 +37,30 @@ public class CardDao {
         this.powerUpSkillList = new ArrayList<>();
 
         // Land
-        for (String[] row : getListFromCsv(Constants.LAND_CSV_FILE_PATH)) {
+        for (String[] row : getListFromCsv(LAND_CSV_FILE_PATH)) {
             landCardList.add(new LandCard(row[4], row[1], row[3], Element.valueOf(row[2])));
         }
 
         // Character
-        for (String[] row : getListFromCsv(Constants.CHARACTER_CSV_FILE_PATH)) {
+        for (String[] row : getListFromCsv(CHARACTER_CSV_FILE_PATH)) {
             characterCardList.add(new CharacterCard(row[4], row[1], row[3], Element.valueOf(row[2]),
                     Integer.parseInt(row[7]), Integer.parseInt(row[5]), Integer.parseInt(row[6])));
         }
 
         // Aura skill
-        for (String[] row : getListFromCsv(Constants.AURA_SKILL_CSV_FILE_PATH)) {
+        for (String[] row : getListFromCsv(AURA_SKILL_CSV_FILE_PATH)) {
             auraSkillList.add(new AuraSkillCard(row[4], row[1], row[3], Element.valueOf(row[2]),
                     Integer.parseInt(row[5]), Integer.parseInt(row[6]), Integer.parseInt(row[7])));
         }
 
         // Destroy skill
-        for (String[] row : getListFromCsv(Constants.DESTROY_SKILL_CSV_FILE_PATH)) {
+        for (String[] row : getListFromCsv(DESTROY_SKILL_CSV_FILE_PATH)) {
             destroySkillList.add(
                     new DestroySkillCard(row[4], row[1], row[3], Element.valueOf(row[2]), Integer.parseInt(row[5])));
         }
 
         // Powerup skill
-        for (String[] row : getListFromCsv(Constants.POWERUP_SKILL_CSV_FILE_PATH)) {
+        for (String[] row : getListFromCsv(POWERUP_SKILL_CSV_FILE_PATH)) {
             powerUpSkillList.add(
                     new PowerUpSkillCard(row[4], row[1], row[3], Element.valueOf(row[2]), Integer.parseInt(row[5])));
         }
