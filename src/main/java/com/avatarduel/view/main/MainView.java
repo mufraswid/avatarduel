@@ -4,7 +4,7 @@ import com.avatarduel.controller.CardFieldDimension;
 import com.avatarduel.controller.listener.CardEventListener;
 import com.avatarduel.controller.listener.MouseEventListener;
 import com.avatarduel.model.Phase;
-import com.avatarduel.model.Player;
+import com.avatarduel.model.IPlayer;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.view.GridView;
 
@@ -40,14 +40,14 @@ public class MainView extends GridView {
     /**
      * @param player specified player
      */
-    public void renderDeckView2(Player player) {
+    public void renderDeckView2(IPlayer player) {
         leftMainView.renderDeckView2(player);
     }
 
     /**
      * @param player specified player
      */
-    public void renderStatusView2(Player player) {
+    public void renderStatusView2(IPlayer player) {
         leftMainView.renderStatusView2(player);
     }
 
@@ -61,14 +61,14 @@ public class MainView extends GridView {
     /**
      * @param player specified player
      */
-    public void renderStatusView1(Player player) {
+    public void renderStatusView1(IPlayer player) {
         leftMainView.renderStatusView1(player);
     }
 
     /**
      * @param player specified player
      */
-    public void renderDeckView1(Player player) {
+    public void renderDeckView1(IPlayer player) {
         leftMainView.renderDeckView1(player);
     }
 
@@ -76,7 +76,7 @@ public class MainView extends GridView {
      * @param player specified player
      * @param closed closed card object
      */
-    public void renderHandCardView2(Player player, Card closed) {
+    public void renderHandCardView2(IPlayer player, Card closed) {
         centerMainView.renderHandCardView2(player, closed);
     }
 
@@ -84,28 +84,28 @@ public class MainView extends GridView {
      * @param player specified player
      * @param closed closed card object
      */
-    public void renderHandCardView1(Player player, Card closed) {
+    public void renderHandCardView1(IPlayer player, Card closed) {
         centerMainView.renderHandCardView1(player, closed);
     }
 
     /**
      * @param player specified player
      */
-    public void renderCardFieldView2(Player player) {
+    public void renderCardFieldView2(IPlayer player) {
         centerMainView.renderCardFieldView2(player);
     }
 
     /**
      * @param player specified player
      */
-    public void renderCardFieldView1(Player player) {
+    public void renderCardFieldView1(IPlayer player) {
         centerMainView.renderCardFieldView1(player);
     }
 
     /**
      * @param player specified player
      */
-    public void renderElementView2(Player player) {
+    public void renderElementView2(IPlayer player) {
         rightMainView.renderElementView2(player);
     }
 
@@ -119,7 +119,7 @@ public class MainView extends GridView {
     /**
      * @param player specified player
      */
-    public void renderElementView1(Player player) {
+    public void renderElementView1(IPlayer player) {
         rightMainView.renderElementView1(player);
     }
 

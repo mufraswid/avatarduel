@@ -1,7 +1,7 @@
 package com.avatarduel.view.child.card;
 
 import com.avatarduel.controller.listener.CardEventListener;
-import com.avatarduel.model.Player;
+import com.avatarduel.model.IPlayer;
 import com.avatarduel.model.card.Card;
 
 import javafx.scene.control.ScrollPane;
@@ -32,7 +32,7 @@ public class HandCardFieldView extends ScrollPane {
      * @param player specified player
      * @param closed a closed card
      */
-    public void render(Player player, Card closed) {
+    public void render(IPlayer player, Card closed) {
         hbox.getChildren().clear();
         player.getHandCards().stream().forEach(card -> {
             SmallCardView smallCardView = new SmallCardView(listener);

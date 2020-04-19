@@ -2,6 +2,7 @@ package com.avatarduel.controller;
 
 import com.avatarduel.controller.listener.CardEventListener;
 import com.avatarduel.controller.listener.MouseEventListener;
+import com.avatarduel.model.IPlayer;
 import com.avatarduel.model.Phase;
 import com.avatarduel.model.Player;
 import com.avatarduel.model.card.Card;
@@ -20,7 +21,7 @@ public class RenderController {
     private MainView mainView;
     private Scene scene;
     private Card closedCard;
-    private Player player1, player2;
+    private IPlayer player1, player2;
 
     /**
      * Constructor
@@ -32,7 +33,7 @@ public class RenderController {
      * @param cardFieldEventListener card field event listener
      * @param phaseEventListener     phase event listener
      */
-    public RenderController(Player player1, Player player2, Card closedCard, CardEventListener handCardEventListener,
+    public RenderController(IPlayer player1, IPlayer player2, Card closedCard, CardEventListener handCardEventListener,
             CardEventListener cardFieldEventListener, MouseEventListener phaseEventListener) {
         scene = new Scene(mainView = new MainView(player1.getCardFieldDimension(), player2.getCardFieldDimension(),
                 handCardEventListener, cardFieldEventListener, phaseEventListener), WIDTH, HEIGHT);

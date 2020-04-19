@@ -2,7 +2,7 @@ package com.avatarduel.view.main;
 
 import com.avatarduel.controller.listener.MouseEventListener;
 import com.avatarduel.model.Phase;
-import com.avatarduel.model.Player;
+import com.avatarduel.model.IPlayer;
 import com.avatarduel.view.GridView;
 import com.avatarduel.view.child.ElementView;
 import com.avatarduel.view.child.PhaseView;
@@ -30,7 +30,7 @@ public class RightMainView extends GridView {
     /**
      * @param player specified player
      */
-    public void renderElementView2(Player player) {
+    public void renderElementView2(IPlayer player) {
         elementView2.render(player);
     }
 
@@ -44,7 +44,7 @@ public class RightMainView extends GridView {
     /**
      * @param player specified player
      */
-    public void renderElementView1(Player player) {
+    public void renderElementView1(IPlayer player) {
         elementView1.render(player);
     }
 

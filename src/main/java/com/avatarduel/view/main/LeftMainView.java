@@ -1,6 +1,6 @@
 package com.avatarduel.view.main;
 
-import com.avatarduel.model.Player;
+import com.avatarduel.model.IPlayer;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.view.GridView;
 import com.avatarduel.view.ViewPosition;
@@ -32,14 +32,14 @@ public class LeftMainView extends GridView {
     /**
      * @param player specified player
      */
-    public void renderDeckView2(Player player) {
+    public void renderDeckView2(IPlayer player) {
         deckView2.render(player);
     }
 
     /**
      * @param player specified player
      */
-    public void renderStatusView2(Player player) {
+    public void renderStatusView2(IPlayer player) {
         statusView2.render(player);
     }
 
@@ -53,14 +53,14 @@ public class LeftMainView extends GridView {
     /**
      * @param player specified player
      */
-    public void renderStatusView1(Player player) {
+    public void renderStatusView1(IPlayer player) {
         statusView1.render(player);
     }
 
     /**
      * @param player specified player
      */
-    public void renderDeckView1(Player player) {
+    public void renderDeckView1(IPlayer player) {
         deckView1.render(player);
     }
 

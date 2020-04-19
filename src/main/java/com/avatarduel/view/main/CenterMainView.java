@@ -2,7 +2,7 @@ package com.avatarduel.view.main;
 
 import com.avatarduel.controller.CardFieldDimension;
 import com.avatarduel.controller.listener.CardEventListener;
-import com.avatarduel.model.Player;
+import com.avatarduel.model.IPlayer;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.view.GridView;
 import com.avatarduel.view.ViewPosition;
@@ -36,7 +36,7 @@ public class CenterMainView extends GridView {
      * @param player specified player
      * @param closed card state flag
      */
-    public void renderHandCardView2(Player player, Card closed) {
+    public void renderHandCardView2(IPlayer player, Card closed) {
         handCardFieldView2.render(player, closed);
     }
 
@@ -44,21 +44,21 @@ public class CenterMainView extends GridView {
      * @param player specified player
      * @param closed card state flag
      */
-    public void renderHandCardView1(Player player, Card closed) {
+    public void renderHandCardView1(IPlayer player, Card closed) {
         handCardFieldView1.render(player, closed);
     }
 
     /**
      * @param player specified player
      */
-    public void renderCardFieldView2(Player player) {
+    public void renderCardFieldView2(IPlayer player) {
         cardFieldView2.render(player);
     }
 
     /**
      * @param player specified player
      */
-    public void renderCardFieldView1(Player player) {
+    public void renderCardFieldView1(IPlayer player) {
         cardFieldView1.render(player);
     }
 

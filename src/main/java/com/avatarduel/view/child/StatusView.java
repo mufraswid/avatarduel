@@ -1,6 +1,6 @@
 package com.avatarduel.view.child;
 
-import com.avatarduel.model.Player;
+import com.avatarduel.model.IPlayer;
 import com.avatarduel.view.DefaultText;
 import com.avatarduel.view.GridView;
 import com.avatarduel.view.ViewPosition;
@@ -31,7 +31,7 @@ public class StatusView extends GridView {
     /**
      * @param player specified player
      */
-    public void render(Player player) {
+    public void render(IPlayer player) {
         nameText.setText(player.getName());
         hpText.setText(player.getHP() + " HP");
     }

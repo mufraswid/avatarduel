@@ -2,7 +2,7 @@ package com.avatarduel.view.child.card;
 
 import com.avatarduel.controller.CardFieldDimension;
 import com.avatarduel.controller.listener.CardEventListener;
-import com.avatarduel.model.Player;
+import com.avatarduel.model.IPlayer;
 import com.avatarduel.view.GridView;
 import com.avatarduel.view.ViewPosition;
 
@@ -30,7 +30,7 @@ public class CardFieldView extends GridView {
     /**
      * @param player specified player
      */
-    public void render(Player player) {
+    public void render(IPlayer player) {
         characterRowFieldView.renderCards(player.getCharacterCards());
         skillRowFieldView.renderCards(player.getSkillCards());
     }

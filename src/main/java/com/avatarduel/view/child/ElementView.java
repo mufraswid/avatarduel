@@ -1,7 +1,7 @@
 package com.avatarduel.view.child;
 
 import com.avatarduel.model.Element;
-import com.avatarduel.model.Player;
+import com.avatarduel.model.IPlayer;
 import com.avatarduel.util.ElementColorPicker;
 import com.avatarduel.view.DefaultText;
 import com.avatarduel.view.GridView;
@@ -54,14 +54,14 @@ public class ElementView extends GridView {
      * @param el     specified element
      * @return String with information about element value out of max element value
      */
-    private String elementStringValue(Player player, Element el) {
+    private String elementStringValue(IPlayer player, Element el) {
         return String.format(": %d / %d", player.getCurrentElementValue(el), player.getMaxElementValue(el));
     }
 
     /**
      * @param player specified player
      */
-    public void render(Player player) {
+    public void render(IPlayer player) {
         earthValue.setText(elementStringValue(player, Element.EARTH));
         fireValue.setText(elementStringValue(player, Element.FIRE));
         waterValue.setText(elementStringValue(player, Element.WATER));

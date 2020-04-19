@@ -1,6 +1,6 @@
 package com.avatarduel.view.child.card;
 
-import com.avatarduel.model.Player;
+import com.avatarduel.model.IPlayer;
 import com.avatarduel.view.DefaultText;
 import com.avatarduel.view.GridView;
 
@@ -21,11 +21,10 @@ public class DeckView extends GridView {
         add(deckValue = new DefaultText(), 0, 1);
     }
 
-
     /**
      * @param player specified player
      */
-    public void render(Player player) {
+    public void render(IPlayer player) {
         deckValue.setText(String.format("%d / %d", player.getCurrentDeckCount(), player.getTotalDeckCount()));
     }
 
