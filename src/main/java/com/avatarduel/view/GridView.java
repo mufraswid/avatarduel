@@ -14,10 +14,19 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 
+/**
+ * Abstract class to represent a grid view such as field
+ */
 public abstract class GridView extends GridPane {
 
     private static final String SEPARATOR = ",";
 
+    /**
+     * Constructor
+     *
+     * @param colPercentages column percentages
+     * @param rowPercentages row percentages
+     */
     public GridView(double[] colPercentages, double[] rowPercentages) {
         Object[] arr = Arrays.stream(colPercentages).mapToObj(d -> {
             ColumnConstraints col = new ColumnConstraints();
@@ -38,21 +47,40 @@ public abstract class GridView extends GridPane {
         getRowConstraints().setAll(Arrays.copyOf(arr, arr.length, RowConstraints[].class));
     }
 
+    /**
+     * Copy constructor
+     *
+     * @param colPercentages column percentages
+     * @param rowPercentages row percentages
+     */
+    public GridView(String colPercentages, String rowPercentages) {
+        this(Arrays.stream(colPercentages.split(SEPARATOR)).mapToDouble(Double::parseDouble).toArray(),
+                Arrays.stream(rowPercentages.split(SEPARATOR)).mapToDouble(Double::parseDouble).toArray());
+    }
+
+    /**
+     * Add border to this grid
+     */
     public void addBorder() {
         addBorder(Color.BLACK, BorderStrokeStyle.SOLID, 1);
     }
 
+    /**
+     * Add border with specified color, style and width to this grid
+     *
+     * @param color  border color
+     * @param style  border style
+     * @param widths border width
+     */
     public void addBorder(Color color, BorderStrokeStyle style, int widths) {
         setBorder(new Border(new BorderStroke(color, style, null, new BorderWidths(widths))));
     }
 
+    /**
+     * Remove this grid border
+     */
     public void removeBorder() {
         setBorder(null);
-    }
-
-    public GridView(String colPercentages, String rowPercentages) {
-        this(Arrays.stream(colPercentages.split(SEPARATOR)).mapToDouble(Double::parseDouble).toArray(),
-                Arrays.stream(rowPercentages.split(SEPARATOR)).mapToDouble(Double::parseDouble).toArray());
     }
 
 }

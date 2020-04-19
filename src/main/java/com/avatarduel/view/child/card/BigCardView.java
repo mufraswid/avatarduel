@@ -12,12 +12,18 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 
+/**
+ * Display a big card
+ */
 public class BigCardView extends CardView {
 
     private DefaultText nameText;
     private ImageView imageView;
     private DescriptionCardView descCardView;
 
+    /**
+     * Constructor
+     */
     public BigCardView() {
         super("100", "10,50,40");
         nameText = new DefaultText("", true);
@@ -28,6 +34,9 @@ public class BigCardView extends CardView {
         add(descCardView, 0, 2);
     }
 
+    /**
+     * @param card specified card
+     */
     public void render(Card card) {
         setBackground(new Background(new BackgroundFill(ElementColorPicker.getColor(card.getElementType()),
                 CornerRadii.EMPTY, Insets.EMPTY)));

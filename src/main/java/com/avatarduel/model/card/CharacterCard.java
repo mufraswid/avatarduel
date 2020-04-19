@@ -3,17 +3,23 @@ package com.avatarduel.model.card;
 import com.avatarduel.model.Element;
 
 /**
- * Kelas CharacterCard: kelas yang memodelkan konsep kartu karakter, merupakan subclass dari kelas Kartu
+ * Represents a character card
  */
 public class CharacterCard extends Card implements PoweredCard, PutableCard {
 
-    /** 
-    * Atribut dari CharacterCard: atk untuk attack, def untuk defense dari kartu, powerNeeded untuk jumlah power yang dibutuhkan, 
-    * skillcard untuk kartu skill yang terkait oleh kartu ini, deltaAttack dan deltaDefense untuk penambahan atk dan def dari skillcard
-    */
     private int powerNeeded, attack, defense;
 
-    // constructor
+    /**
+     * Constructor for character card
+     *
+     * @param imagePath   path to image resource
+     * @param name        name for the card
+     * @param description description for the card
+     * @param elementType element type of land card
+     * @param powerNeeded the needed power
+     * @param attack      attack value
+     * @param defense     defense value
+     */
     public CharacterCard(String imagePath, String name, String description, Element elementType, int powerNeeded,
             int attack, int defense) {
         super(imagePath, name, description, elementType);
@@ -22,44 +28,71 @@ public class CharacterCard extends Card implements PoweredCard, PutableCard {
         setDefense(defense);
     }
 
-    //#region setter
+    // #region setter
+    /**
+     * @param attack set attack value
+     */
     private void setAttack(int attack) {
         this.attack = attack;
     }
 
+    /**
+     * @param defense set defense value
+     */
     private void setDefense(int defense) {
         this.defense = defense;
     }
 
+    /**
+     * @param power set power needed value
+     */
     private void setPowerNeeded(int power) {
         this.powerNeeded = power;
     }
-    //#endregion
+    // #endregion
 
-    //#region getter
+    // #region getter
+    /**
+     * @return this card attack value
+     */
     public int getAttack() {
         return this.attack;
     }
 
+    /**
+     * @return this card defense value
+     */
     public int getDefense() {
         return this.defense;
     }
 
+    /**
+     * @return this card needed power value
+     */
     public int getPowerNeeded() {
         return this.powerNeeded;
     }
 
+    /**
+     * @return this card description
+     */
     @Override
     public String getDescription() {
         return "Character Card\n" + super.getDescription();
     }
 
+    /**
+     * @return make a new arena card from this card
+     */
     @Override
     public ArenaCharacterCard createArenaCard() {
         return new ArenaCharacterCard(this);
     }
-    //#endregion
+    // #endregion
 
+    /**
+     * @return a new copy of this character card
+     */
     @Override
     public Card copy() {
         return new CharacterCard(imagePath, name, description, elementType, powerNeeded, attack, defense);

@@ -5,15 +5,26 @@ import com.avatarduel.model.CardPosition;
 import com.avatarduel.model.card.ArenaCharacterCard;
 import com.avatarduel.model.card.Card;
 
+/**
+ * Display a placed card
+ */
 public class PlacedCardView extends CardView {
 
     private CardEventListener listener;
 
+    /**
+     * Constructor
+     *
+     * @param listener card event listener
+     */
     public PlacedCardView(CardEventListener listener) {
         super("100", "100");
         this.listener = listener;
     }
 
+    /**
+     * @param card the specified card
+     */
     public void render(Card card) {
         getChildren().clear();
         if (card != null) {

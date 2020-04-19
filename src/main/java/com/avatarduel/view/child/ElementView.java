@@ -11,10 +11,16 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.paint.Color;
 
+/**
+ * Display each player's element status
+ */
 public class ElementView extends GridView {
 
     private DefaultText earthValue, fireValue, waterValue, airValue;
 
+    /**
+     * Constructor
+     */
     public ElementView() {
         super("40,60", "25,25,25,25");
 
@@ -42,10 +48,20 @@ public class ElementView extends GridView {
         add(airValue = new DefaultText(), 1, 3);
     }
 
+    /**
+     * Get element value in string format
+     *
+     * @param player specified player
+     * @param el     specified element
+     * @return String with information about element value out of max element value
+     */
     private String elementStringValue(Player player, Element el) {
         return String.format(": %d / %d", player.getCurrentElementValue(el), player.getMaxElementValue(el));
     }
 
+    /**
+     * @param player specified player
+     */
     public void render(Player player) {
         earthValue.setText(elementStringValue(player, Element.EARTH));
         fireValue.setText(elementStringValue(player, Element.FIRE));

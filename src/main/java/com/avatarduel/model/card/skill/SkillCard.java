@@ -5,23 +5,33 @@ import com.avatarduel.model.card.Card;
 import com.avatarduel.model.card.PoweredCard;
 
 /**
- * Kelas abstrak Kartu Skill: kelas yang memodelkan konsep kartu skill, merupakan subclass dari kelas Kartu, 
- * menurunkan jenis KartuSkillAura, KartuSkillDestroy, dan KartuSkillPowerUp.
+ * Abstract class to represents a skill card
  */
 public abstract class SkillCard extends Card implements PoweredCard {
-    // Atribut dari KartuSkill
+    // SkillCard attribute
     protected int powerNeeded;
 
-    // Konstruktor
+    /**
+     * Constructor for skill card
+     *
+     * @param imagePath   path to image resource
+     * @param name        name for the card
+     * @param description description for the card
+     * @param elementType element type of this card
+     * @param powerNeeded amount of power needed
+     */
     public SkillCard(String imagePath, String name, String description, Element elementType, int powerNeeded) {
         super(imagePath, name, description, elementType);
         this.powerNeeded = powerNeeded;
     }
 
-    //#region getter
+    // #region getter
+    /**
+     * @return the power needed
+     */
     @Override
     public int getPowerNeeded() {
         return this.powerNeeded;
     }
-    //#endregion
+    // #endregion
 }

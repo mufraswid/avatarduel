@@ -18,12 +18,20 @@ import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
+/**
+ * Display a small card
+ */
 public class SmallCardView extends CardView {
 
     private CardEventListener listener;
     private DefaultText nameText;
     private ImageView imageView;
 
+    /**
+     * Constructor
+     *
+     * @param listener card event listener
+     */
     public SmallCardView(CardEventListener listener) {
         super("100", "10,80,10");
         this.listener = listener;
@@ -37,6 +45,9 @@ public class SmallCardView extends CardView {
         imageView.setFitWidth(80);
     }
 
+    /**
+     * @param card specified card
+     */
     public void render(Card card) {
         if (card.isClicked()) {
             addBorder(Color.BLACK, BorderStrokeStyle.DASHED, 3);

@@ -6,7 +6,18 @@ import com.avatarduel.model.card.PoweredCard;
 import com.avatarduel.model.card.skill.AuraSkillCard;
 import com.avatarduel.view.child.card.CardView;
 
+/**
+ * TODO
+ */
 public final class StatusViewFactory {
+
+    /**
+     * Create a CardView according to type of card
+     *
+     * @param card specified card
+     * @param small small flag
+     * @return CardView
+     */
     public static CardView createStatusView(Card card, boolean small) {
         if (card instanceof CharacterCard || card instanceof AuraSkillCard) {
             StatusView statusView = new StatusView(small);

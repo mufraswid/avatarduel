@@ -10,12 +10,22 @@ import com.avatarduel.view.GridView;
 
 import javafx.geometry.Insets;
 
+/**
+ * This class help to organize every section in one place
+ */
 public class MainView extends GridView {
 
     private LeftMainView leftMainView;
     private CenterMainView centerMainView;
     private RightMainView rightMainView;
 
+    /**
+     * Constructor
+     *
+     * @param handCardEventListener  specified hand card event listener
+     * @param cardFieldEventListener specified card field event listener
+     * @param phaseEventListener     specified phase event listener
+     */
     public MainView(CardEventListener handCardEventListener, CardEventListener cardFieldEventListener,
             MouseEventListener phaseEventListener) {
         super("20,70,10", "100");
@@ -25,50 +35,88 @@ public class MainView extends GridView {
         add(rightMainView = new RightMainView(phaseEventListener), 2, 0);
     }
 
+    /**
+     * @param player specified player
+     */
     public void renderDeckView2(Player player) {
         leftMainView.renderDeckView2(player);
     }
 
+    /**
+     * @param player specified player
+     */
     public void renderStatusView2(Player player) {
         leftMainView.renderStatusView2(player);
     }
 
+    /**
+     * @param card specified card
+     */
     public void renderBigCardView(Card card) {
         leftMainView.renderBigCardView(card);
     }
 
+    /**
+     * @param player specified player
+     */
     public void renderStatusView1(Player player) {
         leftMainView.renderStatusView1(player);
     }
 
+    /**
+     * @param player specified player
+     */
     public void renderDeckView1(Player player) {
         leftMainView.renderDeckView1(player);
     }
 
+    /**
+     * @param player specified player
+     * @param closed closed card object
+     */
     public void renderHandCardView2(Player player, Card closed) {
         centerMainView.renderHandCardView2(player, closed);
     }
 
+    /**
+     * @param player specified player
+     * @param closed closed card object
+     */
     public void renderHandCardView1(Player player, Card closed) {
         centerMainView.renderHandCardView1(player, closed);
     }
 
+    /**
+     * @param player specified player
+     */
     public void renderCardFieldView2(Player player) {
         centerMainView.renderCardFieldView2(player);
     }
 
+    /**
+     * @param player specified player
+     */
     public void renderCardFieldView1(Player player) {
         centerMainView.renderCardFieldView1(player);
     }
 
+    /**
+     * @param player specified player
+     */
     public void renderElementView2(Player player) {
         rightMainView.renderElementView2(player);
     }
 
+    /**
+     * @param phase specified phase
+     */
     public void renderPhase(Phase phase) {
         rightMainView.renderPhase(phase);
     }
 
+    /**
+     * @param player specified player
+     */
     public void renderElementView1(Player player) {
         rightMainView.renderElementView1(player);
     }

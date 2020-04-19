@@ -1,5 +1,8 @@
 package com.avatarduel;
 
+/**
+ * Class contain all constant values
+ */
 public final class Constants {
 
     private Constants() {

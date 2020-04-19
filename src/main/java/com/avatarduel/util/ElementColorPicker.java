@@ -4,7 +4,15 @@ import com.avatarduel.model.Element;
 
 import javafx.scene.paint.Color;
 
+/**
+ * This class used to pick a color for given elements
+ */
 public class ElementColorPicker {
+
+    /**
+     * @param el one of 4 elements
+     * @return Color object
+     */
     public static Color getColor(Element el) {
         if (el != null) {
             switch (el) {

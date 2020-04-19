@@ -7,10 +7,18 @@ import com.avatarduel.view.GridView;
 
 import javafx.scene.input.MouseButton;
 
+/**
+ * Display phases
+ */
 public class PhaseView extends GridView {
 
     private DefaultText[] texts;
 
+    /**
+     * Constructor
+     *
+     * @param listener mouse event listener
+     */
     public PhaseView(MouseEventListener listener) {
         super("100", "20,20,20,20,20");
         texts = new DefaultText[Phase.values().length];
@@ -32,6 +40,10 @@ public class PhaseView extends GridView {
         setOnMouseExited(e -> listener.onMouseExited());
     }
 
+
+    /**
+     * @param phase specified phase
+     */
     public void render(Phase phase) {
         for (int i = 0; i < Phase.values().length; ++i) {
             if (i == phase.ordinal()) {

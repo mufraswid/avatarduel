@@ -10,6 +10,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Region;
 
+/**
+ * GameController is where the flow of the game is controlled
+ */
 public class GameController {
 
     private Phase phase;
@@ -17,6 +20,11 @@ public class GameController {
     private RenderController renderController;
     private PlayerController playerController;
 
+    /**
+     * Constructor
+     *
+     * @param cardDao where card data stored
+     */
     public GameController(CardDao cardDao) {
         playerController = new PlayerController(cardDao);
         phase = Phase.DRAW;
@@ -25,14 +33,23 @@ public class GameController {
         playPhase();
     }
 
+    /**
+     * @return this render controller
+     */
     public RenderController getRenderController() {
         return renderController;
     }
 
+    /**
+     * @return this player controller
+     */
     public PlayerController getPlayerController() {
         return playerController;
     }
 
+    /**
+     * Move to next phase, switch turn to the other player if already END phase
+     */
     public void nextPhase() {
         if (phase.ordinal() == Phase.values().length - 1) {
             phase = Phase.values()[0];
@@ -43,10 +60,16 @@ public class GameController {
         playPhase();
     }
 
+    /**
+     * @return this phase
+     */
     public Phase getPhase() {
         return phase;
     }
 
+    /**
+     * Play the current phase
+     */
     public void playPhase() {
         Card clicked = playerController.getClickedCard();
         renderController.updatePhase(phase);
@@ -66,6 +89,11 @@ public class GameController {
         }
     }
 
+    /**
+     * End the game and display the winner
+     *
+     * @param winner player who win
+     */
     public void endGame(Player winner) {
         Alert alert = new Alert(AlertType.INFORMATION, winner.getName() + " win!", ButtonType.OK);
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
@@ -73,6 +101,9 @@ public class GameController {
         Platform.exit();
     }
 
+    /**
+     * Check if the game is finished
+     */
     public void checkEndGame() {
         Player winner = null;
         Player player1 = playerController.getPlayer1(), player2 = playerController.getPlayer2();

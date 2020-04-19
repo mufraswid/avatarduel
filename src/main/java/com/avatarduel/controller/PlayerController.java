@@ -7,6 +7,9 @@ import com.avatarduel.model.card.ArenaCharacterCard;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.model.card.skill.SkillCard;
 
+/**
+ * Control a player
+ */
 public class PlayerController {
 
     private static final int FIRST_CARD_DRAWN = 7;
@@ -14,6 +17,11 @@ public class PlayerController {
     private Player player1, player2, turn;
     private Card clickedCard;
 
+    /**
+     * Constructor
+     *
+     * @param cardDao where card data stored
+     */
     public PlayerController(CardDao cardDao) {
         player1 = new Player("Player 1");
         player2 = new Player("Player 2");
@@ -27,6 +35,11 @@ public class PlayerController {
         turn = player1;
     }
 
+    /**
+     * Remove specified card from the field
+     *
+     * @param card specified card
+     */
     public void removeCardFromField(ArenaCharacterCard card) {
         int i = 0;
         for (int j = 0; j < Constants.CARD_COLUMN; ++j) {
@@ -46,10 +59,21 @@ public class PlayerController {
         }
     }
 
+    /**
+     * Remove specified card from the field
+     *
+     * @param card specified card
+     */
     public void removeCardFromField(SkillCard card) {
         removeCardFromField(card, true);
     }
 
+    /**
+     * Remove specified skill card from the field
+     *
+     * @param card                specified card
+     * @param checkCharacterSkill character skill flag
+     */
     public void removeCardFromField(SkillCard card, boolean checkCharacterSkill) {
         for (int i = 0; i < Constants.CARD_ROW; ++i) {
             for (int j = 0; j < Constants.CARD_COLUMN; ++j) {
@@ -72,6 +96,9 @@ public class PlayerController {
         }
     }
 
+    /**
+     * @param card the clicked card
+     */
     public void setClickedCard(Card card) {
         if (clickedCard != null) {
             clickedCard.setClicked(false);
@@ -82,10 +109,16 @@ public class PlayerController {
         }
     }
 
+    /**
+     * @return this clickedCard
+     */
     public Card getClickedCard() {
         return clickedCard;
     }
 
+    /**
+     * @return false if cant do draw phase, true otherwise
+     */
     public boolean doDrawPhase() {
         if (turn.getCurrentDeckCount() <= 0) {
             return false;
@@ -94,31 +127,56 @@ public class PlayerController {
         return true;
     }
 
+    /**
+     * @return player 1 object
+     */
     public Player getPlayer1() {
         return player1;
     }
 
+    /**
+     * @return player 2 object
+     */
     public Player getPlayer2() {
         return player2;
     }
 
+    /**
+     * @return player in current turn
+     */
     public Player getCurrentPlayerTurn() {
         return turn;
     }
 
+    /**
+     * @return enemy in current turn
+     */
     public Player getEnemyCurrentTurn() {
         return turn == player1 ? player2 : player1;
     }
 
+    /**
+     * Switch turn to other player
+     */
     public void switchTurn() {
         turn = turn == player1 ? player2 : player1;
     }
 
+    /**
+     * reset turn state
+     */
     public void resetPlayerState() {
         turn.resetState();
         setClickedCard(null);
     }
 
+    /**
+     * Attack
+     *
+     * @param attacker attacker card
+     * @param defender defender card
+     * @return if the attack succesful
+     */
     public boolean doAttack(ArenaCharacterCard attacker, ArenaCharacterCard defender) {
         if (defender == null) {
             getEnemyCurrentTurn().damage(attacker.getTotalAttack());

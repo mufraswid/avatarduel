@@ -19,6 +19,9 @@ import com.avatarduel.model.card.skill.PowerUpSkillCard;
 import com.avatarduel.util.CSVReader;
 import com.avatarduel.util.ResourceFinder;
 
+/**
+ * CardDao serve as an object where all data about cards are stored
+ */
 public class CardDao {
 
     private static final String LAND_CSV_FILE_PATH = "card/data/land.csv";
@@ -29,6 +32,12 @@ public class CardDao {
 
     private List<Card> landCardList, characterCardList, auraSkillList, destroySkillList, powerUpSkillList;
 
+    /**
+     * Constructor
+     *
+     * @throws IOException        if an input or output exception occured
+     * @throws URISyntaxException if a string could not be parsed as a URI reference
+     */
     public CardDao() throws IOException, URISyntaxException {
         this.landCardList = new ArrayList<>();
         this.characterCardList = new ArrayList<>();
@@ -66,6 +75,14 @@ public class CardDao {
         }
     }
 
+    /**
+     * Get list of lines separated with ";" in csv file from the specified path
+     *
+     * @param path path to csv file that want to be parsed
+     * @return list of string arrays each represent 1 row
+     * @throws IOException        if an input or output exception occured
+     * @throws URISyntaxException if a string could not be parsed as a URI reference
+     */
     private List<String[]> getListFromCsv(String path) throws IOException, URISyntaxException {
         File csvFile = new File(ResourceFinder.getURI(path));
         CSVReader reader = new CSVReader(csvFile, ";");
@@ -73,28 +90,53 @@ public class CardDao {
         return reader.read();
     }
 
-    //#Card List getter
+    // #Card List getter
+    /**
+     * @return this list of land cards
+     */
     public List<Card> getLandCardList() {
         return this.landCardList;
     }
 
+    /**
+     * @return this list of character cards
+     */
     public List<Card> getCharacterCardList() {
         return this.characterCardList;
     }
 
+    /**
+     * @return this list of aura skill cards
+     */
     public List<Card> getAuraSkillCardList() {
         return this.auraSkillList;
     }
 
+    /**
+     * @return this list of destroy skill cards
+     */
     public List<Card> getDestroySkillCardList() {
         return this.destroySkillList;
     }
 
+    /**
+     * @return this list of power up skill cards
+     */
     public List<Card> getPowerUpSkillCardList() {
         return this.powerUpSkillList;
     }
 
-    //#region Random getter
+    // #region Random getter
+    /**
+     * Get a randomized deck with a specified number of each type
+     *
+     * @param landCount      number of land cards for the deck
+     * @param characterCount number of character cards for the deck
+     * @param auraCount      number of aura cards for the deck
+     * @param destroyCount   number of destroy cards for the deck
+     * @param powerupCount   number of power up cards for the deck
+     * @return randomized list of cards with each specified number of type
+     */
     public List<Card> getRandomDeck(int landCount, int characterCount, int auraCount, int destroyCount,
             int powerupCount) {
         List<Card> res = new ArrayList<>();
@@ -110,6 +152,13 @@ public class CardDao {
         return res;
     }
 
+    /**
+     * Get random collection of cards with specified type and number
+     *
+     * @param type  type of card that want to be randomly picked
+     * @param count number of cards that want to be randomly picked
+     * @return list of randomly selected card
+     */
     private List<Card> getRandomCards(CardType type, int count) {
         List<Card> res = new ArrayList<>();
         List<Card> collect;
@@ -143,6 +192,6 @@ public class CardDao {
         }
         return res;
     }
-    //#endregion
+    // #endregion
 
 }

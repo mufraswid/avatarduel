@@ -19,37 +19,87 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
+/**
+ * This class is used for testing the game mechanism
+ */
 public class LogicTest {
 
     private PlayerController playerController;
 
+    /**
+     * Initialize before testing
+     *
+     * @throws IOException        if an input or output exception occured
+     * @throws URISyntaxException if a string could not be parsed as a URI reference
+     */
     @BeforeEach
     public void init() throws IOException, URISyntaxException {
         playerController = new PlayerController(new CardDao());
     }
 
+    /**
+     * Make arena card with specified attack and defense in attack position
+     *
+     * @param attack  attack point
+     * @param defense defense point
+     * @return new arena character card
+     */
     private ArenaCharacterCard createCharacterCard(int attack, int defense) {
         return createCharacterCard(attack, defense, CardPosition.ATTACK);
     }
 
-    private PowerUpSkillCard createPowerUpCard() {
-        return new PowerUpSkillCard("", "", "", Element.AIR, 0);
-    }
-
-    private AuraSkillCard createAuraCard(int datk, int ddef) {
-        return new AuraSkillCard("", "", "", Element.AIR, 0, datk, ddef);
-    }
-
+    /**
+     * Make arena card with specified attack and defense and position
+     *
+     * @param attack   attack point
+     * @param defense  defense point
+     * @param position position
+     * @return new arena character card
+     */
     private ArenaCharacterCard createCharacterCard(int attack, int defense, CardPosition position) {
         ArenaCharacterCard res = new ArenaCharacterCard(new CharacterCard("", "", "", Element.AIR, 0, attack, defense));
         res.setPosition(position);
         return res;
     }
 
+    /**
+     * @return new power up card
+     */
+    private PowerUpSkillCard createPowerUpCard() {
+        return new PowerUpSkillCard("", "", "", Element.AIR, 0);
+    }
+
+    /**
+     * Create new aura card with specified extra attack and defense
+     *
+     * @param datk
+     * @param ddef
+     * @return new aura card
+     */
+    private AuraSkillCard createAuraCard(int datk, int ddef) {
+        return new AuraSkillCard("", "", "", Element.AIR, 0, datk, ddef);
+    }
+
+    /**
+     * @return enemy HP
+     */
     private int getEnemyHP() {
         return playerController.getEnemyCurrentTurn().getHP();
     }
 
+    /**
+     * Test attack mechanism
+     *
+     * @param atk      attack point
+     * @param powerUp  extra power up
+     * @param auras    extra aura
+     * @param atkDef   attack point for defender card
+     * @param defDef   defend point for defender card
+     * @param aurasDef extra aura for defender card
+     * @param position position of defender card
+     * @param damage   target damage dealt
+     * @param succeed  result flag
+     */
     @DisplayName("Testing attack and defend calculation")
     @ParameterizedTest(name = "AttackValue {0}, PowerUp {1}, Auras {2} attacking AttackValue {3}, DefenseValue {4}, Auras {5}, with Position {6} should be resulting damage {7} to the enemy player!")
     @CsvFileSource(resources = "testAttack.csv", delimiter = '\t', emptyValue = "-")

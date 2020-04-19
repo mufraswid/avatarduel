@@ -5,13 +5,24 @@ import com.avatarduel.model.card.PutableCard;
 import com.avatarduel.model.card.Card;
 
 /**
- * Kelas KartuSkillAura: kelas yang memodelkan konsep kartu skill tipe Aura, diturunkan dari kelas KartuSkill
+ * Represents aura skill card
  */
 public class AuraSkillCard extends SkillCard implements PutableCard {
-    // Atribut: untuk menambahkan atk dan def dari kartu target. Dapat bernilai 0 dan negatif
+
+    // AuraSkillCard attribute
     private int attackAddition, defenseAddition;
 
-    // Konstruktor
+    /**
+     * Constructor
+     *
+     * @param imagePath       path to image resource
+     * @param name            name for the card
+     * @param description     description for the card
+     * @param elementType     element type of this card
+     * @param powerNeeded     amount of power needed
+     * @param attackAddition  amount of extra attack
+     * @param defenseAddition amount of extra defense
+     */
     public AuraSkillCard(String imagePath, String name, String description, Element elementType, int powerNeeded,
             int attackAddition, int defenseAddition) {
         super(imagePath, name, description, elementType, powerNeeded);
@@ -19,36 +30,57 @@ public class AuraSkillCard extends SkillCard implements PutableCard {
         setDefenseAddition(defenseAddition);
     }
 
-    //#region setter
+    // #region setter
+    /**
+     * @param attackAddition amount of extra attack
+     */
     private void setAttackAddition(int attackAddition) {
         this.attackAddition = attackAddition;
     }
 
+    /**
+     * @param defenseAddition amount of extra defense
+     */
     private void setDefenseAddition(int defenseAddition) {
         this.defenseAddition = defenseAddition;
     }
-    //#endregion
+    // #endregion
 
-    //#region getter
+    // #region getter
+    /**
+     * @return this card attack addition
+     */
     public int getAttackAddition() {
         return this.attackAddition;
     }
 
+    /**
+     * @return this card defense addition
+     */
     public int getDefenseAddition() {
         return this.defenseAddition;
     }
 
+    /**
+     * @return this card description
+     */
     @Override
     public String getDescription() {
         return "Aura Skill Card\n" + super.getDescription();
     }
-    //#endregion
+    // #endregion
 
+    /**
+     * @return this card
+     */
     @Override
     public AuraSkillCard createArenaCard() {
         return this;
     }
 
+    /**
+     * @return a new copy of this card
+     */
     @Override
     public Card copy() {
         return new AuraSkillCard(imagePath, name, description, elementType, powerNeeded, attackAddition,

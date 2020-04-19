@@ -4,10 +4,16 @@ import com.avatarduel.model.Player;
 import com.avatarduel.view.DefaultText;
 import com.avatarduel.view.GridView;
 
+/**
+ * Display deck for each player
+ */
 public class DeckView extends GridView {
 
     private DefaultText deckValue;
 
+    /**
+     * Constructor
+     */
     public DeckView() {
         super("100", "50,50");
         addBorder();
@@ -15,6 +21,10 @@ public class DeckView extends GridView {
         add(deckValue = new DefaultText(), 0, 1);
     }
 
+
+    /**
+     * @param player specified player
+     */
     public void render(Player player) {
         deckValue.setText(String.format("%d / %d", player.getCurrentDeckCount(), player.getTotalDeckCount()));
     }
