@@ -5,22 +5,20 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.avatarduel.controller.CardFieldDimension;
+import com.avatarduel.model.card.ActivableCard;
 import com.avatarduel.model.card.ArenaCharacterCard;
 import com.avatarduel.model.card.Card;
-import com.avatarduel.model.card.CharacterCard;
-import com.avatarduel.model.card.LandCard;
 import com.avatarduel.model.card.PoweredCard;
-import com.avatarduel.model.card.PutableCard;
 import com.avatarduel.model.card.skill.PutableSkillCard;
 
 /**
  * Represents a player
  */
-public class Player {
+public class Player implements IPlayer {
 
-    private int[] currentElementValue, maxElementValue;
+    private int[] currentElementValues, maxElementValues;
     private int totalDeckCount, hp;
-    private List<Card> deck, handCards;
+    private List<ActivableCard> deck, handCards;
     private List<ArenaCharacterCard> characterFieldCards;
     private List<PutableSkillCard> skillFieldCards;
     private String name;
@@ -35,8 +33,8 @@ public class Player {
     public Player(String name, CardFieldDimension cardFieldDimension) {
         this.name = name;
         int elementLength = Element.values().length;
-        currentElementValue = new int[elementLength];
-        maxElementValue = new int[elementLength];
+        currentElementValues = new int[elementLength];
+        maxElementValues = new int[elementLength];
         totalDeckCount = 0;
         deck = new ArrayList<>();
         handCards = new ArrayList<>();
@@ -48,16 +46,20 @@ public class Player {
 
         // TODO delete later
         for (int i = 0; i < elementLength; ++i) {
-            currentElementValue[i] = 89;
-            maxElementValue[i] = 89;
+            currentElementValues[i] = 89;
+            maxElementValues[i] = 89;
         }
+    }
+
+    public int[] getCurrentElementValues() {
+        return currentElementValues;
     }
 
     /**
      * @param count number of card to draw from deck
      */
     public void drawCard(int count) {
-        List<Card> subList = deck.subList(0, count);
+        List<ActivableCard> subList = deck.subList(0, count);
         handCards.addAll(subList);
         subList.clear();
     }
@@ -68,7 +70,7 @@ public class Player {
     public void resetState() {
         hasPutLandCard = false;
         for (Element el : Element.values()) {
-            currentElementValue[el.ordinal()] = maxElementValue[el.ordinal()];
+            currentElementValues[el.ordinal()] = maxElementValues[el.ordinal()];
         }
         characterFieldCards.stream().filter(acc -> acc != null).forEach(acc -> {
             acc.setHasAttacked(false);
@@ -82,7 +84,7 @@ public class Player {
      * @param card specified card
      * @return true if found, false otherwise
      */
-    public boolean hasCardOnField(Card card) {
+    public boolean hasCardOnField(ActivableCard card) {
         return characterFieldCards.stream().anyMatch(c -> c == card)
                 || skillFieldCards.stream().anyMatch(c -> c == card);
     }
@@ -108,7 +110,7 @@ public class Player {
      */
     public void addMaxElement(Element el) {
         addCurrentElement(el, 1);
-        ++maxElementValue[el.ordinal()];
+        ++maxElementValues[el.ordinal()];
     }
 
     /**
@@ -118,7 +120,7 @@ public class Player {
      * @param count number of element value to be added
      */
     public void addCurrentElement(Element el, int count) {
-        currentElementValue[el.ordinal()] += count;
+        currentElementValues[el.ordinal()] += count;
     }
 
     /**
@@ -126,114 +128,9 @@ public class Player {
      *
      * @param cards specified list of card to add
      */
-    public void addToDeck(List<Card> cards) {
+    public void addToDeck(List<ActivableCard> cards) {
         deck.addAll(cards);
         totalDeckCount = deck.size();
-    }
-
-    /**
-     * Add a character card to a field with specified index of column
-     *
-     * @param i    index of column
-     * @param card specified card
-     */
-    private void putCharacterCard(int i, ArenaCharacterCard card) {
-        characterFieldCards.set(i, card);
-    }
-
-    /**
-     * Add a skill card to a field with specified index of column
-     *
-     * @param i    index of column
-     * @param card specified card
-     */
-    private void putSkillCard(int i, PutableSkillCard card) {
-        skillFieldCards.set(i, card);
-    }
-
-    /**
-     * Add a land card to a field
-     *
-     * @param card specified card
-     */
-    private void putLandCard(LandCard card) {
-        hasPutLandCard = true;
-        addMaxElement(card.getElementType());
-    }
-
-    /**
-     * Put a card from hand to field
-     *
-     * @param card specified card
-     * @return true if success, false otherwise
-     */
-    public boolean putCard(Card card) {
-        if (!canPutCard(card)) {
-            return false;
-        }
-        handCards.remove(card);
-        if (card instanceof LandCard) {
-            putLandCard((LandCard) card);
-            return true;
-        }
-        if (card instanceof PoweredCard) {
-            addCurrentElement(card.getElementType(), -((PoweredCard) card).getPowerNeeded());
-        }
-        if (card instanceof PutableCard) {
-            if (card instanceof CharacterCard) {
-                for (int i = 0; i < characterFieldCards.size(); ++i) {
-                    if (characterFieldCards.get(i) == null) {
-                        putCharacterCard(i, ((CharacterCard) card).createArenaCard());
-                        return true;
-                    }
-                }
-            } else if (card instanceof PutableSkillCard) {
-                for (int i = 0; i < skillFieldCards.size(); ++i) {
-                    if (skillFieldCards.get(i) == null) {
-                        putSkillCard(i, ((PutableSkillCard) card).createArenaCard());
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * @param card specified card
-     * @return true if allowed to put a card
-     */
-    public boolean canPutCard(Card card) {
-        if (!handCards.contains(card)) {
-            return false;
-        }
-        if (card instanceof PutableCard) {
-            boolean hasEmpty = false;
-            if (card instanceof CharacterCard) {
-                for (int i = 0; i < characterFieldCards.size(); ++i) {
-                    if (characterFieldCards.get(i) == null) {
-                        hasEmpty = true;
-                        break;
-                    }
-                }
-            } else if (card instanceof PutableSkillCard) {
-                for (int i = 0; i < skillFieldCards.size(); ++i) {
-                    if (skillFieldCards.get(i) == null) {
-                        hasEmpty = true;
-                        break;
-                    }
-                }
-            }
-            if (!hasEmpty) {
-                return false;
-            }
-        }
-        if (card instanceof LandCard) {
-            return !hasPutLandCard;
-        } else if (card instanceof PoweredCard) {
-            return ((PoweredCard) card).getPowerNeeded() <= currentElementValue[card.getElementType().ordinal()];
-        }
-        return false;
     }
 
     public CardFieldDimension getCardFieldDimension() {
@@ -259,7 +156,7 @@ public class Player {
      * @return element value of this player
      */
     public int getCurrentElementValue(Element element) {
-        return currentElementValue[element.ordinal()];
+        return currentElementValues[element.ordinal()];
     }
 
     /**
@@ -267,7 +164,7 @@ public class Player {
      * @return max element value of this player
      */
     public int getMaxElementValue(Element element) {
-        return maxElementValue[element.ordinal()];
+        return maxElementValues[element.ordinal()];
     }
 
     /**
@@ -287,7 +184,8 @@ public class Player {
     /**
      * @return list of cards in hand
      */
-    public List<Card> getHandCards() {
+    @Override
+    public List<ActivableCard> getHandCards() {
         return handCards;
     }
 
@@ -362,6 +260,56 @@ public class Player {
      */
     public void damage(int damage) {
         hp -= damage;
+    }
+
+    @Override
+    public boolean hasOnHand(Card card) {
+        return handCards.contains(card);
+    }
+
+    @Override
+    public boolean canSpendPower(PoweredCard card) {
+        return card.getPowerNeeded() <= currentElementValues[card.getElementType().ordinal()];
+    }
+
+    @Override
+    public void spendPower(PoweredCard card) {
+        addCurrentElement(card.getElementType(), -card.getPowerNeeded());
+    }
+
+    @Override
+    public boolean canPutCharacterCard() {
+        return characterFieldCards.contains(null);
+    }
+
+    @Override
+    public boolean canPutSkillCard() {
+        return skillFieldCards.contains(null);
+    }
+
+    @Override
+    public void putCharacterCard(ArenaCharacterCard card) {
+        characterFieldCards.set(characterFieldCards.indexOf(null), card);
+    }
+
+    @Override
+    public void putSkillCard(PutableSkillCard card) {
+        skillFieldCards.set(skillFieldCards.indexOf(null), card);
+    }
+
+    @Override
+    public boolean hasPutLandCard() {
+        return hasPutLandCard;
+    }
+
+    @Override
+    public void setHasPutLandCard(boolean value) {
+        hasPutLandCard = value;
+    }
+
+    @Override
+    public void removeFromHand(ActivableCard card) {
+        handCards.remove(card);
     }
 
 }

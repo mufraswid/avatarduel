@@ -10,7 +10,7 @@ import com.avatarduel.model.card.skill.DestroySkillCard;
 /**
  * CardDao serve as an object where all data about cards are stored
  */
-public class DestroySkillCardRepository extends BaseCardRepository {
+public class DestroySkillCardRepository extends BaseActivableCardRepository {
 
     private static final String DESTROY_SKILL_CSV_FILE_PATH = "card/data/skill/destroy.csv";
 

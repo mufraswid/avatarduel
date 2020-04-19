@@ -10,7 +10,7 @@ import com.avatarduel.model.card.LandCard;
 /**
  * CardDao serve as an object where all data about cards are stored
  */
-public class LandCardRepository extends BaseCardRepository {
+public class LandCardRepository extends BaseActivableCardRepository {
 
     private static final String LAND_CSV_FILE_PATH = "card/data/land.csv";
 

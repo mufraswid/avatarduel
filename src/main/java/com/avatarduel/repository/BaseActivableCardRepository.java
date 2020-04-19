@@ -11,39 +11,39 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import com.avatarduel.model.card.Card;
+import com.avatarduel.model.card.ActivableCard;
 import com.avatarduel.util.CSVReader;
 import com.avatarduel.util.ResourceFinder;
 
-public abstract class BaseCardRepository implements Repository<Card, UUID> {
+public abstract class BaseActivableCardRepository implements Repository<ActivableCard, UUID> {
 
-    protected List<Card> cardList;
+    protected List<ActivableCard> cardList;
 
     @Override
-    public Optional<Card> get(UUID id) {
+    public Optional<ActivableCard> get(UUID id) {
         return cardList.stream().filter(card -> card.getId().equals(id)).findAny();
     }
 
     @Override
-    public List<Card> getAll() {
+    public List<ActivableCard> getAll() {
         return cardList;
     }
 
     @Override
-    public void save(Card card) {
+    public void save(ActivableCard card) {
         cardList.add(card);
     }
 
     @Override
-    public void delete(Card card) {
+    public void delete(ActivableCard card) {
         cardList.remove(card);
     }
 
     @Override
-    public void update(UUID id, Card card) {
-        Iterator<Card> iter = cardList.iterator();
+    public void update(UUID id, ActivableCard card) {
+        Iterator<ActivableCard> iter = cardList.iterator();
         while (iter.hasNext()) {
-            Card next = iter.next();
+            ActivableCard next = iter.next();
             if (next.getId().equals(id)) {
                 iter.remove();
                 break;
@@ -58,15 +58,16 @@ public abstract class BaseCardRepository implements Repository<Card, UUID> {
      * @param count number of cards that want to be randomly picked
      * @return list of randomly selected card
      */
-    public List<Card> getRandomCards(int count) {
-        List<Card> res = new ArrayList<>();
+    public List<ActivableCard> getRandomCards(int count) {
+        List<ActivableCard> res = new ArrayList<>();
         int listLength = cardList.size();
         while (count > 0) {
             int take = Math.min(count, listLength);
             if (take != listLength) {
                 Collections.shuffle(cardList);
             }
-            res.addAll(cardList.subList(0, take).stream().map(c -> c.copy()).collect(Collectors.toList()));
+            res.addAll(
+                    cardList.subList(0, take).stream().map(c -> (ActivableCard) c.copy()).collect(Collectors.toList()));
             count -= take;
         }
         return res;

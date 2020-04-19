@@ -41,7 +41,7 @@ public class LogicTest {
     @BeforeEach
     public void init() throws IOException, URISyntaxException {
         CardFieldDimension cardFieldDimension = new CardFieldDimension(0, 0);
-        playerController = new PlayerController(new Player("Player 1", cardFieldDimension),
+        playerController = new PlayerController(0, new Player("Player 1", cardFieldDimension),
                 new Player("Player 2", cardFieldDimension), new LandCardRepository(), new CharacterCardRepository(),
                 new AuraSkillCardRepository(), new DestroySkillCardRepository(), new PowerUpSkillCardRepository());
     }

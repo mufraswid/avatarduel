@@ -1,14 +1,15 @@
 package com.avatarduel.model.card.skill;
 
 import com.avatarduel.model.Element;
-import com.avatarduel.model.card.Card;
+import com.avatarduel.model.IPlayer;
+import com.avatarduel.model.card.ActivableCard;
 import com.avatarduel.model.card.PoweredCard;
 
 /**
  * Abstract class to represents a skill card
  */
-public abstract class SkillCard extends Card implements PoweredCard {
-    // SkillCard attribute
+public abstract class SkillCard extends ActivableCard implements PoweredCard {
+
     protected int powerNeeded;
 
     /**
@@ -25,7 +26,6 @@ public abstract class SkillCard extends Card implements PoweredCard {
         this.powerNeeded = powerNeeded;
     }
 
-    // #region getter
     /**
      * @return the power needed
      */
@@ -33,5 +33,15 @@ public abstract class SkillCard extends Card implements PoweredCard {
     public int getPowerNeeded() {
         return this.powerNeeded;
     }
-    // #endregion
+
+    @Override
+    public boolean canBePutOn(IPlayer player) {
+        return super.canBePutOn(player) && player.canSpendPower(this);
+    }
+
+    @Override
+    public void putOn(IPlayer player) {
+        super.putOn(player);
+        player.spendPower(this);
+    }
 }

@@ -10,7 +10,7 @@ import com.avatarduel.model.card.skill.AuraSkillCard;
 /**
  * CardDao serve as an object where all data about cards are stored
  */
-public class AuraSkillCardRepository extends BaseCardRepository {
+public class AuraSkillCardRepository extends BaseActivableCardRepository {
 
     private static final String AURA_SKILL_CSV_FILE_PATH = "card/data/skill/aura.csv";
 

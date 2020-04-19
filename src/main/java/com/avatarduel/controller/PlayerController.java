@@ -7,12 +7,12 @@ import java.util.stream.Stream;
 
 import com.avatarduel.model.CardPosition;
 import com.avatarduel.model.Player;
+import com.avatarduel.model.card.ActivableCard;
 import com.avatarduel.model.card.ArenaCharacterCard;
-import com.avatarduel.model.card.Card;
 import com.avatarduel.model.card.skill.PutableSkillCard;
 import com.avatarduel.model.card.skill.SkillCard;
 import com.avatarduel.repository.AuraSkillCardRepository;
-import com.avatarduel.repository.BaseCardRepository;
+import com.avatarduel.repository.BaseActivableCardRepository;
 import com.avatarduel.repository.CharacterCardRepository;
 import com.avatarduel.repository.DestroySkillCardRepository;
 import com.avatarduel.repository.PowerUpSkillCardRepository;
@@ -22,11 +22,9 @@ import com.avatarduel.repository.PowerUpSkillCardRepository;
  */
 public class PlayerController {
 
-    private static final int FIRST_CARD_DRAWN = 7;
-
     private Player player1, player2, turn;
-    private Card clickedCard;
-    private BaseCardRepository landCardRepository;
+    private ActivableCard clickedCard;
+    private BaseActivableCardRepository landCardRepository;
     private CharacterCardRepository characterCardRepository;
     private AuraSkillCardRepository auraSkillCardRepository;
     private DestroySkillCardRepository destroySkillCardRepository;
@@ -43,9 +41,9 @@ public class PlayerController {
      * @param destroySkillCardRepository Repository for Destroy Skill Card
      * @param powerUpSkillCardRepository Repository for Power Up Skill Card
      */
-    public PlayerController(Player player1, Player player2, BaseCardRepository landCardRepository,
-            CharacterCardRepository characterCardRepository, AuraSkillCardRepository auraSkillCardRepository,
-            DestroySkillCardRepository destroySkillCardRepository,
+    public PlayerController(int firstDrawnCardCount, Player player1, Player player2,
+            BaseActivableCardRepository landCardRepository, CharacterCardRepository characterCardRepository,
+            AuraSkillCardRepository auraSkillCardRepository, DestroySkillCardRepository destroySkillCardRepository,
             PowerUpSkillCardRepository powerUpSkillCardRepository) {
         this.player1 = player1;
         this.player2 = player2;
@@ -58,8 +56,8 @@ public class PlayerController {
         player1.addToDeck(getRandomDeck(24, 24, 4, 4, 4));
         player2.addToDeck(getRandomDeck(24, 24, 4, 4, 4));
 
-        player1.drawCard(FIRST_CARD_DRAWN);
-        player2.drawCard(FIRST_CARD_DRAWN);
+        player1.drawCard(firstDrawnCardCount);
+        player2.drawCard(firstDrawnCardCount);
 
         turn = player1;
     }
@@ -74,9 +72,9 @@ public class PlayerController {
      * @param powerupCount   number of power up cards for the deck
      * @return randomized list of cards with each specified number of type
      */
-    public List<Card> getRandomDeck(int landCount, int characterCount, int auraCount, int destroyCount,
+    public List<ActivableCard> getRandomDeck(int landCount, int characterCount, int auraCount, int destroyCount,
             int powerupCount) {
-        List<Card> res = new ArrayList<>();
+        List<ActivableCard> res = new ArrayList<>();
 
         res.addAll(landCardRepository.getRandomCards(landCount));
         res.addAll(characterCardRepository.getRandomCards(characterCount));
@@ -131,7 +129,7 @@ public class PlayerController {
     /**
      * @param card the clicked card
      */
-    public void setClickedCard(Card card) {
+    public void setClickedCard(ActivableCard card) {
         if (clickedCard != null) {
             clickedCard.setClicked(false);
         }
@@ -144,7 +142,7 @@ public class PlayerController {
     /**
      * @return this clickedCard
      */
-    public Card getClickedCard() {
+    public ActivableCard getClickedCard() {
         return clickedCard;
     }
 

@@ -40,7 +40,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws URISyntaxException, IOException {
         CardFieldDimension cardFieldDimension = new CardFieldDimension(6, 6);
-        PlayerController playerController = new PlayerController(new Player("Player 1", cardFieldDimension),
+        PlayerController playerController = new PlayerController(7, new Player("Player 1", cardFieldDimension),
                 new Player("Player 2", cardFieldDimension), new LandCardRepository(), new CharacterCardRepository(),
                 new AuraSkillCardRepository(), new DestroySkillCardRepository(), new PowerUpSkillCardRepository());
         GameController game = new GameController(playerController);

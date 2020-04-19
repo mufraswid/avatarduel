@@ -3,6 +3,7 @@ package com.avatarduel.controller;
 import com.avatarduel.controller.listener.CardEventListener;
 import com.avatarduel.model.Phase;
 import com.avatarduel.model.Player;
+import com.avatarduel.model.card.ActivableCard;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.model.card.skill.SkillCard;
 
@@ -60,28 +61,32 @@ public class CardHandEventListener implements CardEventListener {
      * @param card the clicked card
      */
     @Override
-    public void onMouseLeftClicked(Card card) {
+    public void onMouseLeftClicked(Card c) {
         Phase phase = gameController.getPhase();
         if (phase != Phase.MAIN1 && phase != Phase.MAIN2) {
             return;
         }
+        if (!(c instanceof ActivableCard)) {
+            return;
+        }
+        ActivableCard card = (ActivableCard) c;
         RenderController renderController = gameController.getRenderController();
         PlayerController playerController = gameController.getPlayerController();
         if (card == renderController.getClosedCard()) {
             return;
         }
         Player turn = playerController.getCurrentPlayerTurn();
-        Card clicked = playerController.getClickedCard();
+        ActivableCard clicked = playerController.getClickedCard();
         if (card instanceof SkillCard) {
-            Card next = card != clicked && turn.canPutCard(card) ? card : null;
+            ActivableCard next = card != clicked && card.canBePutOn(turn) ? card : null;
             playerController.setClickedCard(next);
             if (next != clicked) {
                 renderController.updateHandCard(turn);
             }
         } else {
             playerController.setClickedCard(null);
-            if (turn.canPutCard(card)) {
-                turn.putCard(card);
+            if (card.canBePutOn(turn)) {
+                card.putOn(turn);
                 renderController.updateFieldCard(turn);
                 renderController.updateElementValues(turn);
                 renderController.updateHandCard(turn);

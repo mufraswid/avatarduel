@@ -10,7 +10,7 @@ import com.avatarduel.model.card.skill.PowerUpSkillCard;
 /**
  * CardDao serve as an object where all data about cards are stored
  */
-public class PowerUpSkillCardRepository extends BaseCardRepository {
+public class PowerUpSkillCardRepository extends BaseActivableCardRepository {
 
     private static final String POWERUP_SKILL_CSV_FILE_PATH = "card/data/skill/powerup.csv";
 

@@ -10,7 +10,7 @@ import com.avatarduel.model.card.CharacterCard;
 /**
  * CardDao serve as an object where all data about cards are stored
  */
-public class CharacterCardRepository extends BaseCardRepository {
+public class CharacterCardRepository extends BaseActivableCardRepository {
 
     private static final String CHARACTER_CSV_FILE_PATH = "card/data/character.csv";
 

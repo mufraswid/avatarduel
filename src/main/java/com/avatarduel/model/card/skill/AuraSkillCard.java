@@ -85,4 +85,5 @@ public class AuraSkillCard extends PutableSkillCard {
         return new AuraSkillCard(imagePath, name, description, elementType, powerNeeded, attackAddition,
                 defenseAddition);
     }
+
 }

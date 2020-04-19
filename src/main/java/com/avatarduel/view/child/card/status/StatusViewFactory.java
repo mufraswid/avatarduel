@@ -7,7 +7,7 @@ import com.avatarduel.model.card.skill.AuraSkillCard;
 import com.avatarduel.view.child.card.CardView;
 
 /**
- * TODO
+ * Status View Factory for creating StatusView based on the Card
  */
 public final class StatusViewFactory {
 

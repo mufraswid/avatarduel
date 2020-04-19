@@ -1,11 +1,12 @@
 package com.avatarduel.model.card;
 
 import com.avatarduel.model.Element;
+import com.avatarduel.model.IPlayer;
 
 /**
  * Represents a character card
  */
-public class CharacterCard extends Card implements PoweredCard, PutableCard<ArenaCharacterCard> {
+public class CharacterCard extends ActivableCard implements PoweredCard, PutableCard<ArenaCharacterCard> {
 
     private int powerNeeded, attack, defense;
 
@@ -96,6 +97,18 @@ public class CharacterCard extends Card implements PoweredCard, PutableCard<Aren
     @Override
     public Card copy() {
         return new CharacterCard(imagePath, name, description, elementType, powerNeeded, attack, defense);
+    }
+
+    @Override
+    public boolean canBePutOn(IPlayer player) {
+        return super.canBePutOn(player) && player.canSpendPower(this) && player.canPutCharacterCard();
+    }
+
+    @Override
+    public void putOn(IPlayer player) {
+        super.putOn(player);
+        player.spendPower(this);
+        player.putCharacterCard(createArenaCard());
     }
 
 }

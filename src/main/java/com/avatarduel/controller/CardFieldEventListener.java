@@ -4,6 +4,7 @@ import com.avatarduel.controller.listener.CardEventListener;
 import com.avatarduel.model.CardPosition;
 import com.avatarduel.model.Phase;
 import com.avatarduel.model.Player;
+import com.avatarduel.model.card.ActivableCard;
 import com.avatarduel.model.card.ArenaCharacterCard;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.model.card.skill.DestroySkillCard;
@@ -55,11 +56,15 @@ public class CardFieldEventListener implements CardEventListener {
      * @param card the clicked card
      */
     @Override
-    public void onMouseRightClicked(Card card) {
+    public void onMouseRightClicked(Card c) {
         Phase phase = gameController.getPhase();
         if (phase == Phase.DRAW || phase == Phase.END) {
             return;
         }
+        if (!(c instanceof ActivableCard)) {
+            return;
+        }
+        ActivableCard card = (ActivableCard) c;
         RenderController renderController = gameController.getRenderController();
         PlayerController playerController = gameController.getPlayerController();
         if (card == renderController.getClosedCard()) {
@@ -85,18 +90,22 @@ public class CardFieldEventListener implements CardEventListener {
      * @param card the clicked card
      */
     @Override
-    public void onMouseLeftClicked(Card card) {
+    public void onMouseLeftClicked(Card c) {
         Phase phase = gameController.getPhase();
         if (phase == Phase.DRAW || phase == Phase.END) {
             return;
         }
+        if (!(c instanceof ActivableCard)) {
+            return;
+        }
+        ActivableCard card = (ActivableCard) c;
         RenderController renderController = gameController.getRenderController();
         PlayerController playerController = gameController.getPlayerController();
         if (card == renderController.getClosedCard()) {
             return;
         }
         Player turn = playerController.getCurrentPlayerTurn();
-        Card clicked = playerController.getClickedCard();
+        ActivableCard clicked = playerController.getClickedCard();
         if (card instanceof ArenaCharacterCard) {
             ArenaCharacterCard acc = (ArenaCharacterCard) card;
             boolean turnsCard = turn.hasCardOnField(acc);
@@ -124,8 +133,8 @@ public class CardFieldEventListener implements CardEventListener {
                 }
             } else {
                 if (clicked instanceof SkillCard) {
-                    if (turn.canPutCard(clicked)) {
-                        turn.putCard(clicked);
+                    if (clicked.canBePutOn(turn)) {
+                        clicked.putOn(turn);
                         playerController.setClickedCard(null);
                         if (clicked instanceof DestroySkillCard) {
                             playerController.removeCardFromField(acc);

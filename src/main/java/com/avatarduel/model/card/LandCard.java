@@ -1,11 +1,12 @@
 package com.avatarduel.model.card;
 
 import com.avatarduel.model.Element;
+import com.avatarduel.model.IPlayer;
 
 /**
  * Represents a land card
  */
-public class LandCard extends Card {
+public class LandCard extends ActivableCard {
     /**
      * Constructor for land card
      *
@@ -32,5 +33,17 @@ public class LandCard extends Card {
     @Override
     public Card copy() {
         return new LandCard(imagePath, name, description, elementType);
+    }
+
+    @Override
+    public boolean canBePutOn(IPlayer player) {
+        return super.canBePutOn(player) && !player.hasPutLandCard();
+    }
+
+    @Override
+    public void putOn(IPlayer player) {
+        super.putOn(player);
+        player.addMaxElement(getElementType());
+        player.setHasPutLandCard(true);
     }
 }

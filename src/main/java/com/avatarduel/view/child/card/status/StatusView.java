@@ -7,7 +7,7 @@ import com.avatarduel.view.DefaultText;
 import com.avatarduel.view.child.card.CardView;
 
 /**
- * TODO
+ * Status View for Cards that have attack, defense, and power
  */
 public class StatusView extends CardView {
 
