@@ -10,11 +10,18 @@ public abstract class PutableSkillCard extends SkillCard implements PutableCard<
         super(imagePath, name, description, elementType, powerNeeded);
     }
 
+    /** 
+     * @param player
+     * @return boolean
+     */
     @Override
     public boolean canBePutOn(IPlayer player) {
         return super.canBePutOn(player) && player.canSpendPower(this) && player.canPutSkillCard();
     }
 
+    /** 
+     * @param player
+     */
     @Override
     public void putOn(IPlayer player) {
         super.putOn(player);

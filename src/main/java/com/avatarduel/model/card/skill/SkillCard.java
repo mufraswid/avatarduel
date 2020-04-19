@@ -34,11 +34,18 @@ public abstract class SkillCard extends ActivableCard implements PoweredCard {
         return this.powerNeeded;
     }
 
+    /** 
+     * @param player
+     * @return boolean
+     */
     @Override
     public boolean canBePutOn(IPlayer player) {
         return super.canBePutOn(player) && player.canSpendPower(this);
     }
 
+    /** 
+     * @param player
+     */
     @Override
     public void putOn(IPlayer player) {
         super.putOn(player);

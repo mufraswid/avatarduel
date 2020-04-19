@@ -19,6 +19,9 @@ public class CardRowFieldView extends CardView {
         setGridPercentages(cols, new double[] { 100 });
     }
 
+    /** 
+     * @param cards
+     */
     public void renderCards(List<? extends Card> cards) {
         getChildren().clear();
         int i = 0;

@@ -41,11 +41,19 @@ public abstract class GridView extends GridPane {
         setGridPercentages(colPercentages, rowPercentages);
     }
 
+    /** 
+     * @param colPercentages
+     * @param rowPercentages
+     */
     protected void setGridPercentages(String colPercentages, String rowPercentages) {
         setGridPercentages(Arrays.stream(colPercentages.split(SEPARATOR)).mapToDouble(Double::parseDouble).toArray(),
                 Arrays.stream(rowPercentages.split(SEPARATOR)).mapToDouble(Double::parseDouble).toArray());
     }
 
+    /** 
+     * @param colPercentages
+     * @param rowPercentages
+     */
     protected void setGridPercentages(double[] colPercentages, double[] rowPercentages) {
         Object[] arr = Arrays.stream(colPercentages).mapToObj(d -> {
             ColumnConstraints col = new ColumnConstraints();

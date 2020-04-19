@@ -22,11 +22,10 @@ public class DestroySkillCard extends SkillCard {
     }
 
     /**
-     * @return this card description
+     * @return this card type name
      */
-    @Override
-    public String getDescription() {
-        return "Destroy Skill Card\n" + super.getDescription();
+    public String getCardTypeName() {
+        return "Destroy Skill Card";
     }
 
     /**

@@ -51,6 +51,9 @@ public class Player implements IPlayer {
         }
     }
 
+    /** 
+     * @return int[]
+     */
     public int[] getCurrentElementValues() {
         return currentElementValues;
     }
@@ -133,6 +136,9 @@ public class Player implements IPlayer {
         totalDeckCount = deck.size();
     }
 
+    /** 
+     * @return CardFieldDimension
+     */
     public CardFieldDimension getCardFieldDimension() {
         return cardFieldDimension;
     }
@@ -262,51 +268,83 @@ public class Player implements IPlayer {
         hp -= damage;
     }
 
+    /** 
+     * @param card
+     * @return boolean
+     */
     @Override
     public boolean hasOnHand(Card card) {
         return handCards.contains(card);
     }
 
+    /** 
+     * @param card
+     * @return boolean
+     */
     @Override
     public boolean canSpendPower(PoweredCard card) {
         return card.getPowerNeeded() <= currentElementValues[card.getElementType().ordinal()];
     }
 
+    /** 
+     * @param card
+     */
     @Override
     public void spendPower(PoweredCard card) {
         addCurrentElement(card.getElementType(), -card.getPowerNeeded());
     }
 
+    /** 
+     * @return boolean
+     */
     @Override
     public boolean canPutCharacterCard() {
         return characterFieldCards.contains(null);
     }
 
+    /** 
+     * @return boolean
+     */
     @Override
     public boolean canPutSkillCard() {
         return skillFieldCards.contains(null);
     }
 
+    /** 
+     * @param card
+     */
     @Override
     public void putCharacterCard(ArenaCharacterCard card) {
         characterFieldCards.set(characterFieldCards.indexOf(null), card);
     }
 
+    /** 
+     * @param card
+     */
     @Override
     public void putSkillCard(PutableSkillCard card) {
         skillFieldCards.set(skillFieldCards.indexOf(null), card);
     }
 
+    /** 
+     * @return boolean
+     */
     @Override
     public boolean hasPutLandCard() {
         return hasPutLandCard;
     }
 
+    /** 
+     * @param value
+     */
     @Override
     public void setHasPutLandCard(boolean value) {
         hasPutLandCard = value;
     }
 
+    /** 
+     * @param card
+     */
     @Override
     public void removeFromHand(ActivableCard card) {
         handCards.remove(card);

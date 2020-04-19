@@ -95,6 +95,9 @@ public abstract class Card {
         return isClosed;
     }
 
+    /** 
+     * @return UUID
+     */
     public UUID getId() {
         return uuid;
     }
@@ -125,6 +128,13 @@ public abstract class Card {
      */
     public Element getElementType() {
         return this.elementType;
+    }
+
+    /**
+     * @return this card's full description on view
+     */
+    public String getFullDescription() {
+        return getDescription();
     }
     // #endregion
 

@@ -140,14 +140,6 @@ public class ArenaCharacterCard extends CharacterCard {
     }
 
     /**
-     * @return character card description
-     */
-    @Override
-    public String getDescription() {
-        return super.getDescription();
-    }
-
-    /**
      * @return list of skill card
      */
     public List<SkillCard> getSkillCardList() {

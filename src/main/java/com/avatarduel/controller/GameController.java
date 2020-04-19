@@ -76,7 +76,6 @@ public class GameController {
         playerController.setClickedCard(null);
         Player turn = playerController.getCurrentPlayerTurn();
         if (phase == Phase.DRAW) {
-            playerController.resetPlayerState();
             if (!playerController.doDrawPhase()) {
                 endGame(playerController.getEnemyCurrentTurn());
                 return;

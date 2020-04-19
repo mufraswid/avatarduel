@@ -20,14 +20,6 @@ public class LandCard extends ActivableCard {
     }
 
     /**
-     * @return this card description
-     */
-    @Override
-    public String getDescription() {
-        return "Land Card\n" + super.getDescription();
-    }
-
-    /**
      * @return a new copy of this card
      */
     @Override
@@ -35,11 +27,25 @@ public class LandCard extends ActivableCard {
         return new LandCard(imagePath, name, description, elementType);
     }
 
+    /**
+     * @return this card type name
+     */
+    public String getCardTypeName() {
+        return "Land Card";
+    }
+
+    /** 
+     * @param player
+     * @return boolean
+     */
     @Override
     public boolean canBePutOn(IPlayer player) {
         return super.canBePutOn(player) && !player.hasPutLandCard();
     }
 
+    /** 
+     * @param player
+     */
     @Override
     public void putOn(IPlayer player) {
         super.putOn(player);

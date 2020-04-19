@@ -22,19 +22,18 @@ public class PowerUpSkillCard extends PutableSkillCard {
     }
 
     /**
-     * @return this card description
-     */
-    @Override
-    public String getDescription() {
-        return "PowerUp Skill Card\n" + super.getDescription();
-    }
-
-    /**
      * @return this card
      */
     @Override
     public PowerUpSkillCard createArenaCard() {
         return this;
+    }
+
+    /**
+     * @return this card type name
+     */
+    public String getCardTypeName() {
+        return "PowerUp Skill Card";
     }
 
     /**

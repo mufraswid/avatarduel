@@ -54,6 +54,13 @@ public class CharacterCard extends ActivableCard implements PoweredCard, Putable
 
     // #region getter
     /**
+     * @return this card type name
+     */
+    public String getCardTypeName() {
+        return "Character Card";
+    }
+
+    /**
      * @return this card attack value
      */
     public int getAttack() {
@@ -75,14 +82,6 @@ public class CharacterCard extends ActivableCard implements PoweredCard, Putable
     }
 
     /**
-     * @return this card description
-     */
-    @Override
-    public String getDescription() {
-        return "Character Card\n" + super.getDescription();
-    }
-
-    /**
      * @return make a new arena card from this card
      */
     @Override
@@ -99,11 +98,18 @@ public class CharacterCard extends ActivableCard implements PoweredCard, Putable
         return new CharacterCard(imagePath, name, description, elementType, powerNeeded, attack, defense);
     }
 
+    /** 
+     * @param player
+     * @return boolean
+     */
     @Override
     public boolean canBePutOn(IPlayer player) {
         return super.canBePutOn(player) && player.canSpendPower(this) && player.canPutCharacterCard();
     }
 
+    /** 
+     * @param player
+     */
     @Override
     public void putOn(IPlayer player) {
         super.putOn(player);

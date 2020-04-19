@@ -47,6 +47,13 @@ public class AuraSkillCard extends PutableSkillCard {
 
     // #region getter
     /**
+     * @return this card type name
+     */
+    public String getCardTypeName() {
+        return "Aura Skill Card";
+    }
+
+    /**
      * @return this card attack addition
      */
     public int getAttackAddition() {
@@ -60,13 +67,6 @@ public class AuraSkillCard extends PutableSkillCard {
         return this.defenseAddition;
     }
 
-    /**
-     * @return this card description
-     */
-    @Override
-    public String getDescription() {
-        return "Aura Skill Card\n" + super.getDescription();
-    }
     // #endregion
 
     /**

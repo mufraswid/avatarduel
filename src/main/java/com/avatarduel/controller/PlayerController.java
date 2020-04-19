@@ -150,6 +150,7 @@ public class PlayerController {
      * @return false if cant do draw phase, true otherwise
      */
     public boolean doDrawPhase() {
+        resetPlayerState();
         if (turn.getCurrentDeckCount() <= 0) {
             return false;
         }

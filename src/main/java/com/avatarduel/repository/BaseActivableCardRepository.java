@@ -19,26 +19,43 @@ public abstract class BaseActivableCardRepository implements Repository<Activabl
 
     protected List<ActivableCard> cardList;
 
+    /** 
+     * @param id
+     * @return Optional<ActivableCard>
+     */
     @Override
     public Optional<ActivableCard> get(UUID id) {
         return cardList.stream().filter(card -> card.getId().equals(id)).findAny();
     }
 
+    /** 
+     * @return List<ActivableCard>
+     */
     @Override
     public List<ActivableCard> getAll() {
         return cardList;
     }
 
+    /** 
+     * @param card
+     */
     @Override
     public void save(ActivableCard card) {
         cardList.add(card);
     }
 
+    /** 
+     * @param card
+     */
     @Override
     public void delete(ActivableCard card) {
         cardList.remove(card);
     }
 
+    /** 
+     * @param id
+     * @param card
+     */
     @Override
     public void update(UUID id, ActivableCard card) {
         Iterator<ActivableCard> iter = cardList.iterator();

@@ -23,7 +23,7 @@ public class DescriptionCardView extends CardView {
         getChildren().clear();
         DefaultText descriptionText = new DefaultText();
         CardView statusCardView = StatusViewFactory.createStatusView(card, false);
-        descriptionText.setText(card.getDescription());
+        descriptionText.setText(card.getFullDescription());
         descriptionText.getText().wrappingWidthProperty().bind(widthProperty().subtract(5));
         add(descriptionText, 0, 0);
         if (statusCardView != null) {
