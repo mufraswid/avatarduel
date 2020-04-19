@@ -1,5 +1,6 @@
 package com.avatarduel.view.main;
 
+import com.avatarduel.controller.CardFieldDimension;
 import com.avatarduel.controller.listener.CardEventListener;
 import com.avatarduel.model.Player;
 import com.avatarduel.model.card.Card;
@@ -22,11 +23,12 @@ public class CenterMainView extends GridView {
      * @param handCardListener  specified hand card listener
      * @param cardFieldListener specified card field listener
      */
-    public CenterMainView(CardEventListener handCardListener, CardEventListener cardFieldListener) {
+    public CenterMainView(CardFieldDimension cardFieldDimension1, CardFieldDimension cardFieldDimension2,
+            CardEventListener handCardListener, CardEventListener cardFieldListener) {
         super("100", "18,32,32,18");
         add(handCardFieldView2 = new HandCardFieldView(handCardListener), 0, 0);
-        add(cardFieldView2 = new CardFieldView(ViewPosition.TOP, cardFieldListener), 0, 1);
-        add(cardFieldView1 = new CardFieldView(ViewPosition.BOTTOM, cardFieldListener), 0, 2);
+        add(cardFieldView2 = new CardFieldView(cardFieldDimension2, ViewPosition.TOP, cardFieldListener), 0, 1);
+        add(cardFieldView1 = new CardFieldView(cardFieldDimension1, ViewPosition.BOTTOM, cardFieldListener), 0, 2);
         add(handCardFieldView1 = new HandCardFieldView(handCardListener), 0, 3);
     }
 

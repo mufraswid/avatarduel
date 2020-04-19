@@ -7,6 +7,7 @@ import com.avatarduel.model.Player;
 import com.avatarduel.model.card.ArenaCharacterCard;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.model.card.skill.DestroySkillCard;
+import com.avatarduel.model.card.skill.PutableSkillCard;
 import com.avatarduel.model.card.skill.SkillCard;
 
 import javafx.scene.Cursor;
@@ -66,8 +67,12 @@ public class CardFieldEventListener implements CardEventListener {
         }
         Player turn = playerController.getCurrentPlayerTurn();
         if (turn.hasCardOnField(card)) {
-            if (phase != Phase.BATTLE || card instanceof ArenaCharacterCard) {
-                playerController.removeCardFromField((ArenaCharacterCard) card);
+            if (phase != Phase.BATTLE && (card instanceof ArenaCharacterCard || card instanceof PutableSkillCard)) {
+                if (card instanceof ArenaCharacterCard) {
+                    playerController.removeCardFromField((ArenaCharacterCard) card);
+                } else {
+                    playerController.removeCardFromField((PutableSkillCard) card);
+                }
                 renderController.updateFieldCard(turn);
                 renderController.updateFieldCard(playerController.getEnemyCurrentTurn());
             }
@@ -99,7 +104,7 @@ public class CardFieldEventListener implements CardEventListener {
             if (phase == Phase.BATTLE) {
                 if (turnsCard && acc.getPosition() == CardPosition.ATTACK && !acc.hasAttacked()
                         && acc.isEnableToAttack()) {
-                    if (enemy.hasActiveCharacterCard()) {
+                    if (enemy.hasAnyArenaCharacterCard()) {
                         playerController.setClickedCard(card == clicked ? null : card);
                         renderController.updateFieldCard(turn);
                     } else {

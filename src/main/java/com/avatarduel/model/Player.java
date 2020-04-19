@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.avatarduel.Constants;
+import com.avatarduel.controller.CardFieldDimension;
 import com.avatarduel.model.card.ArenaCharacterCard;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.model.card.CharacterCard;
 import com.avatarduel.model.card.LandCard;
 import com.avatarduel.model.card.PoweredCard;
 import com.avatarduel.model.card.PutableCard;
+import com.avatarduel.model.card.skill.PutableSkillCard;
 
 /**
  * Represents a player
@@ -20,16 +21,18 @@ public class Player {
     private int[] currentElementValue, maxElementValue;
     private int totalDeckCount, hp;
     private List<Card> deck, handCards;
-    private Card[][] fieldCards;
+    private List<ArenaCharacterCard> characterFieldCards;
+    private List<PutableSkillCard> skillFieldCards;
     private String name;
     private boolean hasPutLandCard;
+    private CardFieldDimension cardFieldDimension;
 
     /**
      * Constructor for player with a specified name
      *
      * @param name the name of the player
      */
-    public Player(String name) {
+    public Player(String name, CardFieldDimension cardFieldDimension) {
         this.name = name;
         int elementLength = Element.values().length;
         currentElementValue = new int[elementLength];
@@ -37,7 +40,9 @@ public class Player {
         totalDeckCount = 0;
         deck = new ArrayList<>();
         handCards = new ArrayList<>();
-        fieldCards = new Card[Constants.CARD_ROW][Constants.CARD_COLUMN];
+        this.cardFieldDimension = cardFieldDimension;
+        characterFieldCards = Arrays.asList(new ArenaCharacterCard[cardFieldDimension.getCharacterCardCount()]);
+        skillFieldCards = Arrays.asList(new PutableSkillCard[cardFieldDimension.getSkillCardCount()]);
         hp = 80;
         hasPutLandCard = false;
 
@@ -65,14 +70,10 @@ public class Player {
         for (Element el : Element.values()) {
             currentElementValue[el.ordinal()] = maxElementValue[el.ordinal()];
         }
-        int i = 0;
-        for (int j = 0; j < Constants.CARD_COLUMN; ++j) {
-            if (fieldCards[i][j] != null) {
-                ArenaCharacterCard acc = (ArenaCharacterCard) fieldCards[i][j];
-                acc.setHasAttacked(false);
-                acc.setIsEnableToAttack(true);
-            }
-        }
+        characterFieldCards.stream().filter(acc -> acc != null).forEach(acc -> {
+            acc.setHasAttacked(false);
+            acc.setIsEnableToAttack(true);
+        });
     }
 
     /**
@@ -82,15 +83,15 @@ public class Player {
      * @return true if found, false otherwise
      */
     public boolean hasCardOnField(Card card) {
-        return Arrays.stream(fieldCards[0]).anyMatch(c -> c == card)
-                || Arrays.stream(fieldCards[1]).anyMatch(c -> c == card);
+        return characterFieldCards.stream().anyMatch(c -> c == card)
+                || skillFieldCards.stream().anyMatch(c -> c == card);
     }
 
     /**
      * @return true if has any active character card, false otherwise
      */
-    public boolean hasActiveCharacterCard() {
-        return Arrays.stream(fieldCards[0]).anyMatch(c -> c != null);
+    public boolean hasAnyArenaCharacterCard() {
+        return characterFieldCards.stream().anyMatch(c -> c != null);
     }
 
     /**
@@ -131,14 +132,23 @@ public class Player {
     }
 
     /**
-     * Add a card to a field with specified row and column
+     * Add a character card to a field with specified index of column
      *
-     * @param i    number of row
-     * @param j    number of column
+     * @param i    index of column
      * @param card specified card
      */
-    private void putCard(int i, int j, Card card) {
-        fieldCards[i][j] = card;
+    private void putCharacterCard(int i, ArenaCharacterCard card) {
+        characterFieldCards.set(i, card);
+    }
+
+    /**
+     * Add a skill card to a field with specified index of column
+     *
+     * @param i    index of column
+     * @param card specified card
+     */
+    private void putSkillCard(int i, PutableSkillCard card) {
+        skillFieldCards.set(i, card);
     }
 
     /**
@@ -170,15 +180,23 @@ public class Player {
             addCurrentElement(card.getElementType(), -((PoweredCard) card).getPowerNeeded());
         }
         if (card instanceof PutableCard) {
-            int i = card instanceof CharacterCard ? 0 : 1;
-            for (int j = 0; j < fieldCards[i].length; ++j) {
-                if (fieldCards[i][j] == null) {
-                    putCard(i, j, ((PutableCard) card).createArenaCard());
-                    return true;
+            if (card instanceof CharacterCard) {
+                for (int i = 0; i < characterFieldCards.size(); ++i) {
+                    if (characterFieldCards.get(i) == null) {
+                        putCharacterCard(i, ((CharacterCard) card).createArenaCard());
+                        return true;
+                    }
+                }
+            } else if (card instanceof PutableSkillCard) {
+                for (int i = 0; i < skillFieldCards.size(); ++i) {
+                    if (skillFieldCards.get(i) == null) {
+                        putSkillCard(i, ((PutableSkillCard) card).createArenaCard());
+                        return true;
+                    }
                 }
             }
         }
-        return true;
+        return false;
     }
 
     /**
@@ -191,10 +209,19 @@ public class Player {
         }
         if (card instanceof PutableCard) {
             boolean hasEmpty = false;
-            int i = card instanceof CharacterCard ? 0 : 1;
-            for (int j = 0; j < fieldCards[i].length; ++j) {
-                if (fieldCards[i][j] == null) {
-                    hasEmpty = true;
+            if (card instanceof CharacterCard) {
+                for (int i = 0; i < characterFieldCards.size(); ++i) {
+                    if (characterFieldCards.get(i) == null) {
+                        hasEmpty = true;
+                        break;
+                    }
+                }
+            } else if (card instanceof PutableSkillCard) {
+                for (int i = 0; i < skillFieldCards.size(); ++i) {
+                    if (skillFieldCards.get(i) == null) {
+                        hasEmpty = true;
+                        break;
+                    }
                 }
             }
             if (!hasEmpty) {
@@ -207,6 +234,10 @@ public class Player {
             return ((PoweredCard) card).getPowerNeeded() <= currentElementValue[card.getElementType().ordinal()];
         }
         return false;
+    }
+
+    public CardFieldDimension getCardFieldDimension() {
+        return cardFieldDimension;
     }
 
     /**
@@ -261,22 +292,67 @@ public class Player {
     }
 
     /**
-     * @param row number of row
-     * @param col number of column
+     * @param idx index column
      * @return card in specified row and column in field
      */
-    public Card getFieldCard(int row, int col) {
-        return fieldCards[row][col];
+    public List<ArenaCharacterCard> getCharacterCards() {
+        return characterFieldCards;
     }
 
     /**
-     * Remove a card from specified row and column
-     *
-     * @param row number of row
-     * @param col number of col
+     * @param idx index column
+     * @return card in specified row and column in field
      */
-    public void removeFieldCard(int row, int col) {
-        fieldCards[row][col] = null;
+    public List<PutableSkillCard> getSkillCards() {
+        return skillFieldCards;
+    }
+
+    /**
+     * Remove a character card from specified index column
+     *
+     * @param idx index column
+     */
+    public void removeCharacterCard(int idx) {
+        characterFieldCards.set(idx, null);
+    }
+
+    /**
+     * Remove a character card from a specified arena character card
+     *
+     * @param card specified arena character card
+     */
+    public boolean removeCharacterCard(ArenaCharacterCard card) {
+        for (int i = 0; i < characterFieldCards.size(); ++i) {
+            if (characterFieldCards.get(i) == card) {
+                removeCharacterCard(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Remove a skill card from specified index column
+     *
+     * @param idx index column
+     */
+    public void removeSkillCard(int idx) {
+        skillFieldCards.set(idx, null);
+    }
+
+    /**
+     * Remove a character card from a specified putable skill card
+     *
+     * @param card specified putable skill card
+     */
+    public boolean removeSkillCard(PutableSkillCard card) {
+        for (int i = 0; i < skillFieldCards.size(); ++i) {
+            if (skillFieldCards.get(i) == card) {
+                removeSkillCard(i);
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

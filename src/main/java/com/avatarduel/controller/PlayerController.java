@@ -3,17 +3,18 @@ package com.avatarduel.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
-import com.avatarduel.Constants;
 import com.avatarduel.model.CardPosition;
 import com.avatarduel.model.Player;
 import com.avatarduel.model.card.ArenaCharacterCard;
 import com.avatarduel.model.card.Card;
+import com.avatarduel.model.card.skill.PutableSkillCard;
 import com.avatarduel.model.card.skill.SkillCard;
 import com.avatarduel.repository.AuraSkillCardRepository;
+import com.avatarduel.repository.BaseCardRepository;
 import com.avatarduel.repository.CharacterCardRepository;
 import com.avatarduel.repository.DestroySkillCardRepository;
-import com.avatarduel.repository.LandCardRepository;
 import com.avatarduel.repository.PowerUpSkillCardRepository;
 
 /**
@@ -25,7 +26,7 @@ public class PlayerController {
 
     private Player player1, player2, turn;
     private Card clickedCard;
-    private LandCardRepository landCardRepository;
+    private BaseCardRepository landCardRepository;
     private CharacterCardRepository characterCardRepository;
     private AuraSkillCardRepository auraSkillCardRepository;
     private DestroySkillCardRepository destroySkillCardRepository;
@@ -42,7 +43,7 @@ public class PlayerController {
      * @param destroySkillCardRepository Repository for Destroy Skill Card
      * @param powerUpSkillCardRepository Repository for Power Up Skill Card
      */
-    public PlayerController(Player player1, Player player2, LandCardRepository landCardRepository,
+    public PlayerController(Player player1, Player player2, BaseCardRepository landCardRepository,
             CharacterCardRepository characterCardRepository, AuraSkillCardRepository auraSkillCardRepository,
             DestroySkillCardRepository destroySkillCardRepository,
             PowerUpSkillCardRepository powerUpSkillCardRepository) {
@@ -94,20 +95,11 @@ public class PlayerController {
      * @param card specified card
      */
     public void removeCardFromField(ArenaCharacterCard card) {
-        int i = 0;
-        for (int j = 0; j < Constants.CARD_COLUMN; ++j) {
-            if (player1.getFieldCard(i, j) == card) {
-                for (SkillCard next : card.getSkillCardList()) {
-                    removeCardFromField(next, false);
+        if (player1.removeCharacterCard(card) || player2.removeCharacterCard(card)) {
+            for (SkillCard next : card.getSkillCardList()) {
+                if (next instanceof PutableSkillCard) {
+                    removeCardFromField((PutableSkillCard) next, false);
                 }
-                player1.removeFieldCard(i, j);
-                return;
-            } else if (player2.getFieldCard(i, j) == card) {
-                for (SkillCard next : card.getSkillCardList()) {
-                    removeCardFromField(next, false);
-                }
-                player2.removeFieldCard(i, j);
-                return;
             }
         }
     }
@@ -117,36 +109,23 @@ public class PlayerController {
      *
      * @param card specified card
      */
-    public void removeCardFromField(SkillCard card) {
+    public void removeCardFromField(PutableSkillCard card) {
         removeCardFromField(card, true);
     }
 
     /**
      * Remove specified skill card from the field
      *
-     * @param card                specified card
+     * @param skillCard                specified card
      * @param checkCharacterSkill character skill flag
      */
-    public void removeCardFromField(SkillCard card, boolean checkCharacterSkill) {
-        for (int i = 0; i < Constants.CARD_ROW; ++i) {
-            for (int j = 0; j < Constants.CARD_COLUMN; ++j) {
-                Card c = player1.getFieldCard(i, j);
-                if (c instanceof ArenaCharacterCard && checkCharacterSkill) {
-                    ((ArenaCharacterCard) c).removeSkill(card);
-                } else if (c == card) {
-                    player1.removeFieldCard(i, j);
-                    return;
-                }
-
-                c = player2.getFieldCard(i, j);
-                if (c instanceof ArenaCharacterCard && checkCharacterSkill) {
-                    ((ArenaCharacterCard) c).removeSkill(card);
-                } else if (c == card) {
-                    player2.removeFieldCard(i, j);
-                    return;
-                }
-            }
+    private void removeCardFromField(PutableSkillCard skillCard, boolean checkCharacterSkill) {
+        if (checkCharacterSkill) {
+            Stream.concat(player1.getCharacterCards().stream(), player2.getCharacterCards().stream())
+                    .filter(acc -> acc != null).forEach(acc -> acc.removeSkill(skillCard));
         }
+        player1.removeSkillCard(skillCard);
+        player2.removeSkillCard(skillCard);
     }
 
     /**

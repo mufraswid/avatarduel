@@ -28,6 +28,25 @@ public abstract class GridView extends GridPane {
      * @param rowPercentages row percentages
      */
     public GridView(double[] colPercentages, double[] rowPercentages) {
+        setGridPercentages(colPercentages, rowPercentages);
+    }
+
+    /**
+     * Constructor
+     *
+     * @param colPercentages column percentages
+     * @param rowPercentages row percentages
+     */
+    public GridView(String colPercentages, String rowPercentages) {
+        setGridPercentages(colPercentages, rowPercentages);
+    }
+
+    protected void setGridPercentages(String colPercentages, String rowPercentages) {
+        setGridPercentages(Arrays.stream(colPercentages.split(SEPARATOR)).mapToDouble(Double::parseDouble).toArray(),
+                Arrays.stream(rowPercentages.split(SEPARATOR)).mapToDouble(Double::parseDouble).toArray());
+    }
+
+    protected void setGridPercentages(double[] colPercentages, double[] rowPercentages) {
         Object[] arr = Arrays.stream(colPercentages).mapToObj(d -> {
             ColumnConstraints col = new ColumnConstraints();
             col.setPercentWidth(d);
@@ -45,17 +64,6 @@ public abstract class GridView extends GridPane {
             return row;
         }).toArray();
         getRowConstraints().setAll(Arrays.copyOf(arr, arr.length, RowConstraints[].class));
-    }
-
-    /**
-     * Copy constructor
-     *
-     * @param colPercentages column percentages
-     * @param rowPercentages row percentages
-     */
-    public GridView(String colPercentages, String rowPercentages) {
-        this(Arrays.stream(colPercentages.split(SEPARATOR)).mapToDouble(Double::parseDouble).toArray(),
-                Arrays.stream(rowPercentages.split(SEPARATOR)).mapToDouble(Double::parseDouble).toArray());
     }
 
     /**

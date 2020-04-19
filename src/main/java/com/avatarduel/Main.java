@@ -3,6 +3,7 @@ package com.avatarduel;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+import com.avatarduel.controller.CardFieldDimension;
 import com.avatarduel.controller.GameController;
 import com.avatarduel.controller.PlayerController;
 import com.avatarduel.model.Player;
@@ -38,9 +39,10 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws URISyntaxException, IOException {
-        PlayerController playerController = new PlayerController(new Player("Player 1"), new Player("Player 2"),
-                new LandCardRepository(), new CharacterCardRepository(), new AuraSkillCardRepository(),
-                new DestroySkillCardRepository(), new PowerUpSkillCardRepository());
+        CardFieldDimension cardFieldDimension = new CardFieldDimension(6, 6);
+        PlayerController playerController = new PlayerController(new Player("Player 1", cardFieldDimension),
+                new Player("Player 2", cardFieldDimension), new LandCardRepository(), new CharacterCardRepository(),
+                new AuraSkillCardRepository(), new DestroySkillCardRepository(), new PowerUpSkillCardRepository());
         GameController game = new GameController(playerController);
         primaryStage.setTitle("Avatar Duel by K03-G01");
         primaryStage.setScene(game.getRenderController().getScene());

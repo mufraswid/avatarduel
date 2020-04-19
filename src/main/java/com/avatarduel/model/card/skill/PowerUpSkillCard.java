@@ -1,13 +1,12 @@
 package com.avatarduel.model.card.skill;
 
 import com.avatarduel.model.Element;
-import com.avatarduel.model.card.PutableCard;
 import com.avatarduel.model.card.Card;
 
 /**
  * Represents power up skill card
  */
-public class PowerUpSkillCard extends SkillCard implements PutableCard {
+public class PowerUpSkillCard extends PutableSkillCard {
 
     /**
      * Constructor

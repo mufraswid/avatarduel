@@ -1,9 +1,8 @@
 package com.avatarduel.view.child.card;
 
-import com.avatarduel.Constants;
+import com.avatarduel.controller.CardFieldDimension;
 import com.avatarduel.controller.listener.CardEventListener;
 import com.avatarduel.model.Player;
-import com.avatarduel.model.card.Card;
 import com.avatarduel.view.GridView;
 import com.avatarduel.view.ViewPosition;
 
@@ -12,8 +11,7 @@ import com.avatarduel.view.ViewPosition;
  */
 public class CardFieldView extends GridView {
 
-    private ViewPosition position;
-    private CardEventListener listener;
+    private CardRowFieldView characterRowFieldView, skillRowFieldView;
 
     /**
      * Constructor
@@ -21,26 +19,20 @@ public class CardFieldView extends GridView {
      * @param position field position
      * @param listener card event listener
      */
-    public CardFieldView(ViewPosition position, CardEventListener listener) {
-        super("15,15,15,15,15,15,15", "50,50");
-        this.position = position;
-        this.listener = listener;
+    public CardFieldView(CardFieldDimension cardFieldDimension, ViewPosition position, CardEventListener listener) {
+        super("100", "50,50");
+        characterRowFieldView = new CardRowFieldView(cardFieldDimension.getCharacterCardCount(), listener);
+        skillRowFieldView = new CardRowFieldView(cardFieldDimension.getSkillCardCount(), listener);
+        add(characterRowFieldView, 0, position == ViewPosition.BOTTOM ? 0 : 1);
+        add(skillRowFieldView, 0, position == ViewPosition.BOTTOM ? 1 : 0);
     }
 
     /**
      * @param player specified player
      */
     public void render(Player player) {
-        getChildren().clear();
-        for (int i = 0; i < Constants.CARD_ROW; ++i) {
-            for (int j = 0; j < Constants.CARD_COLUMN; ++j) {
-                Card card = player.getFieldCard(i, j);
-                int row = position == ViewPosition.BOTTOM ? i : (i + 1) % 2;
-                PlacedCardView placedCardView = new PlacedCardView(listener);
-                add(placedCardView, j, row);
-                placedCardView.render(card == null ? null : player.getFieldCard(i, j));
-            }
-        }
+        characterRowFieldView.renderCards(player.getCharacterCards());
+        skillRowFieldView.renderCards(player.getSkillCards());
     }
 
 }

@@ -34,8 +34,8 @@ public class RenderController {
      */
     public RenderController(Player player1, Player player2, CardEventListener handCardEventListener,
             CardEventListener cardFieldEventListener, MouseEventListener phaseEventListener) {
-        scene = new Scene(mainView = new MainView(handCardEventListener, cardFieldEventListener, phaseEventListener),
-                WIDTH, HEIGHT);
+        scene = new Scene(mainView = new MainView(player1.getCardFieldDimension(), player2.getCardFieldDimension(),
+                handCardEventListener, cardFieldEventListener, phaseEventListener), WIDTH, HEIGHT);
         closedCard = new ClosedCard();
         this.player1 = player1;
         this.player2 = player2;

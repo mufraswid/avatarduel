@@ -1,13 +1,12 @@
 package com.avatarduel.model.card.skill;
 
 import com.avatarduel.model.Element;
-import com.avatarduel.model.card.PutableCard;
 import com.avatarduel.model.card.Card;
 
 /**
  * Represents aura skill card
  */
-public class AuraSkillCard extends SkillCard implements PutableCard {
+public class AuraSkillCard extends PutableSkillCard {
 
     // AuraSkillCard attribute
     private int attackAddition, defenseAddition;

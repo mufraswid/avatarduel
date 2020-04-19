@@ -5,7 +5,7 @@ import com.avatarduel.model.Element;
 /**
  * Represents a character card
  */
-public class CharacterCard extends Card implements PoweredCard, PutableCard {
+public class CharacterCard extends Card implements PoweredCard, PutableCard<ArenaCharacterCard> {
 
     private int powerNeeded, attack, defense;
 

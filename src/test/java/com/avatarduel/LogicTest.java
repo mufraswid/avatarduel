@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+import com.avatarduel.controller.CardFieldDimension;
 import com.avatarduel.controller.PlayerController;
 import com.avatarduel.model.CardPosition;
 import com.avatarduel.model.Element;
@@ -39,9 +40,10 @@ public class LogicTest {
      */
     @BeforeEach
     public void init() throws IOException, URISyntaxException {
-        playerController = new PlayerController(new Player("Player 1"), new Player("Player 2"),
-                new LandCardRepository(), new CharacterCardRepository(), new AuraSkillCardRepository(),
-                new DestroySkillCardRepository(), new PowerUpSkillCardRepository());
+        CardFieldDimension cardFieldDimension = new CardFieldDimension(0, 0);
+        playerController = new PlayerController(new Player("Player 1", cardFieldDimension),
+                new Player("Player 2", cardFieldDimension), new LandCardRepository(), new CharacterCardRepository(),
+                new AuraSkillCardRepository(), new DestroySkillCardRepository(), new PowerUpSkillCardRepository());
     }
 
     /**
