@@ -23,10 +23,10 @@ public class GameController {
     /**
      * Constructor
      *
-     * @param cardDao where card data stored
+     * @param playerController player controller that will be controlling in this game
      */
-    public GameController(CardDao cardDao) {
-        playerController = new PlayerController(cardDao);
+    public GameController(PlayerController playerController) {
+        this.playerController = playerController;
         phase = Phase.DRAW;
         renderController = new RenderController(playerController.getPlayer1(), playerController.getPlayer2(),
                 new CardHandEventListener(this), new CardFieldEventListener(this), new PhaseEventListener(this));

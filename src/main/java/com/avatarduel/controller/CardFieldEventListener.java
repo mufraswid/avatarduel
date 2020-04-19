@@ -21,7 +21,7 @@ public class CardFieldEventListener implements CardEventListener {
     /**
      * Constructor
      *
-     * @param gameController thw current game
+     * @param gameController the current game
      */
     public CardFieldEventListener(GameController gameController) {
         this.gameController = gameController;

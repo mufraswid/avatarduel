@@ -5,14 +5,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import com.avatarduel.controller.CardDao;
 import com.avatarduel.controller.PlayerController;
 import com.avatarduel.model.CardPosition;
 import com.avatarduel.model.Element;
+import com.avatarduel.model.Player;
 import com.avatarduel.model.card.ArenaCharacterCard;
 import com.avatarduel.model.card.CharacterCard;
 import com.avatarduel.model.card.skill.AuraSkillCard;
 import com.avatarduel.model.card.skill.PowerUpSkillCard;
+import com.avatarduel.repository.AuraSkillCardRepository;
+import com.avatarduel.repository.CharacterCardRepository;
+import com.avatarduel.repository.DestroySkillCardRepository;
+import com.avatarduel.repository.LandCardRepository;
+import com.avatarduel.repository.PowerUpSkillCardRepository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -34,7 +39,9 @@ public class LogicTest {
      */
     @BeforeEach
     public void init() throws IOException, URISyntaxException {
-        playerController = new PlayerController(new CardDao());
+        playerController = new PlayerController(new Player("Player 1"), new Player("Player 2"),
+                new LandCardRepository(), new CharacterCardRepository(), new AuraSkillCardRepository(),
+                new DestroySkillCardRepository(), new PowerUpSkillCardRepository());
     }
 
     /**

@@ -201,8 +201,12 @@ public class Player {
                 return false;
             }
         }
-        return (card instanceof LandCard && !hasPutLandCard) || (card instanceof PoweredCard
-                && ((PoweredCard) card).getPowerNeeded() <= currentElementValue[card.getElementType().ordinal()]);
+        if (card instanceof LandCard) {
+            return !hasPutLandCard;
+        } else if (card instanceof PoweredCard) {
+            return ((PoweredCard) card).getPowerNeeded() <= currentElementValue[card.getElementType().ordinal()];
+        }
+        return false;
     }
 
     /**

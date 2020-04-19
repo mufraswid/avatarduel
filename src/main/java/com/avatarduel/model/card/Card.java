@@ -95,6 +95,10 @@ public abstract class Card {
         return isClosed;
     }
 
+    public UUID getId() {
+        return uuid;
+    }
+
     /**
      * @return this card image resource path
      */

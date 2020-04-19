@@ -1,11 +1,20 @@
 package com.avatarduel.controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import com.avatarduel.Constants;
 import com.avatarduel.model.CardPosition;
 import com.avatarduel.model.Player;
 import com.avatarduel.model.card.ArenaCharacterCard;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.model.card.skill.SkillCard;
+import com.avatarduel.repository.AuraSkillCardRepository;
+import com.avatarduel.repository.CharacterCardRepository;
+import com.avatarduel.repository.DestroySkillCardRepository;
+import com.avatarduel.repository.LandCardRepository;
+import com.avatarduel.repository.PowerUpSkillCardRepository;
 
 /**
  * Control a player
@@ -16,23 +25,67 @@ public class PlayerController {
 
     private Player player1, player2, turn;
     private Card clickedCard;
+    private LandCardRepository landCardRepository;
+    private CharacterCardRepository characterCardRepository;
+    private AuraSkillCardRepository auraSkillCardRepository;
+    private DestroySkillCardRepository destroySkillCardRepository;
+    private PowerUpSkillCardRepository powerUpSkillCardRepository;
 
     /**
      * Constructor
      *
-     * @param cardDao where card data stored
+     * @param player1 Player 1
+     * @param player2 Player 2
+     * @param landCardRepository Repository for Land Card
+     * @param characterCardRepository Repository for Character Card
+     * @param auraSkillCardRepository Repository for Aura Skill Card
+     * @param destroySkillCardRepository Repository for Destroy Skill Card
+     * @param powerUpSkillCardRepository Repository for Power Up Skill Card
      */
-    public PlayerController(CardDao cardDao) {
-        player1 = new Player("Player 1");
-        player2 = new Player("Player 2");
+    public PlayerController(Player player1, Player player2, LandCardRepository landCardRepository,
+            CharacterCardRepository characterCardRepository, AuraSkillCardRepository auraSkillCardRepository,
+            DestroySkillCardRepository destroySkillCardRepository,
+            PowerUpSkillCardRepository powerUpSkillCardRepository) {
+        this.player1 = player1;
+        this.player2 = player2;
+        this.landCardRepository = landCardRepository;
+        this.characterCardRepository = characterCardRepository;
+        this.auraSkillCardRepository = auraSkillCardRepository;
+        this.destroySkillCardRepository = destroySkillCardRepository;
+        this.powerUpSkillCardRepository = powerUpSkillCardRepository;
 
-        player1.addToDeck(cardDao.getRandomDeck(24, 24, 4, 4, 4));
-        player2.addToDeck(cardDao.getRandomDeck(24, 24, 4, 4, 4));
+        player1.addToDeck(getRandomDeck(24, 24, 4, 4, 4));
+        player2.addToDeck(getRandomDeck(24, 24, 4, 4, 4));
 
         player1.drawCard(FIRST_CARD_DRAWN);
         player2.drawCard(FIRST_CARD_DRAWN);
 
         turn = player1;
+    }
+
+    /**
+     * Get a randomized deck with a specified number of each type
+     *
+     * @param landCount      number of land cards for the deck
+     * @param characterCount number of character cards for the deck
+     * @param auraCount      number of aura cards for the deck
+     * @param destroyCount   number of destroy cards for the deck
+     * @param powerupCount   number of power up cards for the deck
+     * @return randomized list of cards with each specified number of type
+     */
+    public List<Card> getRandomDeck(int landCount, int characterCount, int auraCount, int destroyCount,
+            int powerupCount) {
+        List<Card> res = new ArrayList<>();
+
+        res.addAll(landCardRepository.getRandomCards(landCount));
+        res.addAll(characterCardRepository.getRandomCards(characterCount));
+        res.addAll(auraSkillCardRepository.getRandomCards(auraCount));
+        res.addAll(destroySkillCardRepository.getRandomCards(destroyCount));
+        res.addAll(powerUpSkillCardRepository.getRandomCards(powerupCount));
+
+        Collections.shuffle(res);
+
+        return res;
     }
 
     /**
@@ -184,7 +237,7 @@ public class PlayerController {
             boolean isDefensePosition = defender.getPosition() == CardPosition.DEFENSE;
             int defValue = isDefensePosition ? defender.getTotalDefense() : defender.getTotalAttack();
             int selisih = attacker.getTotalAttack() - defValue;
-            if (selisih < 0) {
+            if (selisih <= 0) {
                 return false;
             }
             removeCardFromField(defender);
