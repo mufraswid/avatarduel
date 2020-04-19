@@ -63,10 +63,7 @@ public interface IPlayer {
     public void addToDeck(List<ActivableCard> cards);
 
     /**
-     * Add a character card to a field with specified index of column
-     *
-     * @param i    index of column
-     * @param card specified card
+     * Get card field dimension for this player
      */
 
     public CardFieldDimension getCardFieldDimension();
@@ -109,14 +106,12 @@ public interface IPlayer {
     public List<ActivableCard> getHandCards();
 
     /**
-     * @param idx index column
-     * @return card in specified row and column in field
+     * @return all character cards
      */
     public List<ArenaCharacterCard> getCharacterCards();
 
     /**
-     * @param idx index column
-     * @return card in specified row and column in field
+     * @return all skill cards
      */
     public List<PutableSkillCard> getSkillCards();
 

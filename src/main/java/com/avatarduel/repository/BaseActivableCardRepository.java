@@ -21,7 +21,7 @@ public abstract class BaseActivableCardRepository implements Repository<Activabl
 
     /** 
      * @param id
-     * @return Optional<ActivableCard>
+     * @return Nullable of Activable Card
      */
     @Override
     public Optional<ActivableCard> get(UUID id) {
@@ -29,7 +29,7 @@ public abstract class BaseActivableCardRepository implements Repository<Activabl
     }
 
     /** 
-     * @return List<ActivableCard>
+     * @return List of ActivableCards
      */
     @Override
     public List<ActivableCard> getAll() {

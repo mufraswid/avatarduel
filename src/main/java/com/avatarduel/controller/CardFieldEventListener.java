@@ -53,7 +53,7 @@ public class CardFieldEventListener implements CardEventListener {
     /**
      * Handle if a card got right clicked
      *
-     * @param card the clicked card
+     * @param c the clicked card
      */
     @Override
     public void onMouseRightClicked(Card c) {
@@ -87,7 +87,7 @@ public class CardFieldEventListener implements CardEventListener {
     /**
      * Handle if a card got left clicked
      *
-     * @param card the clicked card
+     * @param c the clicked card
      */
     @Override
     public void onMouseLeftClicked(Card c) {

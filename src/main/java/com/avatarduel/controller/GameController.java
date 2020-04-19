@@ -3,6 +3,7 @@ package com.avatarduel.controller;
 import com.avatarduel.model.Phase;
 import com.avatarduel.model.Player;
 import com.avatarduel.model.card.Card;
+import com.avatarduel.model.card.ClosedCard;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -29,7 +30,8 @@ public class GameController {
         this.playerController = playerController;
         phase = Phase.DRAW;
         renderController = new RenderController(playerController.getPlayer1(), playerController.getPlayer2(),
-                new CardHandEventListener(this), new CardFieldEventListener(this), new PhaseEventListener(this));
+                new ClosedCard(), new CardHandEventListener(this), new CardFieldEventListener(this),
+                new PhaseEventListener(this));
         playPhase();
     }
 

@@ -5,7 +5,6 @@ import com.avatarduel.controller.listener.MouseEventListener;
 import com.avatarduel.model.Phase;
 import com.avatarduel.model.Player;
 import com.avatarduel.model.card.Card;
-import com.avatarduel.model.card.ClosedCard;
 import com.avatarduel.view.main.MainView;
 
 import javafx.scene.Scene;
@@ -28,15 +27,16 @@ public class RenderController {
      *
      * @param player1                player 1 object
      * @param player2                player 2 object
+     * @param closedCard             closed card the view of a closed card
      * @param handCardEventListener  hand card event listener
      * @param cardFieldEventListener card field event listener
      * @param phaseEventListener     phase event listener
      */
-    public RenderController(Player player1, Player player2, CardEventListener handCardEventListener,
+    public RenderController(Player player1, Player player2, Card closedCard, CardEventListener handCardEventListener,
             CardEventListener cardFieldEventListener, MouseEventListener phaseEventListener) {
         scene = new Scene(mainView = new MainView(player1.getCardFieldDimension(), player2.getCardFieldDimension(),
                 handCardEventListener, cardFieldEventListener, phaseEventListener), WIDTH, HEIGHT);
-        closedCard = new ClosedCard();
+        this.closedCard = closedCard;
         this.player1 = player1;
         this.player2 = player2;
         initView();

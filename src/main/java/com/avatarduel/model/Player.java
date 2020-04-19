@@ -196,16 +196,14 @@ public class Player implements IPlayer {
     }
 
     /**
-     * @param idx index column
-     * @return card in specified row and column in field
+     * @return all character cards
      */
     public List<ArenaCharacterCard> getCharacterCards() {
         return characterFieldCards;
     }
 
     /**
-     * @param idx index column
-     * @return card in specified row and column in field
+     * @return all skill cards
      */
     public List<PutableSkillCard> getSkillCards() {
         return skillFieldCards;

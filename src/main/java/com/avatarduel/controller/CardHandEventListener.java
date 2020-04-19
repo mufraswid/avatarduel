@@ -58,7 +58,7 @@ public class CardHandEventListener implements CardEventListener {
     /**
      * Handle if a card got left clicked
      *
-     * @param card the clicked card
+     * @param c the clicked card
      */
     @Override
     public void onMouseLeftClicked(Card c) {
