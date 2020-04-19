@@ -1,6 +1,5 @@
 package com.avatarduel.view.child;
 
-import com.avatarduel.Constants;
 import com.avatarduel.model.Element;
 import com.avatarduel.model.Player;
 import com.avatarduel.util.ElementColorPicker;
@@ -34,7 +33,7 @@ public class ElementView extends GridView {
         airText.getText().setFill(ElementColorPicker.getColor(Element.AIR));
 
         getColumnConstraints().forEach(col -> col.setHalignment(HPos.LEFT));
-        setPadding(new Insets(0, 0, 0, Constants.GAP));
+        setPadding(new Insets(0, 0, 0, 10));
         addBorder();
 
         add(earthText, 0, 0);

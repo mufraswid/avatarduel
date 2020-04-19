@@ -1,6 +1,5 @@
 package com.avatarduel.view.child.card.status;
 
-import com.avatarduel.Constants;
 import com.avatarduel.model.card.ArenaCharacterCard;
 import com.avatarduel.model.card.CharacterCard;
 import com.avatarduel.model.card.skill.AuraSkillCard;
@@ -25,9 +24,9 @@ public class StatusView extends CardView {
         defenseText = new DefaultText();
         powerText = new DefaultText();
         if (small) {
-            attackText.setSize(Constants.SMALL_FONT_SIZE);
-            defenseText.setSize(Constants.SMALL_FONT_SIZE);
-            powerText.setSize(Constants.SMALL_FONT_SIZE);
+            attackText.setSize(8);
+            defenseText.setSize(8);
+            powerText.setSize(8);
             setHgap(0);
             setVgap(0);
         }

@@ -1,6 +1,5 @@
 package com.avatarduel.view.child.card.status;
 
-import com.avatarduel.Constants;
 import com.avatarduel.model.card.PoweredCard;
 import com.avatarduel.view.DefaultText;
 import com.avatarduel.view.child.card.CardView;
@@ -21,7 +20,7 @@ public class PowerStatusView extends CardView {
         super("100", "100");
         powerText = new DefaultText();
         if (small) {
-            powerText.setSize(Constants.SMALL_FONT_SIZE);
+            powerText.setSize(8);
         }
         add(powerText, 0, 0);
     }

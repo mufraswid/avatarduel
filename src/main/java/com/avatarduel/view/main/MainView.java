@@ -1,6 +1,5 @@
 package com.avatarduel.view.main;
 
-import com.avatarduel.Constants;
 import com.avatarduel.controller.CardFieldDimension;
 import com.avatarduel.controller.listener.CardEventListener;
 import com.avatarduel.controller.listener.MouseEventListener;
@@ -31,7 +30,7 @@ public class MainView extends GridView {
             CardEventListener handCardEventListener, CardEventListener cardFieldEventListener,
             MouseEventListener phaseEventListener) {
         super("20,70,10", "100");
-        setPadding(new Insets(Constants.GAP, Constants.GAP, Constants.GAP, Constants.GAP));
+        setPadding(new Insets(10, 10, 10, 10));
         add(leftMainView = new LeftMainView(), 0, 0);
         add(centerMainView = new CenterMainView(cardFieldDimension1, cardFieldDimension2, handCardEventListener,
                 cardFieldEventListener), 1, 0);

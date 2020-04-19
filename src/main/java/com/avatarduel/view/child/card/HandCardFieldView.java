@@ -1,6 +1,5 @@
 package com.avatarduel.view.child.card;
 
-import com.avatarduel.Constants;
 import com.avatarduel.controller.listener.CardEventListener;
 import com.avatarduel.model.Player;
 import com.avatarduel.model.card.Card;
@@ -24,7 +23,7 @@ public class HandCardFieldView extends ScrollPane {
     public HandCardFieldView(CardEventListener listener) {
         this.listener = listener;
         hbox = new HBox();
-        hbox.setSpacing(Constants.GAP);
+        hbox.setSpacing(10);
         setContent(hbox);
         setFitToHeight(true);
     }

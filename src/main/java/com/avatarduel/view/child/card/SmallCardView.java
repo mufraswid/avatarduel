@@ -1,6 +1,5 @@
 package com.avatarduel.view.child.card;
 
-import com.avatarduel.Constants;
 import com.avatarduel.controller.listener.CardEventListener;
 import com.avatarduel.model.card.Card;
 import com.avatarduel.util.ElementColorPicker;
@@ -40,7 +39,7 @@ public class SmallCardView extends CardView {
         setVgap(0);
         setHgap(0);
 
-        nameText.setSize(Constants.SMALL_FONT_SIZE);
+        nameText.setSize(8);
         imageView.setPreserveRatio(true);
         imageView.setFitWidth(80);
     }
