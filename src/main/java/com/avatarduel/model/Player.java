@@ -43,12 +43,6 @@ public class Player implements IPlayer {
         skillFieldCards = Arrays.asList(new PutableSkillCard[cardFieldDimension.getSkillCardCount()]);
         hp = 80;
         hasPutLandCard = false;
-
-        // TODO delete later
-        for (int i = 0; i < elementLength; ++i) {
-            currentElementValues[i] = 89;
-            maxElementValues[i] = 89;
-        }
     }
 
     /** 
